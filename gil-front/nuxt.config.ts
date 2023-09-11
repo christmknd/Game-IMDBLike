@@ -1,4 +1,4 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// https://nuxt.com/docs/api/configuration/nuxt-config<
 import {resolve} from 'path'
 
 
@@ -8,7 +8,9 @@ export default defineNuxtConfig({
     "@": resolve(__dirname, '/')
   },
   runtimeConfig: {
-    apikey: process.env.API_KEY,
+    public: {
+      RAWG_API_KEY: process.env.RAWG_API_KEY,
+    }
   },
   css: [
     '~/assets/style.css', // Chemin vers votre fichier CSS

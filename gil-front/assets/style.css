@@ -1,0 +1,121 @@
+body {
+    font-family: Baskerville, Cambria, Courier, Garamond, Georgia, serif;
+}
+  
+h1, h2, h3, h4, h5, h6 {
+    font-family: Calibri, 'Century Gothic', 'DejaVu Sans', Verdana, sans-serif;
+    text-align: center;
+}
+
+h1, h2 {
+    text-align: center;
+}
+  
+.section {
+    margin: 1.25rem;
+    padding: 10px;
+}
+  
+.section + .section {
+    margin-top: 2rem; 
+}
+  
+h1 {
+    font-size: 2.75rem;
+    line-height: 1.5;
+    letter-spacing: -2px;
+    font-weight: bold; 
+}
+  
+h2 {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    letter-spacing: -0.5px;
+}
+
+  
+.long-text {
+    text-align: left;
+}
+  
+.text-container {
+    max-width: 800px;
+}
+  
+p {
+    color: #333; 
+}
+
+
+/* Form */
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form input {
+    height: 1rem;
+    width: 10rem;
+    margin: 0.5rem;
+}
+
+button {
+    width: 8rem;
+    height: 2rem
+}
+
+
+/* Nav */
+
+nav {
+    overflow: hidden;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+      padding-bottom: 25px;
+}
+    
+nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+}
+    
+nav li a {
+      text-decoration: none;
+      float: left;
+      padding: 5px;
+      color: black;
+}
+    
+    
+nav li a:hover {
+      color: grey;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+  }
+
+footer li  {
+    text-decoration: none;
+    float: left;
+    padding: 1rem;
+    color: black;
+}

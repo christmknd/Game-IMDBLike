@@ -1,4 +1,4 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config<
+// https://nuxt.com/docs/api/configuration/nuxt-config
 import {resolve} from 'path'
 
 

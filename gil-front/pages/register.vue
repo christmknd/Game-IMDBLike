@@ -1,8 +1,8 @@
-<script lang="ts" setup></script>
+<script  setup></script>
 
 <template>
   <div>
-    Page: foo
+    <AuthRegisterForm/>
   </div>
 </template>
 

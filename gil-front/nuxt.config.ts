@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     apikey: process.env.API_KEY,
   },
   css: [
-    '~/assets/styles.css', // Chemin vers votre fichier CSS
+    '~/assets/style.css', // Chemin vers votre fichier CSS
   ],
   components: [
     {

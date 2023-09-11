@@ -2,7 +2,8 @@
 
 <template>
   <div>
-    <AuthLoginForm/>
+    <h1>Home</h1>
+    <GameSearch />
   </div>
 </template>
 

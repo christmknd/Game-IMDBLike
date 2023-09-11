@@ -7,6 +7,9 @@ export default defineNuxtConfig({
   alias: {
     "@": resolve(__dirname, '/')
   },
+  runtimeConfig: {
+    apikey: process.env.API_KEY,
+  },
   css: [
     '~/assets/styles.css', // Chemin vers votre fichier CSS
   ],
@@ -15,5 +18,6 @@ export default defineNuxtConfig({
       path: '~/components',
       extensions: ['.vue'],
     }
-  ]
+  ],
+ 
 })

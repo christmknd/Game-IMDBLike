@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { GameModule } from './game/game.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './game/entities/game.entity';
+import { ShopModule } from './shop/shop.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { Game } from './game/entities/game.entity';
       migrations: ['dist/migrations/*js'],
     }),
     GameModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [AppService],

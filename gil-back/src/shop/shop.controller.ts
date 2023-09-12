@@ -12,7 +12,7 @@ import { ShopService } from './shop.service';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Shop')
+@ApiTags('shop')
 @Controller('shop')
 export class ShopController {
   constructor(private readonly shopService: ShopService) {}

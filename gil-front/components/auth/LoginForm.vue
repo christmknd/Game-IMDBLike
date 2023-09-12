@@ -1,4 +1,14 @@
-<script setup>
+<script>
+export default {
+  data: () => {
+    return {
+      form : {
+        pseudo : '',
+        password : ''
+      }
+    }
+  }
+}
 </script>
 
 <template>
@@ -8,13 +18,15 @@
         <input 
           type="text" 
           id="pseudo" 
-          placeholder='pseudo' 
+          placeholder='pseudo'
+          v-model="form.pseudo" 
           />
         <label htmlFor='password'>Mot de passe</label>
           <input 
-            type="password" 
+          type="password" 
           id="password" 
           placeholder="password"
+          v-model="form.password"
           />
           <button>Se connecter</button>
       </form>

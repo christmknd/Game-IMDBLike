@@ -35,7 +35,7 @@ export class ShopController {
     }
   }
 
-  @Get()
+  @Get(':shopId/games')
   findAllGamesInShop(@Param('shopId') shopId: number) {
     try {
       return this.shopService.findAllGamesInShop(shopId);
@@ -53,13 +53,13 @@ export class ShopController {
     }
   }
 
-  @Post(':shopId:add-game/:gameId')
+  @Post(':shopId/add-game/:gameId')
   addGameToShop(
     @Param('shopId') shopId: number,
     @Param('gameId') gameId: number,
   ) {
     try {
-      return this.addGameToShop(shopId, gameId);
+      return this.shopService.addGameToShop(shopId, gameId);
     } catch {
       throw new NotFoundException(
         'Cannot add the game from the shop : the game may not exist',
@@ -74,7 +74,7 @@ export class ShopController {
     @Param('gameId') gameId: number,
   ) {
     try {
-      return this.deleteGameFromShop(shopId, gameId);
+      return this.shopService.deleteGameFromShop(shopId, gameId);
     } catch {
       throw new NotFoundException(
         'Cannot delete the game from the shop : the game may not exist',

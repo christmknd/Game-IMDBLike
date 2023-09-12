@@ -5,6 +5,7 @@ import { GameModule } from './game/game.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './game/entities/game.entity';
 import { ShopModule } from './shop/shop.module';
+import { Shop } from "./shop/entities/shop.entity";
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ShopModule } from './shop/shop.module';
       username: 'root',
       password: 'mtae123',
       database: 'gameapp',
-      entities: [Game],
+      entities: [Game, Shop],
       logging: true,
       synchronize: true,
       migrations: ['dist/migrations/*js'],

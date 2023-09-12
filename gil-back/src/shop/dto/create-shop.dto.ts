@@ -6,5 +6,5 @@ export class CreateShopDto {
     description: 'Title of the shop'
   })
   @IsNotEmpty()
-  title: string;
+  name: string;
 }

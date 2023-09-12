@@ -13,9 +13,9 @@ export class Game {
   @Column()
   releaseDate: string;
 
-  @Column('text', { array: true })
-  genres: string[];
+  @Column('json')
+  genres: string;
 
-  @Column('text', { array: true })
-  platforms: string[];
+  @Column('json')
+  platforms: string;
 }

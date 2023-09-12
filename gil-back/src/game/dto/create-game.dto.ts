@@ -11,8 +11,8 @@ export class CreateGameDto {
   releasedDate: string;
 
   @ApiProperty({ description: 'Genre(s) of the game' })
-  genres: string[];
+  genres: string;
 
   @ApiProperty({ description: 'Platform(s) you can play the game on' })
-  platforms: string[];
+  platforms: string;
 }

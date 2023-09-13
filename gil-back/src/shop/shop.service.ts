@@ -12,7 +12,7 @@ export class ShopService {
     @InjectRepository(Shop)
     private shopRepository: Repository<Shop>,
     @InjectRepository(Game)
-    private bookRepository: Repository<Game>,
+    private gameRepository: Repository<Game>,
   ) {}
   async createShop(createShopDto: CreateShopDto): Promise<Shop> {
     const shop = this.shopRepository.create(createShopDto);
@@ -48,25 +48,30 @@ export class ShopService {
   }
 
   async addGameToShop(shopId: number, gameId: number): Promise<Shop> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const shop = await this.shopRepository.findOne(shopId, {
+    const shops = await this.shopRepository.find({
+      where: { id: shopId },
       relations: ['games'],
     });
-    if (!shop) {
+
+    if (shops.length === 0) {
       throw new NotFoundException(`Shop with ID ${shopId} not found`);
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const game = await this.bookRepository.findOne(gameId);
-    if (!game) {
+    const shop = shops[0];
+    const games = await this.gameRepository.find({
+      where: { id: gameId },
+    });
+
+    if (games.length === 0) {
       throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
+
+    const game = games[0];
 
     shop.games.push(game);
     return this.shopRepository.save(shop);
   }
+
 
 
   async deleteGameFromShop(shopId: number, gameId: number): Promise<Shop> {
@@ -91,7 +96,7 @@ export class ShopService {
   async deleteShop(shopId: number): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const shop = await this.shopRepository.findOneBy({ shopId: shopId} );
+    const shop = await this.shopRepository.findOneBy({ shopId : shopId} );
     if (!shop) {
       throw new NotFoundException(`Shop with ID ${shopId} not found`);
     }

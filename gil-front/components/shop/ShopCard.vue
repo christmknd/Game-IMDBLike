@@ -1,41 +1,30 @@
 <script>
+import GameCard from '~/components/GameCard.vue'; // Assurez-vous d'importer correctement le composant GameCard
+
 export default {
   props: {
-    shopId: Number 
-  },
-  data() {
-    return {
-      shop: null 
-    };
-  },
-  created() {
-    this.getShopById();
+    shop: Object, // Assurez-vous que shop est un objet contenant un tableau de jeux (games)
   },
   methods: {
-    async getShopById(){
-      try {
-        const response = await $fetch(`http://localhost:5000/shop/${this.shopId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        this.shop = await response;
-      } catch (error) {
-        console.error('Une erreur s\'est produite lors de la récupération du shop :', error);
-      }
-    }
-  }
-}
+    async deleteShop() {
+      // Mettez ici votre logique de suppression de shop si nécessaire
+    },
+  },
+  components: {
+    GameCard,
+  },
+};
 </script>
 
 <template>
   <div class="shop-card">
-    <div v-if="shop">
     <h2>{{ shop.name }}</h2>
-    </div>
-    <div v-else>
-    <p>Chargement en cours...</p>
+    <button @click="deleteShop">Supprimer</button>
+    <div>
+      <h3>Jeux dans ce shop :</h3>
+      <div v-for="gameId in shop.games" :key="gameId">
+        <GameCard :gameId="gameId" />
+      </div>
     </div>
   </div>
 </template>

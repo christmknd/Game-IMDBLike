@@ -7,7 +7,7 @@ export default {
     };
   },
   methods: {
-    async loadShops() {
+    async getAllShops() {
       try {
         const response = await $fetch('http://localhost:5000/shop', {
           method: 'GET',
@@ -26,7 +26,7 @@ export default {
   },
   created() {
     // Chargez la liste des shops lorsque le composant est créé
-    this.loadShops();
+    this.getAllShops();
   },
 }
 </script>
@@ -41,4 +41,15 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+li {
+  text-decoration: none;
+}
+</style>

@@ -45,7 +45,7 @@ export class ShopController {
   }
 
   @Get(':id')
-  findShopById(@Param('id') id: string) {
+  findShopById(@Param('id') id: number) {
     try {
       return this.shopService.findShopById(+id);
     } catch {

@@ -16,14 +16,10 @@ export default {
           },
           body: JSON.stringify(shopData) 
         });
-        if (response.ok) {
           this.$emit('shop-created');
           console.log('Shop créé avec succès !');
-        } else {
-          console.error('Erreur lors de la création du shop.');
-        }
       } catch(error) {
-        console.error('Une erreur s\'est produite :', error);
+        console.error('Une erreur s\'est produite lors de la récupération des shops :', error);
 
       }
     }
@@ -45,4 +41,5 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

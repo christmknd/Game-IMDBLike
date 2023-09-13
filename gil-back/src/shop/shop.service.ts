@@ -1,10 +1,9 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateShopDto } from './dto/create-shop.dto';
-import { UpdateShopDto } from './dto/update-shop.dto';
 import { Shop } from './entities/shop.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Game } from "../game/entities/game.entity";
+import { Game } from '../game/entities/game.entity';
 
 @Injectable()
 export class ShopService {
@@ -29,7 +28,7 @@ export class ShopService {
   async findAllGamesInShop(shopId: number): Promise<Game[]> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const shop = await this.shopRepository.findOne(shopId);
+    const shop = await this.shopRepository.findOneBy({ shopId: shopId });
     if (!shop) {
       throw new NotFoundException('Shop not found : we can find no games');
     }
@@ -39,7 +38,9 @@ export class ShopService {
   async findShopById(id: number): Promise<Shop> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const shop = await this.shopRepository.findOne(id);
+    const shop = await this.shopRepository.findOneBy({
+      id: id
+    });
     if (!shop) {
       throw new NotFoundException(`Shop with id ${id} not found`);
     }
@@ -90,7 +91,7 @@ export class ShopService {
   async deleteShop(shopId: number): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const shop = await this.shopRepository.findOne(shopId);
+    const shop = await this.shopRepository.findOneBy({ shopId: shopId} );
     if (!shop) {
       throw new NotFoundException(`Shop with ID ${shopId} not found`);
     }

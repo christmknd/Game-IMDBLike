@@ -4,12 +4,14 @@ import { ref } from 'vue';
 const config = useRuntimeConfig();
 const apiKey = config.public.RAWG_API_KEY
 
-
-
 const searchQuery = ref('');
 const games = ref([]);
+const shops = ref([]);
 const loading = ref(false);
 
+const selectedShop = ref(null);
+
+//Rechercher des jeux à partir de l'API Rawg.
 const searchGames = async () => {
   if (!searchQuery.value) {
     return;
@@ -30,8 +32,61 @@ const searchGames = async () => {
   }
 };
 
-const addGameToShop = async () => {
 
+//CHARGER LA LISTE DES SHOPS 
+
+const loadShops = async () => {
+  try {
+    const response = await $fetch('http://localhost:5000/shop', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  shops.value = await response;
+  } catch (error) {
+    console.error('Une erreur s\'est produite lors du chargement des magasins :', error);
+  }
+};
+loadShops();
+
+
+//AJOUTER UN JEU A LA BASE DE DONNEES 
+const addGameToDatabase = async (gameId) => {
+  try {
+    const response = await $fetch(`http://localhost:5000/game`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ gameId }), // Envoyez l'ID du jeu au backend
+    });
+      console.log('Jeu ajouté à la base de données avec succès !');
+  } catch (error) {
+    console.error('Une erreur s\'est produite lors de l\'ajout du jeu à la base de données :', error);
+  }
+};
+
+
+//AJOUTER UN JEU A UN SHOP 
+const addGameToShop = async (gameId) => {
+
+  await addGameToDatabase(gameId);
+  if (!selectedShop.value) {
+    console.error('Veuillez sélectionner un magasin.');
+    return;
+  }
+  try {
+    const response = await $fetch(`http://localhost:5000/shop/${selectedShop.value}/add-game/${gameId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+      console.log('Le jeu a été ajouté au magasin avec succès.');
+  } catch (error) {
+    console.error('Une erreur s\'est produite lors de l\'ajout du jeu au magasin :', error);
+  }
 }
 
 </script>
@@ -64,7 +119,12 @@ const addGameToShop = async () => {
               {{ platform.name || platform.platform.name }}
             </li>
           </ul> <br>
-          <li> <button @click="addGameToShop">Ajouter le jeu à un shop</button></li>
+          <li>
+            <select v-model="selectedShop">
+              <option v-for="shop in shops" :key="shop.id" :value="shop.id">{{ shop.name }}</option>
+            </select>
+            <button @click="addGameToShop(game.id)">Ajouter le jeu à un shop</button>
+          </li>
         </li> <br>
       
       </ul>

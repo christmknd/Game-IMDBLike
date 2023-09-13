@@ -1,21 +1,6 @@
 <script>
 export default {
-  props: {
-    shop: Object,
-    required: true
-  },
-  methods: {
-    async deleteShop() {
-      try {
-        await $fetch(`/shop/${this.shop.id}` , {
-          method : 'DELETE',
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  },
-};
+}
 </script>
 
 <template>

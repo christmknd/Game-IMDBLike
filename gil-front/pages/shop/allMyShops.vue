@@ -1,7 +1,6 @@
 <script>
-//import ShopCard from '~/components/shop/ShopCard.vue'; 
-
 export default {
+
   data() {
     return {
       shops: [] 
@@ -10,33 +9,25 @@ export default {
   methods: {
     async loadShops() {
       try {
-        await $fetch('http://localhost:5000/shop' , {
-          method : 'GET',
+        const response = await $fetch('http://localhost:5000/shop', {
+          method: 'GET',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
         });
-        
-        if (response.ok) {
-          const shopsData = await response.json();
-          console.log(shopsData)
-          this.shops = shopsData;
-          console/log(this.shops)
-          console.log('Liste des shops mise à jour avec succès !');
-        } else {
-          console.error('Erreur lors de la récupération de la liste des shops.');
-        }
+      
+          const data = await response;
+          this.shops.push(...data)
+          console.log('Liste des shops mise à jour avec succès !', data);
       } catch (error) {
-        console.error('Une erreur s\' est produite : la liste des shops n\' a pas pu être récupéré')
+        console.error('Une erreur s\'est produite : la liste des shops n\'a pas pu être récupérée');
       }
     },
-    handleShopDeleted(shopId) {
-      this.shops = this.shops.filter(shop => shop.id !== shopId);
-    },
-    created() {
+  },
+  created() {
+    // Chargez la liste des shops lorsque le composant est créé
     this.loadShops();
-  }
-  }
+  },
 }
 </script>
 

@@ -10,13 +10,29 @@ import {
 } from '@nestjs/common';
 import { ShopService } from './shop.service';
 import { CreateShopDto } from './dto/create-shop.dto';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiOperation, ApiParam,
+  ApiResponse,
+  ApiTags
+} from "@nestjs/swagger";
+import { Shop } from "./entities/shop.entity";
 
-@ApiTags('Shop')
+@ApiTags('shop')
 @Controller('shop')
 export class ShopController {
   constructor(private readonly shopService: ShopService) {}
 
+  @ApiOperation({ summary: 'Create a new shop' })
+  @ApiBody({ type: CreateShopDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Shop created successfully',
+    type: Shop,
+  })
+  @ApiBadRequestResponse({ description: 'Shop cannot be registrated' })
   @Post()
   create(@Body() createShopDto: CreateShopDto) {
     try {
@@ -26,6 +42,8 @@ export class ShopController {
     }
   }
 
+  @ApiOperation({ summary: 'Get all shops' })
+  @ApiNotFoundResponse({ description: 'No shops found' })
   @Get()
   findAllShops() {
     try {
@@ -44,12 +62,20 @@ export class ShopController {
     }
   }
 
+  @ApiOperation({ summary: 'Get shop by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({
+    status: 200,
+    description: 'Return shop by ID',
+    type: Shop,
+  })
+  @ApiNotFoundResponse({ description: 'Shop not found' })
   @Get(':id')
-  findShopById(@Param('id') id: string) {
+  findShopById(@Param('id') id: number) {
     try {
       return this.shopService.findShopById(+id);
     } catch {
-      throw new NotFoundException(`Games with id ${id} not found `);
+      throw new NotFoundException(`Shop not found `);
     }
   }
 
@@ -82,6 +108,10 @@ export class ShopController {
     }
   }
 
+  @ApiOperation({ summary: 'Delete shop by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Shop deleted successfully' })
+  @ApiNotFoundResponse({ description: 'Shop not found : cannot be deleted' })
   @Delete(':id')
   delete(@Param('id') id: string) {
     try {

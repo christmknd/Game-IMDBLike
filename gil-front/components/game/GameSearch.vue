@@ -29,6 +29,11 @@ const searchGames = async () => {
     loading.value = false;
   }
 };
+
+const addGameToShop = async () => {
+
+}
+
 </script>
 
 <template>
@@ -59,7 +64,9 @@ const searchGames = async () => {
               {{ platform.name || platform.platform.name }}
             </li>
           </ul> <br>
+          <li> <button @click="addGameToShop">Ajouter le jeu à un shop</button></li>
         </li> <br>
+      
       </ul>
     </div>
   </div>

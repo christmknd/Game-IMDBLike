@@ -12,13 +12,29 @@ import {
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiOperation, ApiParam,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
+import { Game } from './entities/game.entity';
 
+@ApiTags('game')
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
-  @ApiTags('Game')
+  @ApiOperation({ summary: 'Create a new game' })
+  @ApiBody({ type: CreateGameDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Book created successfully',
+    type: Game,
+  })
+  @ApiBadRequestResponse({ description: 'Game cannot be registrated' })
   @Post()
   create(@Body() createGameDto: CreateGameDto) {
     try {
@@ -28,7 +44,9 @@ export class GameController {
     }
   }
 
-  @Get()
+  @ApiOperation({ summary: 'Get all books' })
+  @ApiNotFoundResponse({ description: 'No games were found' })
+  @Get('/all')
   findAll() {
     try {
       return this.gameService.findAllGames();
@@ -37,6 +55,14 @@ export class GameController {
     }
   }
 
+  @ApiOperation({ summary: 'Get game by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({
+    status: 200,
+    description: 'Return game by ID',
+    type: Game,
+  })
+  @ApiNotFoundResponse({ description: 'Game not found' })
   @Get(':id')
   findGameById(@Param('id') id: number) {
     try {
@@ -45,6 +71,17 @@ export class GameController {
       throw new NotFoundException('Game not found');
     }
   }
+
+
+  @ApiOperation({ summary: 'Update game by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiBody({ type: UpdateGameDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Game updated successfully',
+    type: Game,
+  })
+  @ApiNotFoundResponse({ description: 'Game not found : Game cannot be updated' })
 
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateGameDto: UpdateGameDto) {

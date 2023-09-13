@@ -25,7 +25,7 @@ export class GameService {
   async findGameById(id: number): Promise<Game> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const game = await this.gameRepository.findOne(id);
+    const game = await this.gameRepository.findOneBy({ id: id});
     if (!game) {
       throw new NotFoundException(`Review with id ${id} not found`);
     }
@@ -33,13 +33,13 @@ export class GameService {
   }
 
   async updateGame(id: number, updateGameDto: UpdateGameDto): Promise<Game> {
-    const game = await this.findGameById(id);
+    const game = await this.gameRepository.findOneBy({ id: id });
     Object.assign(game, updateGameDto);
     return this.gameRepository.save(game);
   }
 
   async deleteGame(id: number): Promise<void> {
-    const game = await this.findGameById(id);
+    const game = await this.gameRepository.findOneBy({ id: id });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     await this.gameRepository.delete(game);

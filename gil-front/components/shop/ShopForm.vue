@@ -4,12 +4,27 @@ export default {
     return {
       shopName: ""
     };
-  }
-
+  },
   methods: {
     async createShop() {
       try {
-        await $fetch('http://localhsot:5000/shop')
+        const shopData = {name : this.shopName}
+       const response =  await $fetch('http://localhost:5000/shop' , {
+          method : 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(shopData) 
+        });
+        if (response.ok) {
+          this.$emit('shop-created');
+          console.log('Shop créé avec succès !');
+        } else {
+          console.error('Erreur lors de la création du shop.');
+        }
+      } catch(error) {
+        console.error('Une erreur s\'est produite :', error);
+
       }
     }
   }

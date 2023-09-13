@@ -6,18 +6,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(5000);
-
-  //SWAGGGER
-
-  const config = new DocumentBuilder()
-    .setTitle('GIL-Backend')
-    .setDescription('Le backend de mon application de critique de jeux vidéos')
-    .setVersion('1.0')
-    .addTag('api')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
 
   //CORS
   const corsOptions: CorsOptions = {
@@ -29,6 +17,21 @@ async function bootstrap() {
   app.enableCors(corsOptions);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
+
+
+  //SWAGGER
+
+  const config = new DocumentBuilder()
+    .setTitle('GIL-Backend')
+    .setDescription('Le backend de mon application de critique de jeux vidéos')
+    .setVersion('1.0')
+    .addTag('api')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  await app.listen(5000);
+
 
 }
 bootstrap();

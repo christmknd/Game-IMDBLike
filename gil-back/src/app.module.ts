@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './game/entities/game.entity';
 import { ShopModule } from './shop/shop.module';
 import { Shop } from './shop/entities/shop.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { Shop } from './shop/entities/shop.entity';
     }),
     GameModule,
     ShopModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

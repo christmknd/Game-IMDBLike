@@ -54,7 +54,7 @@ loadShops();
 //AJOUTER UN JEU A LA BASE DE DONNEES 
 const addGameToDatabase = async (gameId) => {
   try {
-    const response = await $fetch(`http://localhost:5000/game`, {
+    await $fetch(`http://localhost:5000/game`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const addGameToShop = async (gameId) => {
     return;
   }
   try {
-    const response = await $fetch(`http://localhost:5000/shop/${selectedShop.value}/add-game/${gameId}`, {
+    await $fetch(`http://localhost:5000/shop/${selectedShop.value}/add-game/${gameId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const addGameToShop = async (gameId) => {
             <select v-model="selectedShop">
               <option v-for="shop in shops" :key="shop.id" :value="shop.id">{{ shop.name }}</option>
             </select>
-            <button @click="addGameToShop(game.id)">Ajouter le jeu à un shop</button>
+            <button @click="addGameToDatabase(game.id)">Ajouter le jeu à un shop</button>
           </li>
         </li> <br>
       

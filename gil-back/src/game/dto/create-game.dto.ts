@@ -8,7 +8,7 @@ export class CreateGameDto {
 
   @ApiProperty({ description: 'Released Date of the game' })
   @IsNotEmpty()
-  releasedDate: string;
+  releaseDate: string;
 
   @ApiProperty({ description: 'Genre(s) of the game' })
   genres: string;

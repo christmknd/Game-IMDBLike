@@ -7,7 +7,7 @@ definePageMeta({
 
 <template>
   <div>
-    Page: foo
+    <GameSearch />
   </div>
 </template>
 

@@ -4,6 +4,8 @@ import { UpdateGameDto } from './dto/update-game.dto';
 import { Game } from './entities/game.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateReviewDto } from "../review/dto/create-review.dto";
+import { Review } from "../review/entities/review.entity";
 
 @Injectable()
 export class GameService {
@@ -11,6 +13,8 @@ export class GameService {
   constructor(
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
+    @InjectRepository(Review)
+    private reviewRepository: Repository<Review>,
   ) {}
 
   async createGame(createGameDto: CreateGameDto): Promise<Game> {
@@ -44,4 +48,25 @@ export class GameService {
     // @ts-ignore
     await this.gameRepository.delete(game);
   }
+
+  async addReviewToGame(
+    gameId: number,
+    createReviewDto: CreateReviewDto,
+  ): Promise<Review> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const game = await this.gameRepository.findOneBy(gameId);
+    if (!game) {
+      throw new NotFoundException(`Game with ID ${gameId} not found`);
+    }
+
+    const review = new Review();
+    review.content = createReviewDto.content;
+    review.rating = createReviewDto.rating;
+    review.games = game; // Associez la review au jeu
+
+    return this.reviewRepository.save(review);
+  }
+
+
 }

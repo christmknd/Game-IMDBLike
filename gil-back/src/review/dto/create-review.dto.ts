@@ -11,5 +11,5 @@ export class CreateReviewDto {
     description: 'Rating for the book',
   })
   @IsNotEmpty()
-  rating: string;
+  rating: number;
 }

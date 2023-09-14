@@ -96,11 +96,12 @@ export class ReviewController {
   @ApiResponse({ status: 200, description: 'Review deleted successfully' })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  delete(@Param('id') id: string) {
     try {
       return this.reviewService.deleteReview(+id);
     } catch {
       throw new NotFoundException('Review not found : cannot be deleted')
     }
   }
+
 }

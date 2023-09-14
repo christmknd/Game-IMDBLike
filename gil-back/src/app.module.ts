@@ -18,10 +18,10 @@ import { Bookmark } from './bookmark/entities/bookmark.entity';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 3306,
+      port: 8889, //3306 || 8889
       username: 'root',
-      password: 'mtae123',
-      database: 'gameapp',
+      password: 'root', //mtae123
+      database: 'gameapp', 
       entities: [Game, Shop, User, Review, Bookmark],
       logging: true,
       synchronize: true,

@@ -1,5 +1,7 @@
-import { Column, Entity, /*ManyToOne*/ PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, /*ManyToOne*/ PrimaryGeneratedColumn } from "typeorm";
 import { IsInt, IsString, Max, Min } from 'class-validator';
+import { Game } from "../../game/entities/game.entity";
+import { User } from "../../users/entities/user.entity";
 //import { User } from "../../users/entities/user.entity";
 
 @Entity({ name: 'review' })
@@ -17,8 +19,10 @@ export class Review {
   @Max(5)
   rating: number;
 
-  /*
   @ManyToOne(() => User, (user) => user.reviews)
   user: User;
-  */
+
+  @ManyToOne(() => Game, (game) => game.reviews)
+  game: Game;
+
 }

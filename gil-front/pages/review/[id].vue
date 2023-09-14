@@ -2,8 +2,7 @@
 
 <template>
   <div>
-    <h1>Home</h1>
-  <GameForm/>
+    Page: foo
   </div>
 </template>
 

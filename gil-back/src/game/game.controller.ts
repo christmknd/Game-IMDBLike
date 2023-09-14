@@ -21,6 +21,7 @@ import {
   ApiTags
 } from '@nestjs/swagger';
 import { Game } from './entities/game.entity';
+import { CreateReviewDto } from '../review/dto/create-review.dto';
 
 @ApiTags('game')
 @Controller('game')
@@ -44,9 +45,9 @@ export class GameController {
     }
   }
 
-  @ApiOperation({ summary: 'Get all books' })
+  @ApiOperation({ summary: 'Get all games' })
   @ApiNotFoundResponse({ description: 'No games were found' })
-  @Get('/all')
+  @Get()
   findAll() {
     try {
       return this.gameService.findAllGames();
@@ -93,11 +94,20 @@ export class GameController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
+  delete(@Param('id') id: number) {
     try {
       return this.gameService.deleteGame(+id);
     } catch {
       throw new NotFoundException('Game not found : Game cannot be deleted')
+    }
+  }
+
+  @Post(':id/reviews')
+  addReviewToGame(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
+    try {
+      return this.gameService.addReviewToGame(gameId, createReviewDto);
+    } catch {
+      throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
   }
 }

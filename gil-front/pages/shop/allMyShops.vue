@@ -9,7 +9,7 @@ export default {
   methods: {
     async getAllShops() {
       try {
-        const response = await $fetch('http://localhost:5000/shop', {
+        const response = await $fetch('http://localhost:5000/shop/', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

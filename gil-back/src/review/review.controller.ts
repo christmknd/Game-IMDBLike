@@ -1,34 +1,106 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Review } from './entities/review.entity';
 
+@ApiTags('review')
 @Controller('review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
+  @ApiOperation({ summary: 'Create a new review' })
+  @ApiBody({ type: CreateReviewDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Review created successfully',
+    type: Review,
+  })
+  @ApiBadRequestResponse({ description: 'Review cannot be registrated' })
   @Post()
   create(@Body() createReviewDto: CreateReviewDto) {
-    return this.reviewService.create(createReviewDto);
+    try {
+      return this.reviewService.createReview(createReviewDto);
+    } catch {
+      throw new BadRequestException('Review cannot be registrated')
+    }
   }
 
+  @ApiOperation({ summary: 'Get all reviews' })
+  @ApiNotFoundResponse({ description: 'No reviews found' })
   @Get()
   findAll() {
-    return this.reviewService.findAll();
+    try {
+      return this.reviewService.findAllReviews();
+    } catch {
+      throw new NotFoundException('No reviews found');
+    }
   }
 
+  @ApiOperation({ summary: 'Get book by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({
+    status: 200,
+    description: 'Return book by ID',
+    type: Review,
+  })
+  @ApiNotFoundResponse({ description: 'Book not found' })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reviewService.findOne(+id);
+  findReviewById(@Param('id') id: string) {
+    try {
+      return this.reviewService.findReviewById(+id);
+    } catch {
+      throw new NotFoundException('Book not found');
+    }
   }
 
+  @ApiOperation({ summary: 'Update review by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiBody({ type: UpdateReviewDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Review updated successfully',
+    type: Review,
+  })
+  @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
-    return this.reviewService.update(+id, updateReviewDto);
+    try {
+      return this.reviewService.updateReview(+id, updateReviewDto);
+    } catch {
+      throw new NotFoundException('Review not found : cannot be updated');
+    }
   }
 
+  @ApiOperation({ summary: 'Delete review by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Review deleted successfully' })
+  @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.reviewService.remove(+id);
+    try {
+      return this.reviewService.deleteReview(+id);
+    } catch {
+      throw new NotFoundException('Review not found : cannot be deleted')
+    }
   }
 }

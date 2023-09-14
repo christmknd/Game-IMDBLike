@@ -9,6 +9,7 @@ import { Shop } from './shop/entities/shop.entity';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { ReviewModule } from './review/review.module';
+import { Review } from './review/entities/review.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { ReviewModule } from './review/review.module';
       username: 'root',
       password: 'mtae123',
       database: 'gameapp',
-      entities: [Game, Shop, User],
+      entities: [Game, Shop, User, Review],
       logging: true,
       synchronize: true,
       migrations: ['dist/migrations/*js'],

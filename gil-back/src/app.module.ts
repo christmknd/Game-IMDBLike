@@ -10,6 +10,8 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { ReviewModule } from './review/review.module';
 import { Review } from './review/entities/review.entity';
+import { BookmarkModule } from './bookmark/bookmark.module';
+import { Bookmark } from './bookmark/entities/bookmark.entity';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { Review } from './review/entities/review.entity';
       username: 'root',
       password: 'mtae123',
       database: 'gameapp',
-      entities: [Game, Shop, User, Review],
+      entities: [Game, Shop, User, Review, Bookmark],
       logging: true,
       synchronize: true,
       migrations: ['dist/migrations/*js'],
@@ -29,6 +31,7 @@ import { Review } from './review/entities/review.entity';
     ShopModule,
     UsersModule,
     ReviewModule,
+    BookmarkModule,
   ],
   controllers: [AppController],
   providers: [AppService],

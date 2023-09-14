@@ -22,10 +22,10 @@ export class Game {
   @Column()
   releaseDate: string;
 
-  @Column('json')
+  @Column()
   genres: string;
 
-  @Column('json')
+  @Column()
   platforms: string;
 
   //Les jeux sont ajoutés par les utilisateurs.

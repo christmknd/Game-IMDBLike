@@ -44,9 +44,9 @@ export class GameController {
     }
   }
 
-  @ApiOperation({ summary: 'Get all books' })
+  @ApiOperation({ summary: 'Get all games' })
   @ApiNotFoundResponse({ description: 'No games were found' })
-  @Get('/all')
+  @Get()
   findAll() {
     try {
       return this.gameService.findAllGames();

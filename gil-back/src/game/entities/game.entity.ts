@@ -33,9 +33,9 @@ export class Game {
   user: User;
 
   //Un jeu peut avoir plusieurs reviews (de différents utilisateurs).
-  @OneToMany(() => Review, (review) => review.games)
+  @OneToMany(() => Review, (review) => review.game)
   reviews: Review[];
-
+  
   //Un jeu peut être bookmarké par plusieurs utilisateurs (être dans leurs favoris).
   @OneToMany(() => Bookmark, (bookmark) => bookmark.games)
   bookmarks: Bookmark[];

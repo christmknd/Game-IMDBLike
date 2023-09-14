@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateReviewDto } from "../review/dto/create-review.dto";
 import { Review } from "../review/entities/review.entity";
+import { identity } from 'rxjs';
 
 @Injectable()
 export class GameService {
@@ -50,20 +51,20 @@ export class GameService {
   }
 
   async addReviewToGame(
-    gameId: number,
+    id: number,
     createReviewDto: CreateReviewDto,
   ): Promise<Review> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const game = await this.gameRepository.findOneBy(gameId);
+    const game = await this.gameRepository.findOneBy({id : id});
     if (!game) {
-      throw new NotFoundException(`Game with ID ${gameId} not found`);
+      throw new NotFoundException(`Game with ID ${id} not found`);
     }
 
     const review = new Review();
     review.content = createReviewDto.content;
     review.rating = createReviewDto.rating;
-    review.games = game; // Associez la review au jeu
+    review.game = game; // Associez la review au jeu
 
     return this.reviewRepository.save(review);
   }

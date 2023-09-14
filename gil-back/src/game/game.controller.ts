@@ -102,10 +102,10 @@ export class GameController {
     }
   }
 
-  @Post('games/:id/reviews')
-  addReviewToGame(@Param('id') gameId: number, @Body() reviewData: CreateReviewDto) {
+  @Post(':id/reviews')
+  addReviewToGame(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
     try {
-      return this.gameService.addReviewToGame(gameId, reviewData);
+      return this.gameService.addReviewToGame(gameId, createReviewDto);
     } catch {
       throw new NotFoundException(`Game with ID ${gameId} not found`);
     }

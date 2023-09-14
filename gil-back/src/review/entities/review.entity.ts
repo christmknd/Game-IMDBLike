@@ -23,6 +23,6 @@ export class Review {
   user: User;
 
   @ManyToOne(() => Game, (game) => game.reviews)
-  games: Game;
+  game: Game;
 
 }

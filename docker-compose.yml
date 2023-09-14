@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: GIL-backend
+    image: GIL-api
+    build:
+      context: gil-back/
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT_BACKEND}:5000
+    volumes:
+      - ./gil-back:/app
+    command: ["npm", "start"]
+
+  frontend:
+    container_name: GIL-frontend
+    image: GIL-ui
+    build:
+      context: gil-front/
+      dockerfile: Dockerfil
+    ports:
+      - ${PORT_FRONTEND}:3000
+    volumes:
+      - ./gil-back:/app
+    command: ["npm", "run", "dev"]

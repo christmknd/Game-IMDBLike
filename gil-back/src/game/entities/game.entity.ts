@@ -1,6 +1,7 @@
 // game.entity.ts
 
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Bookmark } from '../../bookmark/entities/bookmark.entity';
 
 @Entity({ name: 'game' })
 export class Game {
@@ -18,4 +19,7 @@ export class Game {
 
   @Column('json')
   platforms: string;
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.game)
+  bookmarks: Bookmark[];
 }

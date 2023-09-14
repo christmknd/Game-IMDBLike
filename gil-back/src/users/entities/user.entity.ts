@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Bookmark } from "../../bookmark/entities/bookmark.entity";
 
 @Entity({ name: 'user' })
 export class User {
@@ -24,4 +25,7 @@ export class User {
   // @ts-ignore
   @Column({ type: 'varchar', nullable: false })
   password: string;
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.user)
+  bookmarks: Bookmark[];
 }

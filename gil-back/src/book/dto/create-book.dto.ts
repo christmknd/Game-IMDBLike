@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsEnum, IsNotEmpty } from "class-validator";
 import { Genre } from '../enums/genre-enum';
 
 export class CreateBookDto {
@@ -17,6 +17,7 @@ export class CreateBookDto {
 
   @ApiProperty({ type: 'enum', enum: Genre })
   @IsNotEmpty()
+  @IsEnum(Genre)
   genre: Genre;
 
   @ApiProperty({

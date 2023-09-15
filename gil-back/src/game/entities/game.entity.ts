@@ -7,7 +7,6 @@ import {
   OneToMany,
   ManyToOne,
 } from 'typeorm';
-import { Bookmark } from '../../bookmark/entities/bookmark.entity';
 import { Review } from '../../review/entities/review.entity';
 import { User } from '../../users/entities/user.entity';
 
@@ -28,15 +27,9 @@ export class Game {
   @Column()
   platforms: string;
 
-  //Les jeux sont ajoutés par les utilisateurs.
-  @ManyToOne(() => User, (user) => user.games)
-  user: User;
 
   //Un jeu peut avoir plusieurs reviews (de différents utilisateurs).
   @OneToMany(() => Review, (review) => review.game)
   reviews: Review[];
-  
-  //Un jeu peut être bookmarké par plusieurs utilisateurs (être dans leurs favoris).
-  @OneToMany(() => Bookmark, (bookmark) => bookmark.games)
-  bookmarks: Bookmark[];
+
 }

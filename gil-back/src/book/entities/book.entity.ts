@@ -1,11 +1,11 @@
 import {
   Column,
-  Entity,
-  /* ManyToOne, OneToMany,*/
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+  Entity, OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { IsString } from 'class-validator';
 import { Genre } from '../enums/genre-enum';
+import { Review } from '../../review/entities/review.entity';
 
 @Entity({ name: 'book' })
 export class Book {
@@ -29,9 +29,9 @@ export class Book {
   @IsString()
   description: string;
 
-  /*
+  
   @OneToMany(() => Review, (review) => review.book)
   reviews: Review[];
 
-   */
+   
 }

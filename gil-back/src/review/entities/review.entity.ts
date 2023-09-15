@@ -2,6 +2,8 @@ import { Column, Entity, ManyToOne, /*ManyToOne*/ PrimaryGeneratedColumn } from 
 import { IsInt, IsString, Max, Min } from 'class-validator';
 import { Game } from "../../game/entities/game.entity";
 import { User } from "../../users/entities/user.entity";
+import { Book } from "../../book/entities/book.entity";
+import { Movie } from "../../movie/entities/movie.entity";
 //import { User } from "../../users/entities/user.entity";
 
 @Entity({ name: 'review' })
@@ -19,8 +21,14 @@ export class Review {
   @Max(5)
   rating: number;
 
-  @ManyToOne(() => User, (user) => user.reviews)
+  @ManyToOne(() => User, (user) => user.review)
   user: User;
+
+  @ManyToOne(() => Movie, (movie) => movie.reviews)
+  movie: Movie;
+
+  @ManyToOne(() => Book, (book) => book.reviews)
+  book: Book;
 
   @ManyToOne(() => Game, (game) => game.reviews)
   game: Game;

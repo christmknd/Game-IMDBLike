@@ -22,6 +22,7 @@ import {
   ApiTags
 } from '@nestjs/swagger';
 import { Book } from './entities/book.entity';
+import { CreateReviewDto } from "../review/dto/create-review.dto";
 
 @ApiTags('book')
 @Controller('book')
@@ -100,6 +101,15 @@ export class BookController {
       return this.bookService.deleteBook(+id);
     } catch {
       throw new NotFoundException('Book not found : cannot be deleted')
+    }
+  }
+
+  @Post(':id/reviews')
+  addReviewToBook(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
+    try {
+      return this.bookService.addReviewToBook(gameId, createReviewDto);
+    } catch {
+      throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
   }
 }

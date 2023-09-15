@@ -4,14 +4,10 @@ import { AppService } from './app.service';
 import { GameModule } from './game/game.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './game/entities/game.entity';
-import { ShopModule } from './shop/shop.module';
-import { Shop } from './shop/entities/shop.entity';
 import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { ReviewModule } from './review/review.module';
 import { Review } from './review/entities/review.entity';
-import { BookmarkModule } from './bookmark/bookmark.module';
-import { Bookmark } from './bookmark/entities/bookmark.entity';
 import { AuthModule } from './auth/auth.module';
 import { BookModule } from './book/book.module';
 import { MovieModule } from './movie/movie.module';
@@ -27,16 +23,14 @@ import { Movie } from './movie/entities/movie.entity';
       username: 'root',
       password: 'mtae123', //mtae123 || root
       database: 'gameapp',
-      entities: [Game, Shop, User, Review, Bookmark, Movie, Book],
+      entities: [Game, User, Review, Movie, Book],
       logging: true,
       synchronize: true,
       migrations: ['dist/migrations/*js'],
     }),
     GameModule,
-    ShopModule,
     UsersModule,
     ReviewModule,
-    BookmarkModule,
     AuthModule,
     BookModule,
     MovieModule,

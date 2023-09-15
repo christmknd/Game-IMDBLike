@@ -12,6 +12,8 @@ import { ReviewModule } from './review/review.module';
 import { Review } from './review/entities/review.entity';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { Bookmark } from './bookmark/entities/bookmark.entity';
+import { AuthModule } from './auth/auth.module';
+import { BookModule } from './book/book.module';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { Bookmark } from './bookmark/entities/bookmark.entity';
       port: 8889, //3306 || 8889
       username: 'root',
       password: 'root', //mtae123
-      database: 'gameapp', 
+      database: 'gameapp',
       entities: [Game, Shop, User, Review, Bookmark],
       logging: true,
       synchronize: true,
@@ -32,6 +34,8 @@ import { Bookmark } from './bookmark/entities/bookmark.entity';
     UsersModule,
     ReviewModule,
     BookmarkModule,
+    AuthModule,
+    BookModule,
   ],
   controllers: [AppController],
   providers: [AppService],

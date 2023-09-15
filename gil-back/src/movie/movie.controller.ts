@@ -21,6 +21,7 @@ import {
   ApiResponse, ApiTags
 } from '@nestjs/swagger';
 import { Movie } from './entities/movie.entity';
+import { CreateReviewDto } from "../review/dto/create-review.dto";
 
 @ApiTags('movie')
 @Controller('movie')
@@ -90,12 +91,25 @@ export class MovieController {
   }
 
 
+  @ApiOperation({ summary: 'Delete movie by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Movie deleted successfully' })
+  @ApiNotFoundResponse({ description: 'Movie not found : cannot be deleted' })
   @Delete(':id')
   remove(@Param('id') id: string) {
     try {
       return this.movieService.deleteMovie(+id);
     } catch {
 
+    }
+  }
+
+  @Post(':id/reviews')
+  addReviewToGame(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
+    try {
+      return this.movieService.addReviewToMovie(gameId, createReviewDto);
+    } catch {
+      throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
   }
 }

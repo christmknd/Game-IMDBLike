@@ -56,7 +56,7 @@ export class GameService {
   ): Promise<Review> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const game = await this.gameRepository.findOneBy({id : id});
+    const game = await this.gameRepository.findOneBy({ id: id  });
     if (!game) {
       throw new NotFoundException(`Game with ID ${id} not found`);
     }

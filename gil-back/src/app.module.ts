@@ -20,9 +20,9 @@ import { BookModule } from './book/book.module';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 8889, //3306 || 8889
+      port: 3306, //3306 || 8889
       username: 'root',
-      password: 'root', //mtae123
+      password: 'mtae123', //mtae123 || root
       database: 'gameapp',
       entities: [Game, Shop, User, Review, Bookmark],
       logging: true,

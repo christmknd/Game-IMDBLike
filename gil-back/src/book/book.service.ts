@@ -1,26 +1,50 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { Book } from './entities/book.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class BookService {
-  create(createBookDto: CreateBookDto) {
-    return 'This action adds a new book';
+  constructor(
+    @InjectRepository(Book)
+    private bookRepository: Repository<Book>,
+  ) {}
+
+  async createBook(createBookDto: CreateBookDto): Promise<Book> {
+    const book = this.bookRepository.create(createBookDto);
+    return this.bookRepository.save(book);
   }
 
-  findAll() {
-    return `This action returns all book`;
+  async findAllBooks(): Promise<Book[]> {
+    return this.bookRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  async findBookById(id: number): Promise<Book> {
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const book = await this.bookRepository.findOneBy({ id: id });
+      if (!book) {
+        throw new NotFoundException(`Book with id ${id} not found`);
+      }
+      return book;
+    } catch (error) {
+      throw new NotFoundException(`Book with id ${id} not found`);
+    }
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${id} book`;
+  async updateBook(id: number, updateBookDto: UpdateBookDto): Promise<Book> {
+    const book = await this.bookRepository.findOneBy({ id: id });
+    Object.assign(book, updateBookDto);
+    return this.bookRepository.save(book);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  async deleteBook(id: number): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const book = await this.bookRepository.findOne(id);
+    await this.bookRepository.delete(book);
   }
 }

@@ -14,6 +14,7 @@ import { BookmarkModule } from './bookmark/bookmark.module';
 import { Bookmark } from './bookmark/entities/bookmark.entity';
 import { AuthModule } from './auth/auth.module';
 import { BookModule } from './book/book.module';
+import { MovieModule } from './movie/movie.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { BookModule } from './book/book.module';
     BookmarkModule,
     AuthModule,
     BookModule,
+    MovieModule,
   ],
   controllers: [AppController],
   providers: [AppService],

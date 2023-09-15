@@ -1,6 +1,8 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Genre } from '../enums/genre-enum';
 
+
+@Entity({name : 'movie'})
 export class Movie {
   @PrimaryGeneratedColumn()
   id: number;

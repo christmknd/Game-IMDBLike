@@ -18,10 +18,11 @@ import {
   ApiNotFoundResponse,
   ApiOperation,
   ApiParam,
-  ApiResponse
+  ApiResponse, ApiTags
 } from '@nestjs/swagger';
 import { Movie } from './entities/movie.entity';
 
+@ApiTags('movie')
 @Controller('movie')
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}

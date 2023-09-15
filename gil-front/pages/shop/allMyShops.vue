@@ -1,4 +1,7 @@
 <script>
+definePageMeta({
+  layout: "user",
+});
 export default {
 
   data() {

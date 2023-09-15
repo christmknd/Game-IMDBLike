@@ -3,26 +3,13 @@ import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
 
-  @ApiProperty({
-    description: 'User lastname',
-  })
-  @IsString()
-  @MinLength(6)
-  lastname: string;
 
   @ApiProperty({
-    description: 'User firstname',
+    description: 'Username',
   })
   @IsString()
   @MinLength(6)
-  firstname: string;
-
-  @ApiProperty({
-    description: 'User pseudo',
-  })
-  @IsString()
-  @MinLength(6)
-  pseudo: string;
+  username: string;
 
   @ApiProperty({
     description: 'user password',

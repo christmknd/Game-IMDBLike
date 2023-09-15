@@ -1,4 +1,7 @@
 <script>
+definePageMeta({
+  layout: "user",
+});
 import ShopCard from '~/components/shop/ShopCard.vue';
 export default {
   components: {

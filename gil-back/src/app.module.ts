@@ -12,17 +12,22 @@ import { ReviewModule } from './review/review.module';
 import { Review } from './review/entities/review.entity';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { Bookmark } from './bookmark/entities/bookmark.entity';
+import { AuthModule } from './auth/auth.module';
+import { BookModule } from './book/book.module';
+import { MovieModule } from './movie/movie.module';
+import { Book } from './book/entities/book.entity';
+import { Movie } from './movie/entities/movie.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 8889, //3306 || 8889
+      port: 3306, //3306 || 8889
       username: 'root',
-      password: 'root', //mtae123
-      database: 'gameapp', 
-      entities: [Game, Shop, User, Review, Bookmark],
+      password: 'mtae123', //mtae123 || root
+      database: 'gameapp',
+      entities: [Game, Shop, User, Review, Bookmark, Movie, Book],
       logging: true,
       synchronize: true,
       migrations: ['dist/migrations/*js'],
@@ -32,6 +37,9 @@ import { Bookmark } from './bookmark/entities/bookmark.entity';
     UsersModule,
     ReviewModule,
     BookmarkModule,
+    AuthModule,
+    BookModule,
+    MovieModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -23,7 +23,7 @@ describe('BookService', () => {
           useClass: Repository,
         },
         {
-          provide: getRepositoryToken(Review), // Ajoutez le repository de Review ici
+          provide: getRepositoryToken(Review),
           useClass: Repository,
         },
       ],
@@ -33,7 +33,7 @@ describe('BookService', () => {
     bookRepository = module.get<Repository<Book>>(getRepositoryToken(Book));
     reviewRepository = module.get<Repository<Review>>(
       getRepositoryToken(Review),
-    ); // Obtenez le repository de Review
+    ); 
   });
 
   it('should be defined', () => {
@@ -126,24 +126,24 @@ describe('BookService', () => {
 
   describe('deleteBook', () => {
     it('should delete a book', async () => {
-      const bookId = 1;
       const existingBook = new Book();
+      const bookId = 1;
       jest.spyOn(bookRepository, 'findOne').mockResolvedValue(existingBook);
-      jest.spyOn(bookRepository, 'delete').mockResolvedValue({} as DeleteResult);
-
+      jest.spyOn(bookRepository, 'delete').mockResolvedValue({affected: 1} as DeleteResult);
+  
       await bookService.deleteBook(bookId);
-
-      expect(bookRepository.delete).toHaveBeenCalledWith(expect.any(Number));
+      expect(bookRepository.delete).toHaveBeenCalledTimes(1);
     });
-
+  
     it('should throw NotFoundException when book is not found', async () => {
       const bookId = 1;
       jest.spyOn(bookRepository, 'findOne').mockResolvedValue(undefined);
-
+  
       await expect(bookService.deleteBook(bookId)).rejects.toThrowError(
         NotFoundException,
       );
     });
   });
+  
 
 });

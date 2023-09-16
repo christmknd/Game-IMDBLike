@@ -54,6 +54,10 @@ export class BookService {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const book = await this.bookRepository.findOne(id);
+    if (!book) {
+      throw new NotFoundException(`Book with ID ${id} not found`);
+    }
+  
     await this.bookRepository.delete(book);
   }
 

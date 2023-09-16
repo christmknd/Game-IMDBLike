@@ -4,8 +4,8 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateReviewDto } from "../review/dto/create-review.dto";
-import { Review } from "../review/entities/review.entity";
+import { CreateReviewDto } from '../review/dto/create-review.dto';
+import { Review } from '../review/entities/review.entity';
 
 @Injectable()
 export class BookService {
@@ -40,7 +40,12 @@ export class BookService {
   }
 
   async updateBook(id: number, updateBookDto: UpdateBookDto): Promise<Book> {
+
     const book = await this.bookRepository.findOneBy({ id: id });
+    if (!book) {
+      throw new NotFoundException(`Book with ID ${id} not found`);
+    }
+
     Object.assign(book, updateBookDto);
     return this.bookRepository.save(book);
   }
@@ -49,6 +54,10 @@ export class BookService {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const book = await this.bookRepository.findOne(id);
+    if (!book) {
+      throw new NotFoundException(`Book with ID ${id} not found`);
+    }
+  
     await this.bookRepository.delete(book);
   }
 
@@ -58,7 +67,7 @@ export class BookService {
   ): Promise<Review> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const book = await this.bookRepository.findOneBy({ id : id });
+    const book = await this.bookRepository.findOneBy({ id: id });
     if (!book) {
       throw new NotFoundException(`Game with ID ${id} not found`);
     }

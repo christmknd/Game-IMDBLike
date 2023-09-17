@@ -45,10 +45,10 @@ export default {
       <input type="text" id="releaseDate" v-model="game_releaseDate" />
 
       <label for="genres">Genre(s)</label>
-      <input type="text" id="genres" v-model="game_genres">
+      <input type="select" id="genres" v-model="game_genres">
 
       <label for="platforms">Plateformes</label>
-      <input type="text" id="platforms" v-model="game_platforms" />      
+      <input type="select" id="platforms" v-model="game_platforms" />      
       <button type="submit">Continuer </button>
     </form>
   </div>

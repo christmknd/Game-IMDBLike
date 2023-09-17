@@ -5,7 +5,7 @@
     <nav>
       <ul>
           <li><nuxt-link to="/user/search">Search</nuxt-link></li>
-          <li><nuxt-link to="/user/myshop">Ma Boutique</nuxt-link></li>
+          <li><nuxt-link to="/user/addGame">Ajouter un jeu</nuxt-link></li>
           <li><nuxt-link to="#">Se Déconnecter</nuxt-link></li>
     </ul>
     </nav>

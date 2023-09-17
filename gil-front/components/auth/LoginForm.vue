@@ -2,17 +2,15 @@
 export default {
   data (){
     return {
-      form : {
-        username : '',
+        email : '',
         password : ''
-      }
     }
   },
   methods: {
     async login () {
       try {
         const formData = {
-          username : this.username,
+          email : this.email,
           password: this.password
         }
 
@@ -37,19 +35,19 @@ export default {
 <template>
   <div>
     <form>
-        <label htmlFor='pseudo'>Username</label>
+        <label htmlFor='email'>Email</label>
         <input 
           type="text" 
-          id="username" 
-          placeholder='username'
-          v-model="username" 
+          id="email" 
+          placeholder='email'
+          v-model="email" 
           />
         <label htmlFor='password'>Mot de passe</label>
           <input 
           type="password" 
           id="password" 
           placeholder="password"
-          v-model="form.password"
+          v-model="password"
           />
           <button>Se connecter</button>
       </form>

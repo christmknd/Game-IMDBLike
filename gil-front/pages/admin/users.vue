@@ -6,7 +6,7 @@ definePageMeta({
 
 <template>
   <div>
-    Page: foo
+    <AdminAllUsers/>
   </div>
 </template>
 

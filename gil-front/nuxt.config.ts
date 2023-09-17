@@ -15,11 +15,6 @@ export default defineNuxtConfig({
   css: [
     '~/assets/style.css', // Chemin vers votre fichier CSS
   ],
-  components: [
-    {
-      path: '~/components',
-      extensions: ['.vue'],
-    }
-  ],
+  components: ['~/components'],
  
 })

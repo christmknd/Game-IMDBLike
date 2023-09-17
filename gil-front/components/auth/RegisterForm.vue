@@ -3,7 +3,8 @@ export default {
   data () {
     return {
         username : '',
-        password : ''
+        email: '',
+        password : '',
       }
     }, 
   methods: {
@@ -11,7 +12,8 @@ export default {
       try {
         const formData = {
           username : this.username,
-          password: this.password
+          email : this.email,
+          password: this.password,
         }
 
         await $fetch('http:localhost:5000/auth/register', {
@@ -40,14 +42,21 @@ export default {
             type="text" 
             id="username" 
             placeholder='username' 
-            v-model="form.username"/>
+            v-model="username"/>
+        <label htmlFor='email'>Email</label>
+            <input 
+          type="text" 
+          id="email" 
+          placeholder='email'
+          v-model="email" 
+          />
         <label htmlFor='password'>Mot de passe</label>
             <input 
             type="password" 
             id="password" 
             placeholder="password"
-            v-model="form.password"/>
-        <button>Se connecter</button>
+            v-model="password"/>
+        <button>S'inscrire</button>
         </form>
   </div>
 </template>

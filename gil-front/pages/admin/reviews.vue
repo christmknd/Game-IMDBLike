@@ -1,13 +1,12 @@
-<script setup>
+<script>
 definePageMeta({
   layout: "admin",
 });
 </script>
 
+
 <template>
-  <div>
-    Page: foo
-  </div>
+  <AdminAllReviews/>
 </template>
 
 <style scoped></style>

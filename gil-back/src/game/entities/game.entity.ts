@@ -8,6 +8,7 @@ import { Review } from '../../review/entities/review.entity';
 import { Genre } from '../enums/genre-enum';
 import { Platform } from '../enums/platform-enum';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEnum, IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
 
 @Entity({ name: 'game' })
 export class Game {
@@ -19,6 +20,9 @@ export class Game {
     description: 'Name of the Game',
     default : 'Name'
   })
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(3)
   name: string;
 
   @Column({type : 'year', default : 2000})
@@ -26,12 +30,14 @@ export class Game {
     description: 'Release Year of the Game',
     default : 2000
   })
+  @IsNumber()
   releaseYear: number;
 
   @Column({type: 'enum', enum: Genre })
   @ApiProperty({
     description: 'Genre of the Game',
   })
+  @IsEnum(Genre)
   genres: Genre;
 
 
@@ -39,6 +45,7 @@ export class Game {
   @ApiProperty({
     description: 'Game Principal Platform',
   })
+  @IsEnum(Platform)
   platform: Platform;
 
 

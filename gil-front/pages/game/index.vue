@@ -1,9 +1,4 @@
-<script setup>
-definePageMeta({
-  layout: "admin",
-});
-</script>
-
+<script lang="ts" setup></script>
 
 <template>
   <div>

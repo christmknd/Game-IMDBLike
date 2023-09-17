@@ -23,8 +23,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AuthGuard } from '../auth/auth.guards';
-import { Roles } from '../roles.decorator';
 import { Role } from './enums/role.enum';
 
 @ApiTags('users')
@@ -91,8 +89,6 @@ export class UsersController {
     }
   }
 
-  @UseGuards(AuthGuard)
-  @Roles(Role.Admin)
   @ApiOperation({ summary: 'Delete user by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'User deleted successfully' })

@@ -23,12 +23,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Review } from './entities/review.entity';
-import { AuthGuard } from '../auth/auth.guards';
-import { Roles } from '../roles.decorator';
-import { Role } from '../users/enums/role.enum';
 
 @ApiTags('review')
-@UseGuards(AuthGuard) 
 @Controller('review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
@@ -40,7 +36,6 @@ export class ReviewController {
     description: 'Review created successfully',
     type: Review,
   })
-  @Roles(Role.User)
   @ApiBadRequestResponse({ description: 'Review cannot be registrated' })
   @Post()
   create(@Body() createReviewDto: CreateReviewDto) {
@@ -53,7 +48,6 @@ export class ReviewController {
 
   @ApiOperation({ summary: 'Get all reviews' })
   @ApiNotFoundResponse({ description: 'No reviews found' })
-  @Roles(Role.User, Role.Admin)
   @Get()
   findAll() {
     try {
@@ -70,7 +64,6 @@ export class ReviewController {
     description: 'Return review by ID',
     type: Review,
   })
-  @Roles(Role.User, Role.Admin)
   @ApiNotFoundResponse({ description: 'Review not found' })
   @Get(':id')
   findReviewById(@Param('id') id: string) {
@@ -90,7 +83,6 @@ export class ReviewController {
     type: Review,
   })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
-  @Roles(Role.Admin, Role.User)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     try {
@@ -104,7 +96,6 @@ export class ReviewController {
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Review deleted successfully' })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
-  @Roles(Role.Admin, Role.User)
   @Delete(':id')
   delete(@Param('id') id: string) {
     try {

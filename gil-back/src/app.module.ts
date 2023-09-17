@@ -7,9 +7,6 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { ReviewModule } from './review/review.module';
 import { Review } from './review/entities/review.entity';
-import { AuthModule } from './auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './auth/auth.guards';
 import { AppService } from './app.service';
 
 @Module({
@@ -29,15 +26,8 @@ import { AppService } from './app.service';
     GameModule,
     UsersModule,
     ReviewModule,
-    AuthModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [AppService],
 })
 export class AppModule {}

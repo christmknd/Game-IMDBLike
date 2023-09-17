@@ -33,7 +33,7 @@ export class GameController {
   @ApiBody({ type: CreateGameDto })
   @ApiResponse({
     status: 201,
-    description: 'Book created successfully',
+    description: 'Game created successfully',
     type: Game,
   })
   @ApiBadRequestResponse({ description: 'Game cannot be registrated' })

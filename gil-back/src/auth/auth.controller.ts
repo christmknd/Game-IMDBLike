@@ -2,21 +2,21 @@ import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
-//import { Roles } from './roles.decorator';
 import { AuthGuard } from './auth.guards';
+import { Role } from '../users/enums/role.enum';
+import { Roles } from './roles.decorator';
 
 @ApiTags('auth')
 @Controller('auth')
+@UseGuards(AuthGuard)
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(AuthGuard)
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
   }
 
-  @UseGuards(AuthGuard)
   @Post('login')
   async login(@Body() createUserDto: CreateUserDto) {
     return this.authService.login(

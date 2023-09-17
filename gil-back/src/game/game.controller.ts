@@ -23,6 +23,7 @@ import {
 import { Game } from './entities/game.entity';
 import { CreateReviewDto } from '../review/dto/create-review.dto';
 
+
 @ApiTags('game')
 @Controller('game')
 export class GameController {
@@ -111,3 +112,7 @@ export class GameController {
     }
   }
 }
+function UseGuards(arg0: any): (target: typeof GameController) => void | typeof GameController {
+  throw new Error('Function not implemented.');
+}
+

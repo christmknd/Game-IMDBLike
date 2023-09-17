@@ -1,31 +1,45 @@
-// game.entity.ts
-
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  ManyToOne,
 } from 'typeorm';
 import { Review } from '../../review/entities/review.entity';
-import { User } from '../../users/entities/user.entity';
+import { Genre } from '../enums/genre-enum';
+import { Platform } from '../enums/platform-enum';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'game' })
 export class Game {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
-  @Column()
+  @Column({type : 'varchar', nullable: false, default: 'Name'})
+  @ApiProperty({
+    description: 'Name of the Game',
+    default : 'Name'
+  })
   name: string;
 
-  @Column()
-  releaseDate: string;
+  @Column({type : 'year', default : 2000})
+  @ApiProperty({
+    description: 'Release Year of the Game',
+    default : 2000
+  })
+  releaseYear: number;
 
-  @Column()
-  genres: string;
+  @Column({type: 'enum', enum: Genre })
+  @ApiProperty({
+    description: 'Genre of the Game',
+  })
+  genres: Genre;
 
-  @Column()
-  platforms: string;
+
+  @Column({type: 'enum', enum: Platform })
+  @ApiProperty({
+    description: 'Game Principal Platform',
+  })
+  platform: Platform;
 
 
   //Un jeu peut avoir plusieurs reviews (de différents utilisateurs).
@@ -33,3 +47,5 @@ export class Game {
   reviews: Review[];
 
 }
+
+

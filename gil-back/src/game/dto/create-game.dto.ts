@@ -1,18 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsEnum, IsInt, IsNotEmpty } from 'class-validator';
+import { Genre } from '../enums/genre-enum';
+import { Platform } from '../enums/platform-enum';
 
 export class CreateGameDto {
   @ApiProperty({ description: 'Game Title' })
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ description: 'Released Date of the game' })
+  @ApiProperty({ description: 'Released Year of the game' })
   @IsNotEmpty()
-  releaseDate: string;
+  @IsInt()
+  releaseYear: number;
 
-  @ApiProperty({ description: 'Genre(s) of the game' })
-  genres: string;
+  @ApiProperty({ type: 'enum', enum: Genre })
+  @IsEnum(Genre)
+  genres: Genre;
 
-  @ApiProperty({ description: 'Platform(s) you can play the game on' })
-  platforms: string;
+  @ApiProperty({ type: 'enum', enum: Platform })
+  @IsEnum(Platform)
+  platforms: Platform;
 }

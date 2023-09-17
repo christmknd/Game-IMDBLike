@@ -2,7 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { Review } from '../../review/entities/review.entity';
 
@@ -22,6 +22,6 @@ export class User {
   password: string;
 
   //  un utilisateur ne peut déposer qu'une seule review sur un movie, un book ou un game.
-  @OneToOne(() => Review, (review) => review.user)
+  @OneToMany(() => Review, (review) => review.user)
   review: Review;
 }

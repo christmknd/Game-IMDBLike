@@ -1,12 +1,31 @@
 <script >
 export default {
-  data: () => {
+  data () {
     return {
-      form : {
-        lastname: '',
-        firstname : '',
-        pseudo : '',
+        username : '',
         password : ''
+      }
+    }, 
+  methods: {
+    async register () {
+      try {
+        const formData = {
+          username : this.username,
+          password: this.password
+        }
+
+        await $fetch('http:localhost:5000/auth/register', {
+          headers : {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${access_token}'
+          } ,
+          body: JSON.stringify(formData)
+          
+        })
+        this.$emit('user-registered');
+        console.log('User enregistré sur la plateforme avec succès')
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de l\'enrigistrement du user : ',error )
       }
     }
   }
@@ -15,25 +34,13 @@ export default {
 
 <template>
   <div>
-    <form>
-        <label for="lastname">Prénom</label>
-            <input 
-            type="text"
-            id="lastname"
-            placeholder="nom"
-            v-model="form.lastname">
-        <label for="firstname">Nom</label>
-            <input 
-            type="text"
-            id="firstname"
-            placeholder="prenom"
-            v-model="form.firstname">
-        <label htmlFor='pseudo'>Pseudo</label>
+    <form @submit.prevent="register">
+        <label htmlFor='username'>Username</label>
             <input 
             type="text" 
-            id="pseudo" 
-            placeholder='pseudo' 
-            v-model="form.pseudo"/>
+            id="username" 
+            placeholder='username' 
+            v-model="form.username"/>
         <label htmlFor='password'>Mot de passe</label>
             <input 
             type="password" 

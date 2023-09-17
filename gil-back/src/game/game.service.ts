@@ -6,7 +6,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateReviewDto } from "../review/dto/create-review.dto";
 import { Review } from "../review/entities/review.entity";
-import { identity } from 'rxjs';
 
 @Injectable()
 export class GameService {

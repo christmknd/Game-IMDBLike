@@ -23,6 +23,7 @@ import {
 import { Game } from './entities/game.entity';
 import { CreateReviewDto } from '../review/dto/create-review.dto';
 
+
 @ApiTags('game')
 @Controller('game')
 export class GameController {
@@ -32,7 +33,7 @@ export class GameController {
   @ApiBody({ type: CreateGameDto })
   @ApiResponse({
     status: 201,
-    description: 'Book created successfully',
+    description: 'Game created successfully',
     type: Game,
   })
   @ApiBadRequestResponse({ description: 'Game cannot be registrated' })
@@ -111,3 +112,7 @@ export class GameController {
     }
   }
 }
+function UseGuards(arg0: any): (target: typeof GameController) => void | typeof GameController {
+  throw new Error('Function not implemented.');
+}
+

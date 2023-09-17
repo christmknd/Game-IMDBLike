@@ -8,6 +8,7 @@ import {
   Delete,
   BadRequestException,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -56,20 +57,20 @@ export class ReviewController {
     }
   }
 
-  @ApiOperation({ summary: 'Get book by ID' })
+  @ApiOperation({ summary: 'Get review by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({
     status: 200,
-    description: 'Return book by ID',
+    description: 'Return review by ID',
     type: Review,
   })
-  @ApiNotFoundResponse({ description: 'Book not found' })
+  @ApiNotFoundResponse({ description: 'Review not found' })
   @Get(':id')
   findReviewById(@Param('id') id: string) {
     try {
       return this.reviewService.findReviewById(+id);
     } catch {
-      throw new NotFoundException('Book not found');
+      throw new NotFoundException('Review not found');
     }
   }
 

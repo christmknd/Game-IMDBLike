@@ -7,7 +7,8 @@ import {
   Param,
   Delete,
   BadRequestException,
-  NotFoundException
+  NotFoundException,
+  UseGuards
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -22,6 +23,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
+import { Role } from './enums/role.enum';
 
 @ApiTags('users')
 @Controller('users')

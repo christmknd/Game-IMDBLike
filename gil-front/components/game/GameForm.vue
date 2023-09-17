@@ -1,11 +1,23 @@
 <script>
+import SuccessAlert from '@/components/ui/alert/SuccessAlert.vue';
+import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue';
+
+import {Genre} from '../../gil-back/src/game/enums/genre-enum.ts'
+import {Platform} from '../../gil-back/src/game/enums/platform-enum.ts'
+
 export default {
+  components: {
+    SuccessAlert,
+    ErrorAlert,
+  },
   data() {
     return {
       game_name: "",
       game_releaseDate: "",
       game_genres: "",
       game_platforms: "",
+      success: false,
+      error: false,
     };
   },
   methods: {
@@ -24,7 +36,8 @@ export default {
           },
           body: JSON.stringify(gameData),
         });
-        this.$emit('game-created');
+        this.success = true;
+        this.error = false;
         console.log('Jeu ajouté avec succès !');
 
       } catch (error) {
@@ -45,13 +58,27 @@ export default {
       <input type="text" id="releaseDate" v-model="game_releaseDate" />
 
       <label for="genres">Genre(s)</label>
-      <input type="select" id="genres" v-model="game_genres">
+      <select id="genres" v-model="game_genres">
+        <option v-for="genre in Genre" :key="genre">{{ genre }}</option>
+      </select>
 
       <label for="platforms">Plateformes</label>
-      <input type="select" id="platforms" v-model="game_platforms" />      
+      <select id="platforms" v-model="game_platform">
+        <option v-for="platform in Platform" :key="platform">{{ platform }}</option>
+      </select>        
       <button type="submit">Continuer </button>
+
+      <SuccessAlert v-if="success">Jeu ajouté avec succès !</SuccessAlert>
+
+      <ErrorAlert v-if="error">Une erreur s'est produite lors de l'ajout du jeu.</ErrorAlert>
     </form>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.button {
+  background-color: #4caf50; /* Vert */
+  color: white;
+  padding: 10px;
+}
+</style>

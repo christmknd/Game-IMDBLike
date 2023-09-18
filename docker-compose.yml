@@ -1,0 +1,12 @@
+services:
+  nuxt:
+    build:
+      context: ./gil-front
+    image: nuxt_front
+    container_name: nuxt_front
+    command: npm run dev
+    volumes:
+    - .:/app
+    - /app/node_modules
+    ports:
+      - "3000:3000"

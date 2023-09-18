@@ -14,9 +14,9 @@ import { AppService } from './app.service';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
-      port: 8889, //3306 || 8889
+      port: 3306, //3306 || 8889
       username: 'root',
-      password: 'root', //mtae123 || root
+      password: 'mtae123', //mtae123 || root
       database: 'gameapp',
       entities: [Game, User, Review],
       logging: true,

@@ -10,6 +10,10 @@ export class Review {
 
   @Column({ type: 'varchar', nullable: false, length: 255 })
   @IsString()
+  title: string;
+
+  @Column({ type: 'varchar', nullable: false, length: 255 })
+  @IsString()
   content: string;
 
   @Column({ type: 'int', nullable: false })
@@ -17,6 +21,16 @@ export class Review {
   @Min(1)
   @Max(5)
   rating: number;
+
+  //points négatifs
+  @Column({ type: 'varchar', nullable: false, length: 255 })
+  @IsString()
+  pros: string;
+
+  //points négatifs
+  @Column({ type: 'varchar', nullable: false, length: 255 })
+  @IsString()
+  cons: string;
 
   @ManyToOne(() => User, (user) => user.review)
   user: User;

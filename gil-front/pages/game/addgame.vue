@@ -1,12 +1,15 @@
 <script  setup>
+definePageMeta({
+  layout: "user",
+});
 useHead({
-  title: 'Register'
+  title: 'Ajouter un jeu'
 })
 </script>
 
 <template>
   <div>
-    <AuthRegisterForm/>
+    <GameForm/>
   </div>
 </template>
 

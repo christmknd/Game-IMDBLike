@@ -1,7 +1,10 @@
-<script>
+<script setup>
 definePageMeta({
   layout: "admin",
 });
+useHead({
+  title: 'Liste de tous les jeux'
+})
 </script>
 
 <template>

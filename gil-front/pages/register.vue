@@ -1,4 +1,8 @@
-<script  setup></script>
+<script  setup>
+useHead({
+  title: 'Register'
+})
+</script>
 
 <template>
   <div>

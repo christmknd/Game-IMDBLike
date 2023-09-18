@@ -4,8 +4,8 @@ import { UpdateGameDto } from './dto/update-game.dto';
 import { Game } from './entities/game.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateReviewDto } from "../review/dto/create-review.dto";
-import { Review } from "../review/entities/review.entity";
+import { CreateReviewDto } from '../review/dto/create-review.dto';
+import { Review } from '../review/entities/review.entity';
 
 @Injectable()
 export class GameService {
@@ -49,22 +49,19 @@ export class GameService {
     await this.gameRepository.delete(game);
   }
 
+  //AJOUTER UNE REVIEW A UN JEU
   async addReviewToGame(
     id: number,
     createReviewDto: CreateReviewDto,
   ): Promise<Review> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const game = await this.gameRepository.findOneBy({ id: id  });
+    const game = await this.gameRepository.findOneBy({ id: id });
     if (!game) {
       throw new NotFoundException(`Game with ID ${id} not found`);
     }
 
-    const review = new Review();
-    review.content = createReviewDto.content;
-    review.rating = createReviewDto.rating;
-    review.game = game; // Associez la review au jeu
-
+    const review = this.reviewRepository.create(createReviewDto);
     return this.reviewRepository.save(review);
   }
 

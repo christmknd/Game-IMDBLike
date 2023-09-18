@@ -1,6 +1,7 @@
-<script>
-export default {
-}
+<script setup>
+useHead({
+  title: 'IMDBLike'
+})
 </script>
 
 <template>

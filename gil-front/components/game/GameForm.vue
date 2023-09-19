@@ -1,9 +1,36 @@
+<template>
+  <div>
+    <form  @submit.prevent="addGame">
+      <label for="name">Nom du jeu :</label>
+      <input type="text" id="name" v-model="game_name" required />
+
+      <label for="releaseDate">Date de sortie</label>
+      <input type="text" id="releaseDate" v-model="game_releaseDate" />
+
+      <label for="genres">Genre(s)</label>
+      <select id="genres" v-model="game_genres">
+        <option v-for="genre in Genres" :key="genre">{{ genre.value }}</option>
+      </select>
+
+      <label for="platforms">Plateformes</label>
+      <select id="platforms" v-model="game_platform">
+        <option v-for="platform in Platform" :key="platform">{{ platform.value }}</option>
+      </select>        
+      <button type="submit">Continuer </button>
+
+      <SuccessAlert v-if="success">Jeu ajouté avec succès !</SuccessAlert>
+
+      <ErrorAlert v-if="error">Une erreur s'est produite lors de l'ajout du jeu.</ErrorAlert>
+    </form>
+  </div>
+</template>
+
 <script>
 import SuccessAlert from '@/components/ui/alert/SuccessAlert.vue';
 import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue';
 
-import {Genre} from '../../gil-back/src/game/enums/genre-enum.ts'
-import {Platform} from '../../gil-back/src/game/enums/platform-enum.ts'
+import {Genre} from '../../../gil-back/src/game/enums/genre-enum'
+import {Platform} from '../../../gil-back/src/game/enums/platform-enum'
 
 export default {
   components: {
@@ -14,8 +41,8 @@ export default {
     return {
       game_name: "",
       game_releaseDate: "",
-      game_genres: "",
-      game_platforms: "",
+      game_genres: Genre,
+      game_platform: Platform,
       success: false,
       error: false,
     };
@@ -48,37 +75,11 @@ export default {
 }
 </script>
 
-<template>
-  <div>
-    <form  @submit.prevent="addGame">
-      <label for="name">Nom du jeu :</label>
-      <input type="text" id="name" v-model="game_name" required />
-
-      <label for="releaseDate">Date de sortie</label>
-      <input type="text" id="releaseDate" v-model="game_releaseDate" />
-
-      <label for="genres">Genre(s)</label>
-      <select id="genres" v-model="game_genres">
-        <option v-for="genre in Genre" :key="genre">{{ genre }}</option>
-      </select>
-
-      <label for="platforms">Plateformes</label>
-      <select id="platforms" v-model="game_platform">
-        <option v-for="platform in Platform" :key="platform">{{ platform }}</option>
-      </select>        
-      <button type="submit">Continuer </button>
-
-      <SuccessAlert v-if="success">Jeu ajouté avec succès !</SuccessAlert>
-
-      <ErrorAlert v-if="error">Une erreur s'est produite lors de l'ajout du jeu.</ErrorAlert>
-    </form>
-  </div>
-</template>
-
 <style scoped>
 .button {
   background-color: #4caf50; /* Vert */
   color: white;
   padding: 10px;
 }
+
 </style>

@@ -1,4 +1,11 @@
-<script lang="ts" setup></script>
+<script setup>
+definePageMeta({
+  layout: "user",
+});
+useHead({
+  title: 'Liste des jeux'
+})
+</script>
 
 <template>
   <div>

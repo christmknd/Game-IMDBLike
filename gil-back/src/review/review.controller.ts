@@ -8,7 +8,6 @@ import {
   Delete,
   BadRequestException,
   NotFoundException,
-  UseGuards,
 } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -42,7 +41,7 @@ export class ReviewController {
     try {
       return this.reviewService.createReview(createReviewDto);
     } catch {
-      throw new BadRequestException('Review cannot be registrated')
+      throw new BadRequestException('Review cannot be registrated');
     }
   }
 
@@ -66,9 +65,9 @@ export class ReviewController {
   })
   @ApiNotFoundResponse({ description: 'Review not found' })
   @Get(':id')
-  findReviewById(@Param('id') id: string) {
+  findReviewById(@Param('id') id: string, gameId: number) {
     try {
-      return this.reviewService.findReviewById(+id);
+      return this.reviewService.findReviewById(+id, gameId);
     } catch {
       throw new NotFoundException('Review not found');
     }
@@ -86,6 +85,8 @@ export class ReviewController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return this.reviewService.updateReview(+id, updateReviewDto);
     } catch {
       throw new NotFoundException('Review not found : cannot be updated');
@@ -101,8 +102,7 @@ export class ReviewController {
     try {
       return this.reviewService.deleteReview(+id);
     } catch {
-      throw new NotFoundException('Review not found : cannot be deleted')
+      throw new NotFoundException('Review not found : cannot be deleted');
     }
   }
-
 }

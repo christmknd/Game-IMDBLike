@@ -111,8 +111,5 @@ export class GameController {
       throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
   }
-}
-function UseGuards(arg0: any): (target: typeof GameController) => void | typeof GameController {
-  throw new Error('Function not implemented.');
-}
 
+}

@@ -7,8 +7,8 @@ import {
   Param,
   Delete,
   BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+  NotFoundException, Query
+} from "@nestjs/common";
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
@@ -27,7 +27,8 @@ import { CreateReviewDto } from '../review/dto/create-review.dto';
 @ApiTags('game')
 @Controller('game')
 export class GameController {
-  constructor(private readonly gameService: GameService) {}
+  constructor(private readonly gameService: GameService) {
+  }
 
   @ApiOperation({ summary: 'Create a new game' })
   @ApiBody({ type: CreateGameDto })
@@ -111,5 +112,4 @@ export class GameController {
       throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
   }
-
 }

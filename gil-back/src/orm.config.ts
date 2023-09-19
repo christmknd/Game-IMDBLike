@@ -19,6 +19,7 @@ const config: TypeOrmModuleOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   entities: [Game, User, Review],
+  logging: true,
   synchronize: true
 }
 

@@ -1,5 +1,6 @@
 export enum Genre {
     Action = 'Action',
+    Aventure = 'Aventure',
     Combat = 'Combat',
     Beat_Them_All = 'Beat_Them_All',
     Plateforme_2D = 'Plateforme_2D',

@@ -9,12 +9,12 @@
 
       <label for="genres">Genre(s)</label>
       <select id="genres" v-model="game_genres">
-        <option v-for="genre in Genres" :key="genre">{{ genre.value }}</option>
+        <option v-for="genre in genres" :key="genre">{{ genre }}</option>
       </select>
 
       <label for="platforms">Plateformes</label>
       <select id="platforms" v-model="game_platform">
-        <option v-for="platform in Platform" :key="platform">{{ platform.value }}</option>
+        <option v-for="platform in platforms" :key="platform">{{ platform }}</option>
       </select>        
       <button type="submit">Continuer </button>
 
@@ -25,12 +25,11 @@
   </div>
 </template>
 
-<script>
+<script >
 import SuccessAlert from '@/components/ui/alert/SuccessAlert.vue';
 import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue';
-
-import {Genre} from '../../../gil-back/src/game/enums/genre-enum'
-import {Platform} from '../../../gil-back/src/game/enums/platform-enum'
+import {Genre} from '../../../gil-back/src/game/enums/genre-enum';
+import {Platform} from '../../../gil-back/src/game/enums/platform-enum';
 
 export default {
   components: {
@@ -39,10 +38,12 @@ export default {
   },
   data() {
     return {
+      genres:Object.values(Genre),
+      platforms : Object.values(Platform),
       game_name: "",
       game_releaseDate: "",
-      game_genres: Genre,
-      game_platform: Platform,
+      game_genres: "",
+      game_platform: "",
       success: false,
       error: false,
     };
@@ -62,7 +63,7 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(gameData),
-        });
+        })
         this.success = true;
         this.error = false;
         console.log('Jeu ajouté avec succès !');

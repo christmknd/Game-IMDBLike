@@ -4,8 +4,8 @@
   <div>
     <nav>
       <ul>
-          <li><nuxt-link to="/user/search">Search</nuxt-link></li>
-          <li><nuxt-link to="/user/addGame">Ajouter un jeu</nuxt-link></li>
+          <li><nuxt-link to="/game/search">Search</nuxt-link></li>
+          <li><nuxt-link to="/game/addGame">Ajouter un jeu</nuxt-link></li>
           <li><nuxt-link to="#">Se Déconnecter</nuxt-link></li>
     </ul>
     </nav>

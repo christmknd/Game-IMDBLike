@@ -1,14 +1,15 @@
-FROM node:16-alpine
+FROM node:19-alpine
 
 WORKDIR /app
 
-RUN apk update && apk upgrade
-RUN apk add git
-
 COPY ./package*.json /app/
 
-RUN npm install && npm cache clean --force
+RUN npm ci
 
 COPY . .
 
-ENV PATH ./node_modules/.bin/:$PATH
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

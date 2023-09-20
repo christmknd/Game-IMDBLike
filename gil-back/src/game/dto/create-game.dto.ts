@@ -20,5 +20,5 @@ export class CreateGameDto {
 
   @ApiProperty({ type: 'enum', enum: Platform })
   @IsEnum(Platform)
-  platforms: Platform;
+  platform: Platform;
 }

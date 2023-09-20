@@ -1,51 +1,44 @@
 <template>
   <div class="game-card">
-    <div v-if="game">
-      {{ game.name }} <br>
-      <img :src="game.background_image" alt="Image du jeu" style="height: 200px; width: 200px; object-fit: cover;"> <br> 
-      Date de sortie : {{ game.released }} <br>
-      Genres :
-      <ul>
-        <li v-for="genre in game.genres" :key="genre.id">
-          {{ genre.name }}
-        </li>
-      </ul> 
-      Plateformes :
-      <ul>
-        <li v-for="platform in game.platforms" :key="platform.id">
-          {{ platform.name || platform.platform.name }}
-        </li>
-      </ul> <br>
-    </div>
-    <div v-else>
-      Chargement en cours...
-    </div>
+    <h2>{{ game.name }}</h2>
+    <p>Date de sortie : {{ game.releaseYear }}</p>
+    <p>Genre : {{ game.genre }}</p>
+    <p>Plateforme : {{ game.platform }}</p>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    gameId: Number,
+    gameId: {
+      type: Number, 
+      required: true,
+    },
   },
   data() {
     return {
-      game: null,
+      game: {},
     };
   },
-  created() {
-    this.getGameById();
+  async created() {
+    await this.getGameById(this.gameId);
   },
   methods: {
-    async getGameById() {
+    async getGameById(gameId) {
       try {
-        const response = await $fetch(`http://localhost:5000/game/${this.gameId}`, {
+        const { data, error } = await useFetch(`http://localhost:5000/game/${gameId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
         });
-        this.game = await response.json();
+
+        if (error) {
+          console.error('Une erreur s\'est produite lors de la récupération du jeu :', error);
+          return;
+        }
+
+        this.game = data;
       } catch (error) {
         console.error('Une erreur s\'est produite lors de la récupération du jeu :', error);
       }
@@ -54,4 +47,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.game-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 16px;
+}
+</style>

@@ -1,34 +1,3 @@
-<script>
-export default {
-
-data() {
-  return {
-    users : []
-  };
-},
-methods: {
-  async getAllUsers () {
-    try {
-      const response = await $fetch('http://localhost:5000/users', {
-        method: 'GET',
-        headers: {
-          'Content-Type' : 'application/json',
-        }
-      });
-
-      const data = await response;
-      this.users.push(...data)
-    } catch(error) {
-      console.error('Erreur lors de la recupérations des critiques')
-    }
-  },
-  created() {
-    this.getAllUsers()
-  }
-}
-}
-</script>
-
 <template>
   <div>
     <h1>Toutes les utilisateurs</h1>
@@ -42,5 +11,12 @@ methods: {
     </ul>
   </div>
 </template>
+
+<script setup>
+  const { data: users } = await useFetch(
+      `http://localhost:5000/users`
+    );
+</script>
+
 
 <style scoped></style>

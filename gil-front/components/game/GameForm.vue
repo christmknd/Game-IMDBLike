@@ -4,33 +4,30 @@
       <label for="name">Nom du jeu :</label>
       <input type="text" id="name" v-model="game_name" required />
 
-      <label for="releaseDate">Date de sortie</label>
-      <input type="text" id="releaseDate" v-model="game_releaseDate" />
+      <label for="releaseYear">Date de sortie</label>
+      <input type="text" id="releaseYear" v-model="game_releaseYear" />
 
       <label for="genres">Genre(s)</label>
       <select id="genres" v-model="game_genres">
-        <option v-for="genre in Genres" :key="genre">{{ genre.value }}</option>
+        <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
       </select>
 
       <label for="platforms">Plateformes</label>
       <select id="platforms" v-model="game_platform">
-        <option v-for="platform in Platform" :key="platform">{{ platform.value }}</option>
+        <option v-for="platform in platforms" :key="platform" :value="platform">{{ platform }}</option>
       </select>        
       <button type="submit">Continuer </button>
-
       <SuccessAlert v-if="success">Jeu ajouté avec succès !</SuccessAlert>
-
       <ErrorAlert v-if="error">Une erreur s'est produite lors de l'ajout du jeu.</ErrorAlert>
     </form>
   </div>
 </template>
 
-<script>
+<script >
 import SuccessAlert from '@/components/ui/alert/SuccessAlert.vue';
 import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue';
-
-import {Genre} from '../../../gil-back/src/game/enums/genre-enum'
-import {Platform} from '../../../gil-back/src/game/enums/platform-enum'
+import {Genre} from '../../../gil-back/src/game/enums/genre-enum';
+import {Platform} from '../../../gil-back/src/game/enums/platform-enum';
 
 export default {
   components: {
@@ -39,10 +36,12 @@ export default {
   },
   data() {
     return {
+      genres:Object.values(Genre),
+      platforms : Object.values(Platform),
       game_name: "",
-      game_releaseDate: "",
-      game_genres: Genre,
-      game_platform: Platform,
+      game_releaseYear: "",
+      game_genres: "",
+      game_platform: "",
       success: false,
       error: false,
     };
@@ -52,9 +51,9 @@ export default {
       try {
         const gameData = {
           name : this.game_name,
-          releaseDate : this.game_releaseDate,
+          releaseYear : parseInt(this.game_releaseYear),
           genres: this.game_genres,
-          platforms : this.game_platforms
+          platform : this.game_platform
         }
         await $fetch('http://localhost:5000/game', {
           method: 'POST',
@@ -62,7 +61,7 @@ export default {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(gameData),
-        });
+        })
         this.success = true;
         this.error = false;
         console.log('Jeu ajouté avec succès !');
@@ -75,11 +74,5 @@ export default {
 }
 </script>
 
-<style scoped>
-.button {
-  background-color: #4caf50; /* Vert */
-  color: white;
-  padding: 10px;
-}
-
+<style>
 </style>

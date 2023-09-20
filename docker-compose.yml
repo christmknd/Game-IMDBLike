@@ -1,12 +1,46 @@
 services:
-  nuxt:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+        - "${DB_PORT}:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  server:
+    build:
+      context: ./gil-back
+      dockerfile: Dockerfile
+    container_name: gil-server
+    ports:
+      - '${PORT_BACKEND}:5000'
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_SYNCHRONIZE: ${DB_SYNCHRONIZE}
+    depends_on:
+      - db
+
+  client:
     build:
       context: ./gil-front
-    image: nuxt_front
-    container_name: nuxt_front
-    command: npm run dev
-    volumes:
-    - .:/app
-    - /app/node_modules
+      dockerfile: Dockerfile
+    container_name: gil-client
     ports:
-      - "3000:3000"
+      - "${PORT_FRONTEND}:3000"
+    depends_on:
+      - server
+  
+      

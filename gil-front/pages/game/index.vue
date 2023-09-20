@@ -1,16 +1,20 @@
-<script setup>
-definePageMeta({
-  layout: "user",
-});
-useHead({
-  title: 'Liste des jeux'
-})
-</script>
-
+<!-- Index.vue -->
 <template>
   <div>
-    <GameForm />
+    <AllGames />
+    <div v-if="selectedGameId !== null">
+      <GameCard :gameId="selectedGameId" />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<script setup>
+import AllGames from '~/components/admin/AllGames.vue';
+import GameCard from '~/components/game/GameCard.vue';
+
+import { selectedGameId } from '~/components/AllGames.vue';
+
+definePageMeta({
+  layout: "user",
+});
+</script>

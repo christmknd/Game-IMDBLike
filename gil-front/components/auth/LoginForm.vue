@@ -17,7 +17,6 @@ export default {
         await $fetch('http:localhost:5000/auth/login', {
           headers : {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${access_token}'
           } ,
           body: JSON.stringify(formData)
           

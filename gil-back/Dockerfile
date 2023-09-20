@@ -1,11 +1,15 @@
-FROM node:16-alpine AS development
+FROM node:19-alpine 
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --only=development
+RUN npm ci
 
 COPY . .
 
 RUN npm run build
+
+EXPOSE 5000
+
+CMD ["npm", "run", "start"]

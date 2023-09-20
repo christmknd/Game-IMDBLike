@@ -41,7 +41,7 @@ export class Game {
   genres: Genre;
 
 
-  @Column({type: 'enum', enum: Platform })
+  @Column({ type: 'enum', enum: Platform })
   @ApiProperty({
     description: 'Game Principal Platform',
   })

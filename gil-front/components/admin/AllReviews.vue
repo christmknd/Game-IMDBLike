@@ -1,46 +1,26 @@
-<script>
-export default {
 
-data() {
-  return {
-    reviews : []
-  };
-},
-methods: {
-  async getAllReviews () {
-    try {
-      const response = await $fetch('http://localhost:5000/review', {
-        method: 'GET',
-        headers: {
-          'Content-Type' : 'application/json',
-        }
-      });
-
-      const data = await response;
-      this.reviews = data
-    } catch(error) {
-      console.error('Erreur lors de la recupérations des critiques')
-    }
-  },
-  created() {
-    this.getAllReviews()
-  }
-}
-}
-</script>
 
 <template>
   <div>
     <h1>Toutes les critiques</h1>
     <ul>
-      <li v-for="review in reviews" :key="review.id">
+      <div v-for="review in reviews" :key="review.id">
+        <h2>{{ review.title }}</h2>
         <ul>
           <li>{{ review.content }}</li>
           <li>{{ review.rating }}</li>
+          <li>{{ review.pros }}</li>
+          <li>{{ review.cons }}</li>
         </ul>
-      </li>
+      </div>
     </ul>
   </div>
 </template>
+
+<script setup>
+  const { data: reviews } = await useFetch(
+      `http://localhost:5000/review`
+    );
+</script>
 
 <style scoped></style>

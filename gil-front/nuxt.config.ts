@@ -24,6 +24,4 @@ export default defineNuxtConfig({
     '~/assets/style.css', // Chemin vers votre fichier CSS
   ],
   components: ['~/components'],
-    modules: ['@sidebase/nuxt-auth'],
- 
 })

@@ -1,15 +1,16 @@
 <script setup>
 definePageMeta({
   layout: "admin",
+  middleware: 'connected'
 });
 useHead({
-  title: 'Liste de tous les utilisateurs'
+  title: 'Admin Dashboard'
 })
 </script>
 
 <template>
   <div>
-    <AdminAllUsers/>
+    <h1>Admin Dashboard</h1>
   </div>
 </template>
 

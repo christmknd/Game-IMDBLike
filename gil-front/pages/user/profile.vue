@@ -1,8 +1,16 @@
-<script lang="ts" setup></script>
+<script setup>
+definePageMeta({
+  layout: "user",
+  middleware: 'connected'
+});
+useHead({
+  title: 'User profile'
+})
+</script>
 
 <template>
   <div>
-    Page: foo
+    <h1>User profile</h1>
   </div>
 </template>
 

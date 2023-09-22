@@ -18,7 +18,6 @@ async function bootstrap() {
 
   app.enableCors(corsOptions);
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
 
 
   //SWAGGER

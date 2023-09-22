@@ -63,7 +63,7 @@ export default {
           player_mode: this.form_playermode,
         }
 
-        await authService.register(this.form_username, this.form_email, this.form_password);
+        await authService.register(formData.username, this.form_email, this.form_password);
         this.$emit('user-registered');
         this.$router.push('/game')
         console.log('User enregistré sur la plateforme avec succès')

@@ -1,4 +1,13 @@
-<script lang="ts" setup></script>
+<script setup>
+import authService from '~/services/auth';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const logout = async () => {
+  authService.logout(); 
+  await router.push('/login'); 
+};
+</script>
 
 <template>
   <div>
@@ -6,7 +15,7 @@
       <ul>
           <li><nuxt-link to="/game">Search</nuxt-link></li>
           <li><nuxt-link to="/game/addGame">Ajouter un jeu</nuxt-link></li>
-          <li><nuxt-link to="#">Se Déconnecter</nuxt-link></li>
+          <li><button @click="logout">Se Déconnecter</button></li>
     </ul>
     </nav>
   

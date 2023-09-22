@@ -9,5 +9,6 @@
 
 definePageMeta({
   layout: "user",
+  middleware: 'connected'
 });
 </script>

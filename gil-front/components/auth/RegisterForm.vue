@@ -38,6 +38,7 @@
 <script >
 import {Playertype} from '../../../gil-back/src/users/enums/playertype.enum';
 import {PlayerMode} from '../../../gil-back/src/users/enums/playermode.enum';
+import authService from '~/services/auth'
 
 export default {
   data () {
@@ -62,14 +63,7 @@ export default {
           player_mode: this.form_playermode,
         }
 
-        await $fetch('http://localhost:5000/auth/register', {
-          headers : {
-            'Content-Type': 'application/json',
-          } ,
-          method: 'POST',
-          body: JSON.stringify(formData)
-          
-        })
+        await authService.register(formData.username, this.form_email, this.form_password);
         this.$emit('user-registered');
         this.$router.push('/game')
         console.log('User enregistré sur la plateforme avec succès')

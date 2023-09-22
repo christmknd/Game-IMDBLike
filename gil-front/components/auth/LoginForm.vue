@@ -21,29 +21,18 @@
 </template>
 
 <script>
+import authService from '~/services/auth'
 export default {
   data (){
     return {
-      form_username : '',
+        form_username : '',
         form_password : ''
     }
   },
   methods: {
     async login () {
       try {
-        const formData = {
-          username : this.form_username,
-          password: this.form_password
-        }
-
-        await $fetch('http://localhost:5000/auth/login', {
-          headers : {
-            'Content-Type': 'application/json',
-          } ,
-          method: 'POST',
-          body: JSON.stringify(formData)
-          
-        })
+        await authService.login(this.form_username, this.form_password);
         this.$emit('user-logged');
         this.$router.push('/game')
         console.log('User connecté sur la plateforme avec succès')

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { Playertype } from '../enums/playertype.enum';
+import { PlayerMode } from '../enums/playermode.enum';
 
 export class CreateUserDto {
 
@@ -27,6 +29,11 @@ export class CreateUserDto {
   @MinLength(6)
   password: string;
 
+  @ApiProperty({ type: 'enum', enum: Playertype })
+  @IsEnum(Playertype)
+  player_type: Playertype;
 
+  @ApiProperty({ type: 'enum', enum: PlayerMode })
+  favorite_mode: PlayerMode;
 
 }

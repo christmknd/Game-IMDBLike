@@ -20,14 +20,13 @@ export default defineNuxtConfig({
   alias: {
     "@": resolve(__dirname)
   },
-  runtimeConfig: {
-    public: {
-      RAWG_API_KEY: process.env.RAWG_API_KEY,
-    }
-  },
   css: [
     '~/assets/style.css', // Chemin vers votre fichier CSS
   ],
   components: ['~/components'],
+  modules: [
+    '@pinia/nuxt'
+  ],
+  
  
 })

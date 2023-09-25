@@ -1,4 +1,13 @@
-<script lang="ts" setup></script>
+<script  setup>
+import authService from '~/services/auth';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const logout = async () => {
+  authService.logout(); 
+  await router.push('/login'); 
+};
+</script>
 
 <template>
   <div class="container-fluid">
@@ -21,14 +30,13 @@
         </li>
       </ul>
     </div>
-</nav>
+      </nav>
     </header>
     <slot />
-    <footer class="fixed-botttom bg-light ">
-      <ul>
-        <li>Site crée par Christ M.</li>
-        <li>All Rights Reserved - 2023</li>
-      </ul>
+    <footer class="bg-light fixed-bottom  ">
+      <div class="text-center p-3" >
+        <p class="text-dark" >Site crée par Christ M. All Rights Reserved - 2023</p>
+      </div>
     </footer>
   </div>
 </template>

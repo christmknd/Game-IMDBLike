@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <h1>Se connecter</h1>
     <form @submit.prevent="login">
       <div class="mb-3">
-        <label htmlFor='username'>Username</label>
+        <label htmlFor='username' class="form-label">Username</label>
         <input 
+          class="form-control"
           type="text" 
           id="username" 
           placeholder='username'
@@ -12,8 +13,9 @@
           />
       </div>
       <div class="mb-3">
-        <label htmlFor='password'>Mot de passe</label>
+        <label htmlFor='password' class="form-label">Mot de passe</label>
           <input 
+          class="form-control"
           type="password" 
           id="password" 
           placeholder="password"

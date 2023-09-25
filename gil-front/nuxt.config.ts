@@ -14,14 +14,24 @@ export default defineNuxtConfig({
         },
         {name : "description", content: "IMBDLike for Video Games"},
         {name: 'author', content: "Christ Mokonda"}
+      ],
+      link : [
+        {
+          rel: 'stylesheet',
+          href: '//cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css'
+        }
+      ] , 
+      script : [
+        {
+          src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js',
+          type: 'text/javascript'
+        },
       ]
     }
   },
   alias: {
     "@": resolve(__dirname)
   },
-  css: [
-    '~/assets/style.css', // Chemin vers votre fichier CSS
-  ],
+  // add bootstrap-vue module for nuxt
   components: ['~/components'],
 })

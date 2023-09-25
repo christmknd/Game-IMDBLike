@@ -1,6 +1,8 @@
 <template>
   <div>
+    <h1>Se connecter</h1>
     <form @submit.prevent="login">
+      <div class="mb-3">
         <label htmlFor='username'>Username</label>
         <input 
           type="text" 
@@ -8,6 +10,8 @@
           placeholder='username'
           v-model="form_username" 
           />
+      </div>
+      <div class="mb-3">
         <label htmlFor='password'>Mot de passe</label>
           <input 
           type="password" 
@@ -15,7 +19,8 @@
           placeholder="password"
           v-model="form_password"
           />
-          <button>Se connecter</button>
+      </div>
+          <button type="submit" class="btn btn-primary">Se connecter</button>
       </form>
   </div>
 </template>

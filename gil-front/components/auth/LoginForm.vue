@@ -1,21 +1,28 @@
 <template>
-  <div>
+  <div class="container-fluid">
+    <h1>Se connecter</h1>
     <form @submit.prevent="login">
-        <label htmlFor='username'>Username</label>
+      <div class="mb-3">
+        <label htmlFor='username' class="form-label">Username</label>
         <input 
+          class="form-control"
           type="text" 
           id="username" 
           placeholder='username'
           v-model="form_username" 
           />
-        <label htmlFor='password'>Mot de passe</label>
+      </div>
+      <div class="mb-3">
+        <label htmlFor='password' class="form-label">Mot de passe</label>
           <input 
+          class="form-control"
           type="password" 
           id="password" 
           placeholder="password"
           v-model="form_password"
           />
-          <button>Se connecter</button>
+      </div>
+          <button type="submit" class="btn btn-primary">Se connecter</button>
       </form>
   </div>
 </template>

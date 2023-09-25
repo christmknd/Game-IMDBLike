@@ -1,35 +1,49 @@
 <template>
   <div>
+    <h1>S'inscrire</h1>
     <form @submit.prevent="register">
-        <label htmlFor='username'>Username</label>
+      <div class="mb-3">
+        <label htmlFor='username' class="form-label">Username</label>
             <input 
+            class="form-control"
             type="text" 
             id="username" 
             placeholder='username' 
             v-model="form_username"/>
-         <label htmlFor='email'>Email</label>
+      </div>
+      <div class="mb-3">
+        <label htmlFor='email' class="form-label">Email</label>
             <input 
+            class="form-control"
           type="text" 
           id="email" 
           placeholder='email'
           v-model="form_email" 
           />
-        <label for="playertype">Type de joueur</label>
-        <select id="playertype" v-model="form_playertype">
+      </div>
+      <div class="mb-3">
+        <label for="playertype" class="form-label">Type de joueur</label>
+        <select id="playertype" class="form-select" v-model="form_playertype">
           <option v-for="playertype in playertypes" :key="playertype" :value="playertype">{{ playertype }}</option>
         </select>
-
-        <label for="playermode">Mode de jeu préféré</label>
-        <select id="playermode" v-model="form_playermode">
+      </div>
+     <div class="mb-3">
+      <label for="playermode" class="form-labe mb-3">Mode de jeu préféré</label>
+        <select id="playermode" class="form-select mb-3" v-model="form_playermode">
           <option v-for="playermode in playermodes" :key="playermode" :value="playermode">{{ playermode }}</option>
         </select>    
-        <label htmlFor='password'>Mot de passe</label>
+     </div>
+     <div class="mb-3">
+      <label htmlFor='password' class="form-label">Mot de passe</label>
             <input 
+            class="form-control"
             type="password" 
             id="password" 
             placeholder="password"
             v-model="form_password"/>
-        <button>S'inscrire</button>
+            <div id="pwdhelp" class="form-text">Le mot de passe doit contenir au moins 6 caractères<Label></Label></div>
+     </div>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
         </form>
   </div>
 </template>

@@ -1,23 +1,27 @@
 <template>
     <div>
       <form  @submit.prevent="addReview">
-        <label for="title">Titre</label>
-        <input type="text" id="title" v-model="review_title" required />
-  
-        <label for="content">Contenu</label>
-        <input type="textarea" id="content" v-model="review_content" />
-  
-        <label for="pros">Points forts</label>
-        <input id="pros" v-model="review_pros">
-   
-  
-        <label for="platforms">Points faibles</label>
-        <input id="platforms" v-model="review_cons"/>
-
-        <label for="rating">Note</label>
-        <input id="rating" v-model="review_rating"/>
-              
-        <button type="submit">Continuer </button>
+        <div class="mb-3">
+          <label for="title" class="form-label">Titre</label>
+          <input type="text" class="form-control" id="title" v-model="review_title" required />
+        </div>
+        <div class="mb-3">
+          <label for="content" class="form-label">Contenu</label>
+        <textarea class="form-control" id="content" v-model="review_content"></textarea>
+        </div>
+       <div class="mb-3">
+        <label for="pros" class="form-label">Points forts</label>
+        <input id="pros" class="form-control" v-model="review_pros">
+       </div>
+       <div class="mb-3">
+        <label for="platforms" class="form-label">Points faibles</label>
+        <textarea id="platforms" class="form-control" v-model="review_cons"></textarea>
+       </div>
+       <div class="mb-3">
+        <label for="rating" class="form-label">Note</label>
+        <textarea id="rating" class="form-control" v-model="review_rating"></textarea>
+       </div>
+        <button type="submit" class="btn btn-success">Continuer </button>
         <SuccessAlert v-if="success">Jeu ajouté avec succès !</SuccessAlert>
 
       <ErrorAlert v-if="error">Une erreur s'est produite lors de l'ajout du jeu.</ErrorAlert>

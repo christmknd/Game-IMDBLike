@@ -6,6 +6,10 @@ export default {
           method: 'POST',
           body: JSON.stringify({ username, password }),
         });
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('username');
+        }
         localStorage.setItem('accessToken', response.access_token);
         localStorage.setItem('username', response.username);
         return response;
@@ -20,6 +24,10 @@ export default {
           method: 'POST',
           body: JSON.stringify({ username, email, password }),
         });
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('username');
+        }
         localStorage.setItem('accessToken', response.access_token);
         localStorage.setItem('username', response.username);
         return response;
@@ -29,6 +37,10 @@ export default {
     },
   
     logout() {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('username');
+      }
       localStorage.removeItem('accessToken');
       localStorage.removeItem('username');
     },

@@ -1,14 +1,17 @@
 <template>
   <div>
-   <AdminAllGames/>
+    <ReviewForm/>
   </div>
 </template>
 
-<script>
-
-
+<script setup>
 definePageMeta({
   layout: "user",
   middleware: 'connected'
 });
+useHead({
+  title: 'Ajouter une critique'
+})
 </script>
+
+<style scoped></style>

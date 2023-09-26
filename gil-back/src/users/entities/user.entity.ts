@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, OneToOne } from "typeorm";
 import { Review } from '../../review/entities/review.entity';
 import {
   IsEmail,
@@ -11,6 +11,7 @@ import { Platform } from '../../game/enums/platform-enum';
 import { Genre } from '../../game/enums/genre-enum';
 import { Playertype } from '../enums/playertype.enum';
 import { PlayerMode } from '../enums/playermode.enum';
+import { Bookmark } from "../../bookmark/entities/bookmark.entity";
 
 @Entity({ name: 'user' })
 export class User {
@@ -50,6 +51,10 @@ export class User {
 
   @Column({ type: 'enum', enum: PlayerMode })
   favorite_mode: PlayerMode;
+
+  @OneToOne(() => Bookmark, (bookmark) => bookmark.user)
+  @JoinColumn()
+  bookmark: Bookmark;
 
   //  un utilisateur ne peut déposer qu'une seule review sur un movie, un book ou un game.
   @OneToMany(() => Review, (review) => review.user)

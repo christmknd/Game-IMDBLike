@@ -1,7 +1,16 @@
 import { Game } from '../../game/entities/game.entity';
-import { Column, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 
+@Entity({ name: 'bookmark' })
 export class Bookmark {
   @PrimaryGeneratedColumn()
   id: number;
@@ -13,7 +22,6 @@ export class Bookmark {
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
-
 
   // Relation ManyToMany avec les jeux (ou livres) favoris
   @ManyToMany(() => Game)

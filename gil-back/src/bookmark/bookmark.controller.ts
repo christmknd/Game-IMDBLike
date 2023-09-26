@@ -10,13 +10,29 @@ import {
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBody,
+  ApiNotFoundResponse,
+  ApiOperation, ApiParam,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
+import { Bookmark } from './entities/bookmark.entity';
 
-@ApiTags('Bookmark')
+@ApiTags('bookmark')
 @Controller('bookmark')
 export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
+  @ApiOperation({ summary: 'Initialize bookmark' })
+  @ApiBody({ type: CreateBookmarkDto })
+  @ApiResponse({
+    status: 201,
+    description: 'Bookmark created successfully',
+    type: Bookmark,
+  })
+  @ApiBadRequestResponse({ description: 'Bookmark cannot be registrated' })
   @Post()
   create(@Body() createBookmarkDto: CreateBookmarkDto) {
     try {
@@ -26,17 +42,8 @@ export class BookmarkController {
     }
   }
 
-  @Get()
-  findAllBookmarks() {
-    try {
-      return this.bookmarkService.findAllBookmarks();
-    } catch {
-      throw new NotFoundException(
-        'No games found : the Bookmark is maybe empty',
-      );
-    }
-  }
-
+  @ApiOperation({ summary: 'Get all games in Bookmark' })
+  @ApiNotFoundResponse({ description: 'No games found : the Bookmark is maybe empty' })
   @Get(':bookmarkId/games')
   findAllGamesInBookmark(@Param('bookmarkId') bookmarkId: number) {
     try {
@@ -48,15 +55,26 @@ export class BookmarkController {
     }
   }
 
+  @ApiOperation({ summary: 'Get bookmark by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({
+    status: 200,
+    description: 'Return bookmark by ID',
+    type: Bookmark,
+  })
+  @ApiNotFoundResponse({ description: 'Bookmark not found' })
   @Get(':id')
   findBookmarkById(@Param('id') id: string) {
     try {
       return this.bookmarkService.findBookmarkById(+id);
     } catch {
-      throw new NotFoundException(`Games with id ${id} not found `);
+      throw new NotFoundException(`Bookmark with id ${id} not found `);
     }
   }
 
+  @ApiOperation({ summary: 'Add game to bookmark' })
+  @ApiParam({ name: 'bookmarkId', type: Number })
+  @ApiParam({ name: 'gameId', type: Number })
   @Post(':bookmarkId/add-game/:gameId')
   addGameToBookmark(
     @Param('bookmarkId') bookmarkId: number,
@@ -72,6 +90,9 @@ export class BookmarkController {
   }
 
 
+  @ApiOperation({ summary: 'Delete game to bookmark' })
+  @ApiParam({ name: 'bookmarkId', type: Number })
+  @ApiParam({ name: 'gameId', type: Number })
   @Delete(':bookmarkId/delete-game/:gameId')
   deleteGameFromBookmark(
     @Param('bookmarkId') bookmarkId: number,
@@ -85,7 +106,10 @@ export class BookmarkController {
       );
     }
   }
-
+  @ApiOperation({ summary: 'Delete bookmark by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Bookmark deleted successfully' })
+  @ApiNotFoundResponse({ description: 'Bookmark not found : cannot be deleted' })
   @Delete(':id')
   delete(@Param('id') id: string) {
     try {

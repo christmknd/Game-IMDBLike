@@ -20,10 +20,6 @@ export class BookmarkService {
     return this.bookmarkRepository.save(bookmark);
   }
 
-  async findAllBookmarks(): Promise<Bookmark[]> {
-    return this.bookmarkRepository.find();
-  }
-
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   async findAllGamesInBookmark(bookmarkId: number): Promise<Game[]> {

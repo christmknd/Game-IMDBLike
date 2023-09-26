@@ -54,6 +54,8 @@ export class GameController {
 
   @ApiOperation({ summary: 'Get all games' })
   @ApiNotFoundResponse({ description: 'No games were found' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Get()
   findAll() {
     try {
@@ -71,6 +73,8 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Get(':id')
   findGameById(@Param('id') id: number) {
     try {
@@ -90,7 +94,8 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found : Game cannot be updated' })
-
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateGameDto: UpdateGameDto) {
     try {
@@ -101,6 +106,8 @@ export class GameController {
   }
 
   @Delete(':id')
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   delete(@Param('id') id: number) {
     try {
       return this.gameService.deleteGame(+id);

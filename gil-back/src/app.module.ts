@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { ReviewModule } from './review/review.module';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { BookmarkModule } from './bookmark/bookmark.module';
 import config from './orm.config';
 
 @Module({
@@ -15,6 +16,7 @@ import config from './orm.config';
     UsersModule,
     ReviewModule,
     AuthModule,
+    BookmarkModule,
   ],
   controllers: [AppController],
   providers: [AppService],

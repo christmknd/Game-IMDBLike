@@ -23,7 +23,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { Role } from './enums/role.enum';
+import { Role } from '../auth/enums/role.enum';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {

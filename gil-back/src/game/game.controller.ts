@@ -1,27 +1,30 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
   BadRequestException,
-  NotFoundException, Query
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post
 } from "@nestjs/common";
-import { GameService } from './game.service';
-import { CreateGameDto } from './dto/create-game.dto';
-import { UpdateGameDto } from './dto/update-game.dto';
+import { GameService } from "./game.service";
+import { CreateGameDto } from "./dto/create-game.dto";
+import { UpdateGameDto } from "./dto/update-game.dto";
 import {
   ApiBadRequestResponse,
   ApiBody,
   ApiNotFoundResponse,
-  ApiOperation, ApiParam,
+  ApiOperation,
+  ApiParam,
   ApiResponse,
   ApiTags
-} from '@nestjs/swagger';
-import { Game } from './entities/game.entity';
-import { CreateReviewDto } from '../review/dto/create-review.dto';
+} from "@nestjs/swagger";
+import { Game } from "./entities/game.entity";
+import { CreateReviewDto } from "../review/dto/create-review.dto";
+import { Role } from "../auth/enums/role.enum";
+import { Roles } from "../auth/decorators/roles.decorators";
 
 
 @ApiTags('game')
@@ -38,6 +41,8 @@ export class GameController {
     type: Game,
   })
   @ApiBadRequestResponse({ description: 'Game cannot be registrated' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Post()
   create(@Body() createGameDto: CreateGameDto) {
     try {

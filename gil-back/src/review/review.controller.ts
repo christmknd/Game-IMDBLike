@@ -23,6 +23,8 @@ import {
 } from "@nestjs/swagger";
 import { Review } from './entities/review.entity';
 import { JwtAuthGuard } from "../auth/jwt-auth.guards";
+import { Roles } from "../auth/decorators/roles.decorators";
+import { Role } from "../auth/enums/role.enum";
 
 @ApiTags('review')
 @Controller('review')
@@ -37,6 +39,8 @@ export class ReviewController {
     type: Review,
   })
   @ApiBadRequestResponse({ description: 'Review cannot be registrated' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Post()
   create(@Body() createReviewDto: CreateReviewDto) {
     try {
@@ -49,6 +53,8 @@ export class ReviewController {
   @ApiOperation({ summary: 'Get all reviews' })
   @ApiNotFoundResponse({ description: 'No reviews found' })
   @UseGuards(JwtAuthGuard)
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Get()
   findAll() {
     try {
@@ -60,6 +66,8 @@ export class ReviewController {
 
   @ApiOperation({ summary: 'Get review by ID' })
   @ApiParam({ name: 'id', type: Number })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard)
   @ApiResponse({
     status: 200,
@@ -85,6 +93,8 @@ export class ReviewController {
     type: Review,
   })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
@@ -101,6 +111,8 @@ export class ReviewController {
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Review deleted successfully' })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string) {

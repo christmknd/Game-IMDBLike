@@ -19,6 +19,8 @@ import {
   ApiTags
 } from '@nestjs/swagger';
 import { Bookmark } from './entities/bookmark.entity';
+import { Roles } from "../auth/decorators/roles.decorators";
+import { Role } from "../auth/enums/role.enum";
 
 @ApiTags('bookmark')
 @Controller('bookmark')
@@ -34,6 +36,8 @@ export class BookmarkController {
   })
   @ApiBadRequestResponse({ description: 'Bookmark cannot be registrated' })
   @Post()
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   create(@Body() createBookmarkDto: CreateBookmarkDto) {
     try {
       return this.bookmarkService.createBookmark(createBookmarkDto);
@@ -44,6 +48,8 @@ export class BookmarkController {
 
   @ApiOperation({ summary: 'Get all games in Bookmark' })
   @ApiNotFoundResponse({ description: 'No games found : the Bookmark is maybe empty' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Get(':bookmarkId/games')
   findAllGamesInBookmark(@Param('bookmarkId') bookmarkId: number) {
     try {
@@ -64,6 +70,8 @@ export class BookmarkController {
   })
   @ApiNotFoundResponse({ description: 'Bookmark not found' })
   @Get(':id')
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   findBookmarkById(@Param('id') id: string) {
     try {
       return this.bookmarkService.findBookmarkById(+id);
@@ -76,6 +84,8 @@ export class BookmarkController {
   @ApiParam({ name: 'bookmarkId', type: Number })
   @ApiParam({ name: 'gameId', type: Number })
   @Post(':bookmarkId/add-game/:gameId')
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   addGameToBookmark(
     @Param('bookmarkId') bookmarkId: number,
     @Param('gameId') gameId: number,
@@ -93,6 +103,8 @@ export class BookmarkController {
   @ApiOperation({ summary: 'Delete game to bookmark' })
   @ApiParam({ name: 'bookmarkId', type: Number })
   @ApiParam({ name: 'gameId', type: Number })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Delete(':bookmarkId/delete-game/:gameId')
   deleteGameFromBookmark(
     @Param('bookmarkId') bookmarkId: number,
@@ -110,6 +122,8 @@ export class BookmarkController {
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Bookmark deleted successfully' })
   @ApiNotFoundResponse({ description: 'Bookmark not found : cannot be deleted' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Delete(':id')
   delete(@Param('id') id: string) {
     try {

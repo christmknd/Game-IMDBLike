@@ -23,7 +23,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { Role } from './enums/role.enum';
+import { Role } from '../auth/enums/role.enum';
+import { Roles } from "../auth/decorators/roles.decorators";
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
@@ -37,6 +38,8 @@ export class UsersController {
     type: User,
   })
   @ApiBadRequestResponse({ description: 'User cannot be registrated' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     try {
@@ -48,6 +51,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Get all users' })
   @ApiNotFoundResponse({ description: 'No users found' })
+  @Roles(Role.Admin)
   @Get()
   findAll() {
     try {
@@ -61,6 +65,7 @@ export class UsersController {
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Return user by ID', type: User })
   @ApiNotFoundResponse({ description: 'User not found' })
+  @Roles(Role.Admin)
   @Get(':id')
   findUserById(@Param('id') id: string) {
     try {
@@ -79,6 +84,8 @@ export class UsersController {
     type: User,
   })
   @ApiNotFoundResponse({ description: 'User not found : cannot be updated' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     try {
@@ -92,6 +99,7 @@ export class UsersController {
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'User deleted successfully' })
   @ApiNotFoundResponse({ description: 'User not found : cannot be deleted' })
+  @Roles(Role.Admin)
   @Delete(':id')
   delete(@Param('id') id: string) {
     try {

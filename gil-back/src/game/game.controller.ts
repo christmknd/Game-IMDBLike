@@ -1,27 +1,30 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
   BadRequestException,
-  NotFoundException, Query
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post
 } from "@nestjs/common";
-import { GameService } from './game.service';
-import { CreateGameDto } from './dto/create-game.dto';
-import { UpdateGameDto } from './dto/update-game.dto';
+import { GameService } from "./game.service";
+import { CreateGameDto } from "./dto/create-game.dto";
+import { UpdateGameDto } from "./dto/update-game.dto";
 import {
   ApiBadRequestResponse,
   ApiBody,
   ApiNotFoundResponse,
-  ApiOperation, ApiParam,
+  ApiOperation,
+  ApiParam,
   ApiResponse,
   ApiTags
-} from '@nestjs/swagger';
-import { Game } from './entities/game.entity';
-import { CreateReviewDto } from '../review/dto/create-review.dto';
+} from "@nestjs/swagger";
+import { Game } from "./entities/game.entity";
+import { CreateReviewDto } from "../review/dto/create-review.dto";
+import { Role } from "../auth/enums/role.enum";
+import { Roles } from "../auth/decorators/roles.decorators";
 
 
 @ApiTags('game')
@@ -38,6 +41,8 @@ export class GameController {
     type: Game,
   })
   @ApiBadRequestResponse({ description: 'Game cannot be registrated' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Post()
   create(@Body() createGameDto: CreateGameDto) {
     try {
@@ -49,6 +54,8 @@ export class GameController {
 
   @ApiOperation({ summary: 'Get all games' })
   @ApiNotFoundResponse({ description: 'No games were found' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Get()
   findAll() {
     try {
@@ -66,6 +73,8 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found' })
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Get(':id')
   findGameById(@Param('id') id: number) {
     try {
@@ -85,7 +94,8 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found : Game cannot be updated' })
-
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateGameDto: UpdateGameDto) {
     try {
@@ -96,6 +106,8 @@ export class GameController {
   }
 
   @Delete(':id')
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   delete(@Param('id') id: number) {
     try {
       return this.gameService.deleteGame(+id);

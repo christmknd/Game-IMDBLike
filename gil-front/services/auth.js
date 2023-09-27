@@ -1,9 +1,9 @@
 import { useAuthStore } from '@/stores/authStore';
 
-const authStore = useAuthStore();
 
 export default {
     async login(username, password) {
+      const authStore = useAuthStore();
       try {
         const response = await $fetch('http://localhost:5000/auth/login', {
           method: 'POST',
@@ -20,6 +20,7 @@ export default {
     },
   
     async register(username, email, password) {
+      const authStore = useAuthStore();
       try {
         const response = await $fetch('http://localhost:5000/auth/register', {
           method: 'POST',

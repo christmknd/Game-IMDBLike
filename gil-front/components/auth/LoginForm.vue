@@ -28,7 +28,10 @@
 </template>
 
 <script>
-import authService from '~/services/auth'
+import { useAuthStore } from '@/stores/authStore';
+
+const authStore = useAuthStore();
+
 export default {
   data (){
     return {
@@ -39,7 +42,16 @@ export default {
   methods: {
     async login () {
       try {
-        await authService.login(this.form_username, this.form_password);
+        const formData = {
+          username : this.form_username,
+          password: this.form_password
+        }
+        const response = await $fetch('http://localhost:5000/auth/login', {
+          method: 'POST',
+          body: JSON.stringify(formData),
+        });
+        useAuthStore().useAuthStore(response.access_token);
+        authStore.setUsername(response.username);
         this.$emit('user-logged');
         console.log('User connecté sur la plateforme avec succès')
       } catch (error) {

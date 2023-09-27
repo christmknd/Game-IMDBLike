@@ -12,6 +12,7 @@ import { Genre } from '../../game/enums/genre-enum';
 import { Playertype } from '../enums/playertype.enum';
 import { PlayerMode } from '../enums/playermode.enum';
 import { Bookmark } from "../../bookmark/entities/bookmark.entity";
+import { Role } from "../../auth/enums/role.enum";
 
 @Entity({ name: 'user' })
 export class User {
@@ -51,6 +52,10 @@ export class User {
 
   @Column({ type: 'enum', enum: PlayerMode })
   favorite_mode: PlayerMode;
+
+  @Column({ type: 'enum', enum: Role, default: Role.Player })
+  @IsEnum(Role)
+  role: Role;
 
   @OneToOne(() => Bookmark, (bookmark) => bookmark.user)
   @JoinColumn()

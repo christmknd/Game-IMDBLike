@@ -55,7 +55,7 @@ export class User {
 
   @Column({ type: 'enum', enum: Role, default: Role.Player })
   @IsEnum(Role)
-  role: Role;
+  roles: Role;
 
   @OneToOne(() => Bookmark, (bookmark) => bookmark.user)
   @JoinColumn()

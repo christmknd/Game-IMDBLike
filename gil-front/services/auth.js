@@ -1,3 +1,6 @@
+import { useAuthStore } from '@/stores/authStore';
+
+const authStore = useAuthStore();
 
 export default {
     async login(username, password) {
@@ -6,12 +9,10 @@ export default {
           method: 'POST',
           body: JSON.stringify({ username, password }),
         });
-        if (typeof localStorage !== 'undefined') {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('username');
-        }
-        localStorage.setItem('accessToken', response.access_token);
-        localStorage.setItem('username', response.username);
+        authStore.setAccessToken(response.access_token);
+        authStore.setUsername(response.username);
+
+   
         return response;
       } catch (error) {
         throw error;
@@ -24,12 +25,8 @@ export default {
           method: 'POST',
           body: JSON.stringify({ username, email, password }),
         });
-        if (typeof localStorage !== 'undefined') {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('username');
-        }
-        localStorage.setItem('accessToken', response.access_token);
-        localStorage.setItem('username', response.username);
+        authStore.setAccessToken(response.access_token);
+        authStore.setUsername(response.username);
         return response;
       } catch (error) {
         throw error;
@@ -37,21 +34,8 @@ export default {
     },
   
     logout() {
-      if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('username');
-      }
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('username');
-    },
-  
-    getAccessToken() {
-      return localStorage.getItem('accessToken');
-    },
-  
-    isConnected() {
-      const accessToken = this.getAccessToken();
-      return accessToken !== null;
+      const authStore = useAuthStore();
+      authStore.clearAuthData();
     },
   };
   

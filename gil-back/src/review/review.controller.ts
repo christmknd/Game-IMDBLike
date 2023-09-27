@@ -39,6 +39,7 @@ export class ReviewController {
     type: Review,
   })
   @ApiBadRequestResponse({ description: 'Review cannot be registrated' })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Post()
@@ -66,9 +67,9 @@ export class ReviewController {
 
   @ApiOperation({ summary: 'Get review by ID' })
   @ApiParam({ name: 'id', type: Number })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
-  @UseGuards(JwtAuthGuard)
   @ApiResponse({
     status: 200,
     description: 'Return review by ID',
@@ -93,9 +94,9 @@ export class ReviewController {
     type: Review,
   })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
-  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     try {

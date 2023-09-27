@@ -7,7 +7,7 @@ import {
   NotFoundException,
   Param,
   Patch,
-  Post
+  Post, UseGuards
 } from "@nestjs/common";
 import { GameService } from "./game.service";
 import { CreateGameDto } from "./dto/create-game.dto";
@@ -25,6 +25,7 @@ import { Game } from "./entities/game.entity";
 import { CreateReviewDto } from "../review/dto/create-review.dto";
 import { Role } from "../auth/enums/role.enum";
 import { Roles } from "../auth/decorators/roles.decorators";
+import { JwtAuthGuard } from "../auth/jwt-auth.guards";
 
 
 @ApiTags('game')
@@ -41,6 +42,7 @@ export class GameController {
     type: Game,
   })
   @ApiBadRequestResponse({ description: 'Game cannot be registrated' })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Post()
@@ -54,6 +56,7 @@ export class GameController {
 
   @ApiOperation({ summary: 'Get all games' })
   @ApiNotFoundResponse({ description: 'No games were found' })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Get()
@@ -73,6 +76,7 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found' })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Get(':id')
@@ -94,6 +98,7 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found : Game cannot be updated' })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Patch(':id')
@@ -106,6 +111,8 @@ export class GameController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete game by ID' })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   delete(@Param('id') id: number) {
@@ -117,6 +124,10 @@ export class GameController {
   }
 
   @Post(':id/reviews')
+  @ApiOperation({ summary: 'Add review to a game' })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   addReviewToGame(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
     try {
       return this.gameService.addReviewToGame(gameId, createReviewDto);

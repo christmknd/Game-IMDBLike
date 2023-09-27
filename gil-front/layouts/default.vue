@@ -1,12 +1,4 @@
 <script  setup>
-import authService from '~/services/auth';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-const logout = async () => {
-  authService.logout(); 
-  await router.push('/login'); 
-};
 </script>
 
 <template>

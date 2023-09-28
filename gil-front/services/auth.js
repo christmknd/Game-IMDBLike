@@ -1,18 +1,13 @@
-import { useAuthStore } from '@/stores/authStore';
 
 
 export default {
     async login(username, password) {
-      const authStore = useAuthStore();
       try {
         const response = await $fetch('http://localhost:5000/auth/login', {
           method: 'POST',
           body: JSON.stringify({ username, password }),
         });
-        authStore.setAccessToken(response.access_token);
-        authStore.setUsername(response.username);
-
-   
+        localStorage.setItem('accessToken', response.access_token);
         return response;
       } catch (error) {
         throw error;
@@ -20,14 +15,12 @@ export default {
     },
   
     async register(username, email, password) {
-      const authStore = useAuthStore();
       try {
         const response = await $fetch('http://localhost:5000/auth/register', {
           method: 'POST',
           body: JSON.stringify({ username, email, password }),
         });
-        authStore.setAccessToken(response.access_token);
-        authStore.setUsername(response.username);
+        localStorage.setItem('accessToken', response.access_token);
         return response;
       } catch (error) {
         throw error;
@@ -35,8 +28,16 @@ export default {
     },
   
     logout() {
-      const authStore = useAuthStore();
-      authStore.clearAuthData();
+      localStorage.removeItem('accessToken');
+    },
+
+    getAccessToken() {
+      return localStorage.getItem('accessToken');
+    },
+
+    isConnected() {
+      const accessToken = this.getAccessToken();
+      return accessToken !== null;
     },
   };
   

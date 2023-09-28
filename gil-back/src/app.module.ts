@@ -9,8 +9,6 @@ import { AuthModule } from './auth/auth.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import config from './orm.config';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './auth/guards/role.guard';
 
 @Module({
   imports: [
@@ -30,10 +28,6 @@ import { RolesGuard } from './auth/guards/role.guard';
   controllers: [AppController],
   providers: [
     AppService,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
   ],
 })
 export class AppModule {}

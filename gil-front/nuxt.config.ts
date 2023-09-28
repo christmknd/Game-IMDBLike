@@ -4,6 +4,7 @@ import {resolve} from 'path'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: false,
   app: {
     head: {
       meta: [
@@ -42,9 +43,4 @@ export default defineNuxtConfig({
   },
   // add bootstrap-vue module for nuxt
   components: ['~/components'],
-  modules: [[
-    '@pinia/nuxt', {
-      autoImports: ['defineStore', 'acceptHMRUpdate'],
-    },
-  ]]
 })

@@ -28,9 +28,7 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/authStore';
-
-const authStore = useAuthStore();
+import authService from '~/services/auth';
 
 export default {
   data (){
@@ -42,17 +40,9 @@ export default {
   methods: {
     async login () {
       try {
-        const formData = {
-          username : this.form_username,
-          password: this.form_password
-        }
-        const response = await $fetch('http://localhost:5000/auth/login', {
-          method: 'POST',
-          body: JSON.stringify(formData),
-        });
-        useAuthStore().useAuthStore(response.access_token);
-        authStore.setUsername(response.username);
+       await authService.login(this.form_username, this.form_password);
         this.$emit('user-logged');
+        this.$router.push('/game');
         console.log('User connecté sur la plateforme avec succès')
       } catch (error) {
         console.error('Une erreur s\'est produite lors de l\'enrigistrement du user : ',error )

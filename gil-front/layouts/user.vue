@@ -1,12 +1,11 @@
 <script setup>
-  import { useAuthStore } from '@/stores/authStore';
   import { useRouter } from 'vue-router';
+  import auth from '~/services/auth';
 
-  const authStore = useAuthStore();
   const router = useRouter();
 
   const logout = async () => {
-    authStore.clearAuthData(); // Efface les données d'authentification
+    auth.logout();
     await router.push('/login'); // Redirige vers la page de connexion
   };
 </script>

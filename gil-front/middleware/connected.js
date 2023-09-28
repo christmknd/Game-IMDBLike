@@ -1,10 +1,11 @@
+import authService from '~/services/auth';
+const router = useRouter();
 
-import { useAuthStore } from '@/stores/authStore';
 
-export default function ({ redirect }) {
-  const authStore = useAuthStore();
+export default function () {
 
-  if (!authStore.accessToken) {
-    return redirect('/login');
+  
+  if (!authService.isConnected()) {
+    return router.push('/login');
   }
 }

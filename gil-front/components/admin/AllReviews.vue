@@ -18,9 +18,15 @@
 </template>
 
 <script setup>
-  const { data: reviews } = await useFetch(
-      `http://localhost:5000/review`
-    );
+
+import auth from '~/services/auth';
+const accessToken = auth.getAccessToken();
+
+  const { data: reviews } = await useFetch(`http://localhost:5000/review`, {
+    headers : {
+      'Authorization': `Bearer ${accessToken} `,
+    }
+  });
 </script>
 
 <style scoped></style>

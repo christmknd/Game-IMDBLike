@@ -13,9 +13,16 @@
 </template>
 
 <script setup>
-  const { data: users } = await useFetch(
-      `http://localhost:5000/users`
-    );
+
+import auth from '~/services/auth';
+const accessToken = auth.getAccessToken();
+
+
+  const { data: users } = await useFetch(`http://localhost:5000/users`, {
+    headers : {
+      'Authorization': `Bearer ${accessToken} `,
+    }
+  });
 </script>
 
 

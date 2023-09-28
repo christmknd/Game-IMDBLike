@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import authService from '~/services/auth';
+import auth from '~/services/auth';
 
 export default {
   data (){
@@ -40,7 +40,7 @@ export default {
   methods: {
     async login () {
       try {
-       await authService.login(this.form_username, this.form_password);
+       await auth.login(this.form_username, this.form_password);
         this.$emit('user-logged');
         this.$router.push('/game');
         console.log('User connecté sur la plateforme avec succès')

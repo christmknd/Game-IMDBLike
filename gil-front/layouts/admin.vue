@@ -21,16 +21,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <nuxt-link to="/admin/users">Utilisateurs</nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link to="/admin/games">Jeux</nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link to="/admin/reviews">Critiques</nuxt-link>
-        </li>
-        <li class="nav-item">
-          <button @click="logout">Se Déconnecter</button>
+          <nuxt-link to="/admin">Dashboard</nuxt-link>
         </li>
       </ul>
     </div>
@@ -39,7 +30,7 @@
     <slot />
       <footer class="bg-light fixed-bottom  ">
       <div class="text-center p-3" >
-        <p class="text-dark" >Site crée par Christ M. All Rights Reserved - 2023</p>
+        <p class="text-dark" >Site crée par Christ M. - All Rights Reserved - 2023</p>
       </div>
     </footer>   
   </div>

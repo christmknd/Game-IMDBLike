@@ -11,6 +11,9 @@ useHead({
 <template>
   <div>
     <h1>Admin Dashboard</h1>
+    <AdminAllGames/>
+    <AdminAllReviews/>
+    <AdminAllUsers/>
   </div>
 </template>
 

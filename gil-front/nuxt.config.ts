@@ -4,7 +4,6 @@ import {resolve} from 'path'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  ssr: false,
   app: {
     head: {
       meta: [
@@ -28,6 +27,14 @@ export default defineNuxtConfig({
           type: 'text/javascript'
         },
       ]
+    },
+    pageTransition: {
+      name: 'fade',
+      mode: 'out-in' 
+    },
+    layoutTransition: {
+      name: 'slide',
+      mode: 'out-in' 
     }
   },
   alias: {

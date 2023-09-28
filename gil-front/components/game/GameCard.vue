@@ -9,24 +9,10 @@
 
 <script>
 export default {
-  props: {
-    gameId: {
-      type: Number, 
-      required: true,
-    },
-  },
-  data() {
-    return {
-      game: {},
-    };
-  },
-  async created() {
-    await this.getGameById(this.gameId);
-  },
   methods: {
     async getGameById(gameId) {
       try {
-        const { data, error } = await useFetch(`http://localhost:5000/game/${gameId}`, {
+        await $fetch(`http://localhost:5000/game/${gameId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

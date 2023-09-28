@@ -31,7 +31,7 @@ export class GameService {
     // @ts-ignore
     const game = await this.gameRepository.findOneBy({ id: id});
     if (!game) {
-      throw new NotFoundException(`Review with id ${id} not found`);
+      throw new NotFoundException(`Game with id ${id} not found`);
     }
     return game;
   }
@@ -46,6 +46,9 @@ export class GameService {
     const game = await this.gameRepository.findOneBy({ id: id });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
+    if (!game) {
+      throw new NotFoundException(`Game with id ${id} not found`);
+    }
     await this.gameRepository.delete(game);
   }
 

@@ -19,7 +19,7 @@ const accessToken = auth.getAccessToken();
 
     const { data: games } = await useFetch( `http://localhost:5000/game`, {
       headers : {
-      'Authorization': `Bearer ${accessToken} `,
+      'Authorization': `Bearer ${accessToken}`,
     }
   })
 

@@ -16,6 +16,13 @@
 </template>
 
 <script setup>
+definePageMeta({
+  layout: "user",
+  middleware: 'connected'
+});
+useHead({
+  title: 'Modifier un jeu'
+})
 import { ref } from 'vue';
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();

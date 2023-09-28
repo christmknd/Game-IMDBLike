@@ -27,7 +27,7 @@
     <slot />
     <footer class="bg-light fixed-bottom  ">
       <div class="text-center p-3" >
-        <p class="text-dark" >Site crée par Christ M. All Rights Reserved - 2023</p>
+        <p class="text-dark" >Site crée par Christ M. - All Rights Reserved - 2023</p>
       </div>
     </footer>
   </div>

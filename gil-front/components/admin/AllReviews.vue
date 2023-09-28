@@ -23,7 +23,9 @@ import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
 
   const { data: reviews } = await useFetch(`http://localhost:5000/review`, {
-    'Authorization': `Bearer ${accessToken} `,
+    headers : {
+      'Authorization': `Bearer ${accessToken} `,
+    }
   });
 </script>
 

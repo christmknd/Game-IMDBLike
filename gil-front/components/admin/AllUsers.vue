@@ -19,7 +19,9 @@ const accessToken = auth.getAccessToken();
 
 
   const { data: users } = await useFetch(`http://localhost:5000/users`, {
-    'Authorization': `Bearer ${accessToken} `,
+    headers : {
+      'Authorization': `Bearer ${accessToken} `,
+    }
   });
 </script>
 

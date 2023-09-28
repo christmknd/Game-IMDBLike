@@ -8,29 +8,8 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    async getGameById(gameId) {
-      try {
-        await $fetch(`http://localhost:5000/game/${gameId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (error) {
-          console.error('Une erreur s\'est produite lors de la récupération du jeu :', error);
-          return;
-        }
-
-        this.game = data;
-      } catch (error) {
-        console.error('Une erreur s\'est produite lors de la récupération du jeu :', error);
-      }
-    },
-  },
-};
+import { ref, defineProps } from 'vue';
+const { game } = defineProps(['game']);
 </script>
 
 <style scoped>

@@ -15,13 +15,14 @@
 
 <script setup>
 import { ref } from 'vue';
-
+import auth from '~/services/auth';
+const accessToken = auth.getAccessToken();
 const selectedGameId = ref(null);
 
 const selectGame = (gameId) => {
   selectedGameId.value = gameId;
 };
-  const { data: games } = await useFetch(
-      `http://localhost:5000/game`
-    );
+  const { data: games } = await useFetch( `http://localhost:5000/game`, {
+    'Authorization': `Bearer ${accessToken} `,
+  });
 </script>

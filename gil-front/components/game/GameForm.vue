@@ -34,6 +34,7 @@ import SuccessAlert from '@/components/ui/alert/SuccessAlert.vue';
 import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue';
 import {Genre} from '../../../gil-back/src/game/enums/genre-enum';
 import {Platform} from '../../../gil-back/src/game/enums/platform-enum';
+import auth from '~/services/auth';
 
 export default {
   components: {
@@ -54,6 +55,7 @@ export default {
   },
   methods: {
     async addGame(){
+      const accesstoken = auth.getAccessToken()
       try {
         const gameData = {
           name : this.game_name,
@@ -65,6 +67,8 @@ export default {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accesstoken}`,
+
           },
           body: JSON.stringify(gameData),
         })

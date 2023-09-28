@@ -41,6 +41,7 @@ export default defineNuxtConfig({
   alias: {
     "@": resolve(__dirname)
   },
-  // add bootstrap-vue module for nuxt
-  components: ['~/components'],
+  components: [
+    '~/components',
+  ],
 })

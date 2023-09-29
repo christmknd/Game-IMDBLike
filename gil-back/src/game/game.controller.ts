@@ -3,7 +3,7 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, HttpStatus,
   NotFoundException,
   Param,
   Patch,
@@ -21,11 +21,11 @@ import {
   ApiResponse,
   ApiTags
 } from "@nestjs/swagger";
-import { Game } from "./entities/game.entity";
-import { CreateReviewDto } from "../review/dto/create-review.dto";
-import { Role } from "../auth/enums/role.enum";
-import { Roles } from "../auth/decorators/roles.decorators";
-import { JwtAuthGuard } from "../auth/jwt-auth.guards";
+import { Game } from './entities/game.entity';
+import { CreateReviewDto } from '../review/dto/create-review.dto';
+import { Role } from '../auth/enums/role.enum';
+import { Roles } from '../auth/decorators/roles.decorators';
+import { JwtAuthGuard } from '../auth/jwt-auth.guards';
 
 
 @ApiTags('game')
@@ -55,6 +55,11 @@ export class GameController {
   }
 
   @ApiOperation({ summary: 'Get all games' })
+  @ApiResponse({
+    status: 200,
+    description: 'Return all games',
+    type: Game,
+  })
   @ApiNotFoundResponse({ description: 'No games were found' })
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
@@ -118,6 +123,9 @@ export class GameController {
   delete(@Param('id') id: number) {
     try {
       return this.gameService.deleteGame(+id);
+      return {
+        statusCode: HttpStatus.NO_CONTENT,
+      };
     } catch {
       throw new NotFoundException('Game not found : Game cannot be deleted')
     }

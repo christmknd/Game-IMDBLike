@@ -45,7 +45,7 @@ export default {
         this.$router.push('/game');
         console.log('User connecté sur la plateforme avec succès')
       } catch (error) {
-        console.error('Une erreur s\'est produite lors de l\'enrigistrement du user : ',error )
+        console.error('Une erreur s\'est produite lors de la connexion du user : ',error )
       }
     }
   }

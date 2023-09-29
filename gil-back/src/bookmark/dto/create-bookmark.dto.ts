@@ -7,5 +7,5 @@ export class CreateBookmarkDto {
     default: 'Favoris',
   })
   @IsNotEmpty()
-  name: string = 'Favoris';
+  name: string;
 }

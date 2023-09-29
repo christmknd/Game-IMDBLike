@@ -23,9 +23,6 @@
           <nuxt-link class="nav-link" to="/game">Jeux</nuxt-link>
         </li>
         <li class="nav-item">
-          <nuxt-link class="nav-link" to="/game/addGame">Ajouter un jeu</nuxt-link>
-        </li>
-        <li class="nav-item">
           <nuxt-link class="nav-link" to="/game/addreview">Ajouter une review</nuxt-link>
         </li>
         <li class="nav-item">

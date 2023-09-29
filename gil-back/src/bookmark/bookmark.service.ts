@@ -25,7 +25,7 @@ export class BookmarkService {
   async findAllGamesInBookmark(bookmarkId: number): Promise<Game[]> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const bookmark = await this.bookmarkRepository.findOne(bookmarkId);
+    const bookmark = await this.bookmarkRepository.findOneBy({ bookmarkId : bookmarkId });
     if (!bookmark) {
       throw new NotFoundException('bookmark not found : we can find no games');
     }
@@ -35,7 +35,7 @@ export class BookmarkService {
   async findBookmarkById(id: number): Promise<Bookmark> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const bookmark = await this.bookmarkRepository.findOne(id);
+    const bookmark = await this.bookmarkRepository.findOneBy({ id: id });
     if (!bookmark) {
       throw new NotFoundException(`bookmark with id ${id} not found`);
     }

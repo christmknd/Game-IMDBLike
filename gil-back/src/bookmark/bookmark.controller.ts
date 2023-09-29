@@ -7,6 +7,7 @@ import {
   Delete,
   BadRequestException,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
@@ -14,13 +15,15 @@ import {
   ApiBadRequestResponse,
   ApiBody,
   ApiNotFoundResponse,
-  ApiOperation, ApiParam,
+  ApiOperation,
+  ApiParam,
   ApiResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger';
 import { Bookmark } from './entities/bookmark.entity';
-import { Roles } from "../auth/decorators/roles.decorators";
-import { Role } from "../auth/enums/role.enum";
+import { Roles } from '../auth/decorators/roles.decorators';
+import { Role } from '../auth/enums/role.enum';
+import { JwtAuthGuard } from '../auth/jwt-auth.guards';
 
 @ApiTags('bookmark')
 @Controller('bookmark')
@@ -42,12 +45,14 @@ export class BookmarkController {
     try {
       return this.bookmarkService.createBookmark(createBookmarkDto);
     } catch {
-      throw new BadRequestException('Bookmark cannot be registrated')
+      throw new BadRequestException('Bookmark cannot be registrated');
     }
   }
 
   @ApiOperation({ summary: 'Get all games in Bookmark' })
-  @ApiNotFoundResponse({ description: 'No games found : the Bookmark is maybe empty' })
+  @ApiNotFoundResponse({
+    description: 'No games found : the Bookmark is maybe empty',
+  })
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Get(':bookmarkId/games')
@@ -72,7 +77,7 @@ export class BookmarkController {
   @Get(':id')
   @Roles(Role.Player)
   @Roles(Role.Admin)
-  findBookmarkById(@Param('id') id: string) {
+  findBookmarkById(@Param('id') id: number) {
     try {
       return this.bookmarkService.findBookmarkById(+id);
     } catch {
@@ -83,9 +88,10 @@ export class BookmarkController {
   @ApiOperation({ summary: 'Add game to bookmark' })
   @ApiParam({ name: 'bookmarkId', type: Number })
   @ApiParam({ name: 'gameId', type: Number })
-  @Post(':bookmarkId/add-game/:gameId')
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
+  @Post(':bookmarkId/add-game/:gameId')
   addGameToBookmark(
     @Param('bookmarkId') bookmarkId: number,
     @Param('gameId') gameId: number,
@@ -99,10 +105,10 @@ export class BookmarkController {
     }
   }
 
-
   @ApiOperation({ summary: 'Delete game to bookmark' })
   @ApiParam({ name: 'bookmarkId', type: Number })
   @ApiParam({ name: 'gameId', type: Number })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Delete(':bookmarkId/delete-game/:gameId')
@@ -121,7 +127,10 @@ export class BookmarkController {
   @ApiOperation({ summary: 'Delete bookmark by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Bookmark deleted successfully' })
-  @ApiNotFoundResponse({ description: 'Bookmark not found : cannot be deleted' })
+  @ApiNotFoundResponse({
+    description: 'Bookmark not found : cannot be deleted',
+  })
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Delete(':id')

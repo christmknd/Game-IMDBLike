@@ -4,6 +4,7 @@
     <p>Date de sortie : {{ game.releaseYear }}</p>
     <p>Genre : {{ game.genres }}</p>
     <p>Plateforme : {{ game.platform }}</p>
+    <button class="btn btn-success" @click="addReview">Ajouter une review</button>
     <button class="btn btn-warning" @click="editGame">Modifier</button>
     <button class="btn btn-danger" @click="deleteGame">Supprimer</button>
   </div>
@@ -32,8 +33,15 @@ const {data: game} = await useFetch(uri , {
   }
 })
 
-//editGame 
+// Ajouter un review 
+const addReview = () => {
+  router.push(`/game/${id}/addreview`)
+}
 
+//editGame 
+const editGame = () => {
+  router.push(`/game/${id}/edit`);
+};
 
 //deleteGame 
 const deleteGame = async () => {
@@ -50,11 +58,6 @@ const deleteGame = async () => {
     console.log('Une erreur s\' est produite : le jeu n\' a pas pu être supprimé . \n')
   } 
 }
-
-const editGame = () => {
-  router.push(`/game/${id}/edit`);
-};
-
 </script>
 
 <style>

@@ -20,4 +20,5 @@ export enum Platform {
   PlayStation_3 = 'PlayStation_3',
   PlayStation_4 = 'PlayStation_4',
   PlayStation_5 = 'PlayStation_5',
+  PC = 'PC',
 }

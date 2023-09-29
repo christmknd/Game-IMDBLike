@@ -21,11 +21,11 @@ import {
   ApiResponse,
   ApiTags
 } from "@nestjs/swagger";
-import { Game } from "./entities/game.entity";
-import { CreateReviewDto } from "../review/dto/create-review.dto";
-import { Role } from "../auth/enums/role.enum";
-import { Roles } from "../auth/decorators/roles.decorators";
-import { JwtAuthGuard } from "../auth/jwt-auth.guards";
+import { Game } from './entities/game.entity';
+import { CreateReviewDto } from '../review/dto/create-review.dto';
+import { Role } from '../auth/enums/role.enum';
+import { Roles } from '../auth/decorators/roles.decorators';
+import { JwtAuthGuard } from '../auth/jwt-auth.guards';
 
 
 @ApiTags('game')
@@ -55,6 +55,11 @@ export class GameController {
   }
 
   @ApiOperation({ summary: 'Get all games' })
+  @ApiResponse({
+    status: 200,
+    description: 'Return all games',
+    type: Game,
+  })
   @ApiNotFoundResponse({ description: 'No games were found' })
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)

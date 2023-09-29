@@ -38,6 +38,9 @@ export class GameService {
 
   async updateGame(id: number, updateGameDto: UpdateGameDto): Promise<Game> {
     const game = await this.gameRepository.findOneBy({ id: id });
+    if (!game) {
+      throw new NotFoundException(`Game with ID ${id} not found`);
+    }
     Object.assign(game, updateGameDto);
     return this.gameRepository.save(game);
   }

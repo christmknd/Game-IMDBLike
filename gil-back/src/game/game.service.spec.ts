@@ -125,8 +125,8 @@ describe('GameService', () => {
     });
   });
 
-  describe('deleteBook', () => {
-    it('should delete a book', async () => {
+  describe('deleteGame', () => {
+    it('should delete a game', async () => {
       const existingGame = new Game();
       const gameId = 1;
       jest.spyOn(gameRepository, 'findOneBy').mockResolvedValue(existingGame);

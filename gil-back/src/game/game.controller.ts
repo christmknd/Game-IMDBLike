@@ -3,7 +3,7 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, HttpStatus,
   NotFoundException,
   Param,
   Patch,
@@ -118,6 +118,9 @@ export class GameController {
   delete(@Param('id') id: number) {
     try {
       return this.gameService.deleteGame(+id);
+      return {
+        statusCode: HttpStatus.NO_CONTENT,
+      };
     } catch {
       throw new NotFoundException('Game not found : Game cannot be deleted')
     }

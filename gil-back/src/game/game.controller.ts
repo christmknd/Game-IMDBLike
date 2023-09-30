@@ -130,17 +130,4 @@ export class GameController {
       throw new NotFoundException('Game not found : Game cannot be deleted')
     }
   }
-
-  @Post(':id/reviews')
-  @ApiOperation({ summary: 'Add review to a game' })
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.Player)
-  @Roles(Role.Admin)
-  addReviewToGame(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
-    try {
-      return this.gameService.addReviewToGame(gameId, createReviewDto);
-    } catch {
-      throw new NotFoundException(`Game with ID ${gameId} not found`);
-    }
-  }
 }

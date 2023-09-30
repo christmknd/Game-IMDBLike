@@ -20,6 +20,22 @@ export class ReviewService {
     return this.reviewRepository.save(review);
   }
 
+  //Ajouter une review à un jeu 
+  async addReviewToGame(
+    id: number,
+    createReviewDto: CreateReviewDto,
+  ): Promise<Review> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const game = await this.gameRepository.findOneBy({ id: id });
+    if (!game) {
+      throw new NotFoundException(`Game with ID ${id} not found`);
+    }
+
+    const review = this.reviewRepository.create(createReviewDto);
+    return this.reviewRepository.save(review);
+  }
+
 
 
   //LISTE DE TOUTES LES REVIEWS DE LA PLATEFORME

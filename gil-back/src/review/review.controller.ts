@@ -51,6 +51,19 @@ export class ReviewController {
     }
   }
 
+  @Post(':id/reviews')
+  @ApiOperation({ summary: 'Add review to a game' })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
+  addReviewToGame(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
+    try {
+      return this.reviewService.addReviewToGame(gameId, createReviewDto);
+    } catch {
+      throw new NotFoundException(`Game with ID ${gameId} not found`);
+    }
+  }
+
   @ApiOperation({ summary: 'Get all reviews' })
   @ApiNotFoundResponse({ description: 'No reviews found' })
   @UseGuards(JwtAuthGuard)

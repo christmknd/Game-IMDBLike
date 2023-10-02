@@ -14,6 +14,8 @@
           <li>{{ review.rating }}</li>
           <li>{{ review.pros }}</li>
           <li>{{ review.cons }}</li>
+          <button class="btn btn-warning" @click="editReview">Modifier la review</button>
+          <button class="btn btn-danger">Supprimer la review</button>
         </ul>
     </div>
   </div>
@@ -56,6 +58,10 @@ const addReview = () => {
   router.push(`/game/${id}/addreview`)
 }
 
+//Edit un review 
+const editReview = () => {
+  router.push(`/game/${id}/editreview`)
+}
 //editGame 
 const editGame = () => {
   router.push(`/game/${id}/edit`);

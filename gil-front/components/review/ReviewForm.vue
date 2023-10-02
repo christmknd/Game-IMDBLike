@@ -49,7 +49,7 @@
             content : review_content.value,
             pros: review_pros.value,
             cons: review_cons.value,
-            rating : parseInt(review_rating.value)
+            rating : review_rating.value
           }
           await $fetch(`http://localhost:5000/game/${gameId}/review`, {
             method: 'POST',

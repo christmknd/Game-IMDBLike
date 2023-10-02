@@ -12,6 +12,7 @@ definePageMeta({
 useHead({
   title: 'Ajouter une critique'
 })
+
 </script>
 
 <style scoped></style>

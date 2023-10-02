@@ -1,36 +1,55 @@
+<template>
+  <div class="container-fluid">
+    <h1>Se connecter</h1>
+    <form @submit.prevent="login">
+      <div class="mb-3">
+        <label htmlFor='username' class="form-label">Username</label>
+        <input 
+          class="form-control"
+          type="text" 
+          id="username" 
+          placeholder='username'
+          v-model="form_username" 
+          />
+      </div>
+      <div class="mb-3">
+        <label htmlFor='password' class="form-label">Mot de passe</label>
+          <input 
+          class="form-control"
+          type="password" 
+          id="password" 
+          placeholder="password"
+          v-model="form_password"
+          />
+      </div>
+          <button type="submit" class="btn btn-primary">Se connecter</button>
+      </form>
+  </div>
+</template>
+
 <script>
+import auth from '~/services/auth';
+
 export default {
-  data: () => {
+  data (){
     return {
-      form : {
-        pseudo : '',
-        password : ''
+        form_username : '',
+        form_password : ''
+    }
+  },
+  methods: {
+    async login () {
+      try {
+       await auth.login(this.form_username, this.form_password);
+        this.$emit('user-logged');
+        this.$router.push('/game');
+        console.log('User connecté sur la plateforme avec succès')
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la connexion du user : ',error )
       }
     }
   }
 }
 </script>
-
-<template>
-  <div>
-    <form>
-        <label htmlFor='pseudo'>pseudo</label>
-        <input 
-          type="text" 
-          id="pseudo" 
-          placeholder='pseudo'
-          v-model="form.pseudo" 
-          />
-        <label htmlFor='password'>Mot de passe</label>
-          <input 
-          type="password" 
-          id="password" 
-          placeholder="password"
-          v-model="form.password"
-          />
-          <button>Se connecter</button>
-      </form>
-  </div>
-</template>
 
 <style scoped></style>

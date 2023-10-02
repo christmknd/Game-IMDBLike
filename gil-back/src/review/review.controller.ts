@@ -7,30 +7,33 @@ import {
   Param,
   Delete,
   BadRequestException,
-  NotFoundException, UseGuards
-} from "@nestjs/common";
+  NotFoundException,
+  UseGuards,
+} from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import {
-  ApiBadRequestResponse, ApiBearerAuth,
+  ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiBody,
   ApiNotFoundResponse,
   ApiOperation,
   ApiParam,
   ApiResponse,
-  ApiTags
-} from "@nestjs/swagger";
+  ApiTags,
+} from '@nestjs/swagger';
 import { Review } from './entities/review.entity';
-import { JwtAuthGuard } from "../auth/jwt-auth.guards";
-import { Roles } from "../auth/decorators/roles.decorators";
-import { Role } from "../auth/enums/role.enum";
+import { JwtAuthGuard } from '../auth/jwt-auth.guards';
+import { Roles } from '../auth/decorators/roles.decorators';
+import { Role } from '../auth/enums/role.enum';
 
 @ApiTags('review')
 @Controller('review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
+  //créer une review
   @ApiOperation({ summary: 'Create a new review' })
   @ApiBody({ type: CreateReviewDto })
   @ApiResponse({
@@ -51,12 +54,16 @@ export class ReviewController {
     }
   }
 
+  //ajouter une review à un jeu
   @Post(':gameId/review')
   @ApiOperation({ summary: 'Add review to a game' })
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
-  addReviewToGame(@Param('id') gameId: number, @Body() createReviewDto: CreateReviewDto) {
+  addReviewToGame(
+    @Param('id') gameId: number,
+    @Body() createReviewDto: CreateReviewDto,
+  ) {
     try {
       return this.reviewService.addReviewToGame(gameId, createReviewDto);
     } catch {
@@ -64,6 +71,7 @@ export class ReviewController {
     }
   }
 
+  //Lire toutes les reviews qui existent sur la plateforme
   @ApiOperation({ summary: 'Get all reviews' })
   @ApiNotFoundResponse({ description: 'No reviews found' })
   @UseGuards(JwtAuthGuard)
@@ -89,9 +97,9 @@ export class ReviewController {
   })
   @ApiNotFoundResponse({ description: 'Game not found' })
   @Get(':gameId/reviews')
-  async findReviewsByGameId(@Param('gameId') gameId: number) {
+  async findAllReviewsByGameId(@Param('gameId') gameId: number) {
     try {
-      return this.reviewService.findReviewsByGameId(gameId);
+      return this.reviewService.findAllReviewsByGameId(gameId);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw new NotFoundException(`Game with ID ${gameId} not found`);
@@ -119,7 +127,9 @@ export class ReviewController {
       return this.reviewService.findReviewByGameIdAndReviewId(gameId, reviewId);
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw new NotFoundException(`Game with ID ${gameId} or Review with ID ${reviewId} not found`);
+        throw new NotFoundException(
+          `Game with ID ${gameId} or Review with ID ${reviewId} not found`,
+        );
       }
       throw error;
     }
@@ -143,10 +153,16 @@ export class ReviewController {
     @Body() createReviewDto: CreateReviewDto,
   ) {
     try {
-      return this.reviewService.updateReviewByGameIdAndReviewId(gameId, reviewId, createReviewDto);
+      return this.reviewService.updateReviewByGameIdAndReviewId(
+        gameId,
+        reviewId,
+        createReviewDto,
+      );
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw new NotFoundException(`Game with ID ${gameId} or Review with ID ${reviewId} not found`);
+        throw new NotFoundException(
+          `Game with ID ${gameId} or Review with ID ${reviewId} not found`,
+        );
       }
       throw error;
     }
@@ -167,10 +183,15 @@ export class ReviewController {
     @Param('reviewId') reviewId: number,
   ) {
     try {
-      await this.reviewService.deleteReviewByGameIdAndReviewId(gameId, reviewId);
+      await this.reviewService.deleteReviewByGameIdAndReviewId(
+        gameId,
+        reviewId,
+      );
     } catch (error) {
       if (error instanceof NotFoundException) {
-        throw new NotFoundException(`Game with ID ${gameId} or Review with ID ${reviewId} not found`);
+        throw new NotFoundException(
+          `Game with ID ${gameId} or Review with ID ${reviewId} not found`,
+        );
       }
       throw error;
     }

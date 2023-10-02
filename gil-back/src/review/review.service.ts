@@ -20,7 +20,7 @@ export class ReviewService {
     return this.reviewRepository.save(review);
   }
 
-  //Ajouter une review à un jeu 
+  // Ajouter une review à un jeu
   async addReviewToGame(
     id: number,
     createReviewDto: CreateReviewDto,
@@ -44,6 +44,7 @@ export class ReviewService {
   }
 
 
+  // chercher un review ( sans se soucier du jeu auquel elle est associé 
   async findReviewById(id: number, gameId: number): Promise<Review> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -54,7 +55,29 @@ export class ReviewService {
     return review;
   }
 
-  async findReviewsByGameId(gameId: number): Promise<Review[]> {
+  // chercher une review en fonction du jeu auquel elle est associé
+  async findReviewByGameIdAndReviewId(
+    gameId: number,
+    reviewId: number,
+  ): Promise<Review> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const game = await this.gameRepository.findOneBy({ gameId: gameId });
+    if (!game) {
+      throw new NotFoundException(`Game with ID ${gameId} not found`);
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const review = await this.reviewRepository.findOne({ where: { id: reviewId, gameId } });
+    if (!review) {
+      throw new NotFoundException(`Review with ID ${reviewId} not found in Game with ID ${gameId}`);
+    }
+    return review;
+  }
+
+
+  //Listes de toutes les reviews pour un jeu spécifique
+  async findAllReviewsByGameId(gameId: number): Promise<Review[]> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const game = await this.gameRepository.findOne(gameId);
@@ -66,22 +89,9 @@ export class ReviewService {
     return this.reviewRepository.find({ where: { gameId } });
   }
 
-  async findReviewByGameIdAndReviewId(gameId: number, reviewId: number): Promise<Review> {
-     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const game = await this.gameRepository.findOneBy({gameId : gameId});
-    if (!game) {
-      throw new NotFoundException(`Game with ID ${gameId} not found`);
-    }
-     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const review = await this.reviewRepository.findOne({ where: { id: reviewId, gameId } });
-    if (!review) {
-      throw new NotFoundException(`Review with ID ${reviewId} not found in Game with ID ${gameId}`);
-    } 
-    return review;
-  }
+  //
 
+  //mettre à jour une review
   async updateReviewByGameIdAndReviewId(
     gameId: number,
     reviewId: number,
@@ -89,7 +99,7 @@ export class ReviewService {
   ): Promise<Review> {
      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const game = await this.gameRepository.findOneBy({gameId : gameId});
+    const game = await this.gameRepository.findOneBy({ gameId: gameId });
     if (!game) {
       throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
@@ -103,10 +113,14 @@ export class ReviewService {
     return this.reviewRepository.save({ ...review, ...updateReviewDto });
   }
 
-  async deleteReviewByGameIdAndReviewId(gameId: number, reviewId: number): Promise<void> {
+  // supprimer une review
+  async deleteReviewByGameIdAndReviewId(
+    gameId: number,
+    reviewId: number,
+  ): Promise<void> {
      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const game = await this.gameRepository.findOneBy({gameId : gameId});
+    const game = await this.gameRepository.findOneBy({ gameId: gameId });
     if (!game) throw new NotFoundException(`Game with ID ${gameId} not found`);
     
      // eslint-disable-next-line @typescript-eslint/ban-ts-comment

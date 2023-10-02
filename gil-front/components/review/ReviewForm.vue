@@ -19,63 +19,53 @@
        </div>
        <div class="mb-3">
         <label for="rating" class="form-label">Note</label>
-        <textarea id="rating" class="form-control" v-model="review_rating"></textarea>
+        <input type="rating" class="form-control" v-model="review_rating"/>
        </div>
         <button type="submit" class="btn btn-success">Continuer </button>
-        <SuccessAlert v-if="success">Jeu ajouté avec succès !</SuccessAlert>
 
-      <ErrorAlert v-if="error">Une erreur s'est produite lors de l'ajout du jeu.</ErrorAlert>
       </form>
     </div>
   </template>
   
-  <script >
-  import SuccessAlert from '@/components/ui/alert/SuccessAlert.vue';
-  import ErrorAlert from '@/components/ui/alert/ErrorAlert.vue';
-  export default {
-    components: {
-      SuccessAlert,
-      ErrorAlert,
-    },
-    data() {
-      return {
-        review_title : "",
-        review_content: "",
-        review_genres: "",
-        review_pros: "",
-        review_cons: "",
-        review_rating: "",
-        success: false,
-        error: false,
-      };
-    },
-    methods: {
-      async addReview(){
+  <script setup >
+  import auth from '~/services/auth';
+
+  const router = useRouter();
+  const route = useRoute();
+  const gameId = route.params.id;
+  console.log(gameId);
+
+  const review_title = ref("");
+  const review_content = ref("");
+  const review_pros = ref("");
+  const review_cons = ref("");
+  const review_rating = ref("");
+  
+  const addReview = async () => {
+        const accesstoken = auth.getAccessToken()
         try {
           const reviewData = {
-            title : this.review_title,
-            content : this.review_content,
-            pros: this.review_pros,
-            cons: this.review_cons,
-            rating : this.review_platform
+            title : review_title.value,
+            content : review_content.value,
+            pros: review_pros.value,
+            cons: review_cons.value,
+            rating : parseInt(review_rating.value)
           }
-          await $fetch('http://localhost:5000/review', {
+          await $fetch(`http://localhost:5000/review/${gameId}/review`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accesstoken}`
             },
             body: JSON.stringify(reviewData),
           })
-          this.success = true;
-          this.error = false;
+          router.push(`/game/${gameId}`)
           console.log('Jeu ajouté avec succès !');
   
         } catch (error) {
           console.error('Une erreur s\'est produite lors de l\'ajout du jeu : ',error )
         }
       }
-    }
-  }
   </script>
   
   <style scoped>

@@ -33,6 +33,14 @@ const {data: game} = await useFetch(uri , {
   }
 })
 
+//Liste de toutes les reviews d'un jeu 
+
+const {data: review} = await useFetch(`http://localhost:5000/game/${id}/reviews`, {
+  headers : {
+    'Authorization': `Bearer ${accessToken} `
+  }
+})
+
 // Ajouter un review 
 const addReview = () => {
   router.push(`/game/${id}/addreview`)

@@ -7,6 +7,15 @@
     <button class="btn btn-success" @click="addReview">Ajouter une review</button>
     <button class="btn btn-warning" @click="editGame">Modifier</button>
     <button class="btn btn-danger" @click="deleteGame">Supprimer</button>
+    <div v-for="review in reviews" :key="review.id" class="review card">
+      <h2>{{ review.title }}</h2>
+        <ul>
+          <li>{{ review.content }}</li>
+          <li>{{ review.rating }}</li>
+          <li>{{ review.pros }}</li>
+          <li>{{ review.cons }}</li>
+        </ul>
+    </div>
   </div>
 </template>
 
@@ -35,7 +44,8 @@ const {data: game} = await useFetch(uri , {
 
 //Liste de toutes les reviews d'un jeu 
 
-const {data: review} = await useFetch(`http://localhost:5000/game/${id}/reviews`, {
+const {data: reviews} = await useFetch(`http://localhost:5000/review/${id}/reviews`, {
+  method: 'get',
   headers : {
     'Authorization': `Bearer ${accessToken} `
   }

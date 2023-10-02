@@ -54,28 +54,10 @@ export class ReviewController {
     }
   }
 
-  //ajouter une review à un jeu
-  @Post(':gameId/review')
-  @ApiOperation({ summary: 'Add review to a game' })
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.Player)
-  @Roles(Role.Admin)
-  addReviewToGame(
-    @Param('id') gameId: number,
-    @Body() createReviewDto: CreateReviewDto,
-  ) {
-    try {
-      return this.reviewService.addReviewToGame(gameId, createReviewDto);
-    } catch {
-      throw new NotFoundException(`Game with ID ${gameId} not found`);
-    }
-  }
-
   //Lire toutes les reviews qui existent sur la plateforme
   @ApiOperation({ summary: 'Get all reviews' })
   @ApiNotFoundResponse({ description: 'No reviews found' })
   @UseGuards(JwtAuthGuard)
-  @Roles(Role.Player)
   @Roles(Role.Admin)
   @Get()
   findAll() {
@@ -86,114 +68,60 @@ export class ReviewController {
     }
   }
 
-  // Lire toutes les critiques d'un jeu
-  @ApiOperation({ summary: 'Get all reviews of a game' })
-  @ApiParam({ name: 'gameId', type: Number })
+  @ApiOperation({ summary: 'Get review by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Admin)
   @ApiResponse({
     status: 200,
-    description: 'Return all reviews of a game',
+    description: 'Return review by ID',
     type: Review,
-    isArray: true,
   })
-  @ApiNotFoundResponse({ description: 'Game not found' })
-  @Get(':gameId/reviews')
-  async findAllReviewsByGameId(@Param('gameId') gameId: number) {
+  @ApiNotFoundResponse({ description: 'Review not found' })
+  @Get(':id')
+  findReviewById(@Param('id') id: string, gameId: number) {
     try {
-      return this.reviewService.findAllReviewsByGameId(gameId);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(`Game with ID ${gameId} not found`);
-      }
-      throw error;
+      return this.reviewService.findReviewById(+id, gameId);
+    } catch {
+      throw new NotFoundException('Review not found');
     }
   }
 
-  // Lire une critique spécifique d'un jeu
-  @ApiOperation({ summary: 'Get a specific review of a game' })
-  @ApiParam({ name: 'gameId', type: Number })
-  @ApiParam({ name: 'reviewId', type: Number })
-  @ApiResponse({
-    status: 200,
-    description: 'Return a specific review of a game',
-    type: Review,
-  })
-  @ApiNotFoundResponse({ description: 'Game not found or Review not found' })
-  @Get(':gameId/review/:reviewId')
-  async findReviewByGameIdAndReviewId(
-    @Param('gameId') gameId: number,
-    @Param('reviewId') reviewId: number,
-  ) {
-    try {
-      return this.reviewService.findReviewByGameIdAndReviewId(gameId, reviewId);
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(
-          `Game with ID ${gameId} or Review with ID ${reviewId} not found`,
-        );
-      }
-      throw error;
-    }
-  }
-
-  // Mettre à jour une critique d'un jeu
-  @ApiOperation({ summary: 'Update a review of a game' })
-  @ApiParam({ name: 'gameId', type: Number })
-  @ApiParam({ name: 'reviewId', type: Number })
-  @ApiBody({ type: CreateReviewDto })
+  @ApiOperation({ summary: 'Update review by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiBody({ type: UpdateReviewDto })
   @ApiResponse({
     status: 200,
     description: 'Review updated successfully',
     type: Review,
   })
-  @ApiNotFoundResponse({ description: 'Game not found or Review not found' })
-  @Patch(':gameId/review/:reviewId')
-  async updateReviewByGameIdAndReviewId(
-    @Param('gameId') gameId: number,
-    @Param('reviewId') reviewId: number,
-    @Body() createReviewDto: CreateReviewDto,
-  ) {
+  @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Admin)
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     try {
-      return this.reviewService.updateReviewByGameIdAndReviewId(
-        gameId,
-        reviewId,
-        createReviewDto,
-      );
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(
-          `Game with ID ${gameId} or Review with ID ${reviewId} not found`,
-        );
-      }
-      throw error;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return this.reviewService.updateReview(+id, updateReviewDto);
+    } catch {
+      throw new NotFoundException('Review not found : cannot be updated');
     }
   }
 
-  // Supprimer une critique d'un jeu
-  @ApiOperation({ summary: 'Delete a review of a game' })
-  @ApiParam({ name: 'gameId', type: Number })
-  @ApiParam({ name: 'reviewId', type: Number })
-  @ApiResponse({
-    status: 204,
-    description: 'Review deleted successfully',
-  })
-  @ApiNotFoundResponse({ description: 'Game not found or Review not found' })
-  @Delete(':gameId/review/:reviewId')
-  async deleteReviewByGameIdAndReviewId(
-    @Param('gameId') gameId: number,
-    @Param('reviewId') reviewId: number,
-  ) {
+  @ApiOperation({ summary: 'Delete review by ID' })
+  @ApiParam({ name: 'id', type: Number })
+  @ApiResponse({ status: 200, description: 'Review deleted successfully' })
+  @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Admin)
+  @Delete(':id')
+  delete(@Param('id') id: string) {
     try {
-      await this.reviewService.deleteReviewByGameIdAndReviewId(
-        gameId,
-        reviewId,
-      );
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw new NotFoundException(
-          `Game with ID ${gameId} or Review with ID ${reviewId} not found`,
-        );
-      }
-      throw error;
+      return this.reviewService.deleteReview(+id);
+    } catch {
+      throw new NotFoundException('Review not found : cannot be deleted');
     }
   }
+
 }

@@ -44,8 +44,8 @@ const {data: game} = await useFetch(uri , {
 
 //Liste de toutes les reviews d'un jeu 
 
-const {data: reviews} = await useFetch(`http://localhost:5000/review/${id}/reviews`, {
-  method: 'get',
+const {data: reviews} = await useFetch(`http://localhost:5000/game/${id}/reviews`, {
+  method: 'GET',
   headers : {
     'Authorization': `Bearer ${accessToken} `
   }

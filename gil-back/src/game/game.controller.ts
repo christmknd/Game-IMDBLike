@@ -7,25 +7,27 @@ import {
   NotFoundException,
   Param,
   Patch,
-  Post, UseGuards
+  Post, Put, UseGuards
 } from "@nestjs/common";
 import { GameService } from "./game.service";
 import { CreateGameDto } from "./dto/create-game.dto";
 import { UpdateGameDto } from "./dto/update-game.dto";
 import {
   ApiBadRequestResponse,
-  ApiBody,
-  ApiNotFoundResponse,
+  ApiBody, ApiCreatedResponse,
+  ApiNotFoundResponse, ApiOkResponse,
   ApiOperation,
   ApiParam,
   ApiResponse,
   ApiTags
 } from "@nestjs/swagger";
 import { Game } from './entities/game.entity';
-import { CreateReviewDto } from '../review/dto/create-review.dto';
 import { Role } from '../auth/enums/role.enum';
 import { Roles } from '../auth/decorators/roles.decorators';
 import { JwtAuthGuard } from '../auth/jwt-auth.guards';
+import { Review } from "../review/entities/review.entity";
+import { UpdateReviewDto } from "../review/dto/update-review.dto";
+import { CreateReviewDto } from "../review/dto/create-review.dto";
 
 
 @ApiTags('game')
@@ -128,6 +130,92 @@ export class GameController {
       };
     } catch {
       throw new NotFoundException('Game not found : Game cannot be deleted')
+    }
+  }
+
+  @ApiOperation({ summary: 'Add  review  by game ID' })
+  @ApiParam({ name: 'gameId', description: 'ID of the game' })
+  @ApiCreatedResponse({ description: 'Review has been successfully created', type: Review })
+  @ApiBadRequestResponse({ description: 'Invalid data provided' })
+  @Post(':gameId/review')
+  async addReviewToGame(
+    @Param('gameId') gameId: number,
+    @Body() createReviewDto: CreateReviewDto,
+  ): Promise<Review> {
+    try {
+      return this.gameService.addReviewToGame(gameId, createReviewDto);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  @ApiOperation({ summary: 'Find all the  reviews for a specific game ID' })
+  @ApiParam({ name: 'gameId', description: 'ID of the game' })
+  @ApiOkResponse({ description: 'All reviews for the game', type: Review, isArray: true })
+  @Get(':gameId/reviews')
+  async findAllReviewsForGame(
+    @Param('gameId') gameId: number,
+  ): Promise<Review[]> {
+    try {
+      return this.gameService.findAllReviewsForGame(gameId);
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
+  @ApiOperation({ summary: 'Find  the  review for a specific game ID' })
+  @ApiParam({ name: 'gameId', description: 'ID of the game' })
+  @ApiParam({ name: 'reviewId', description: 'ID of the review' })
+  @ApiOkResponse({ description: 'Review found', type: Review })
+  @ApiNotFoundResponse({ description: 'Review not found' })
+  @Get(':gameId/review/:reviewId')
+  async findReviewByIdForGame(
+    @Param('gameId') gameId: number,
+    @Param('reviewId') reviewId: number,
+  ): Promise<Review> {
+    try {
+      return this.gameService.findReviewByIdForGame(gameId, reviewId);
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
+  @ApiOperation({ summary: 'Update review  by game ID' })
+  @ApiParam({ name: 'gameId', description: 'ID of the game' })
+  @ApiParam({ name: 'reviewId', description: 'ID of the review' })
+  @ApiOkResponse({ description: 'Review has been successfully updated', type: Review })
+  @ApiNotFoundResponse({ description: 'Review not found' })
+  @Patch(':gameId/review/:reviewId')
+  async updateReviewForGame(
+    @Param('gameId') gameId: number,
+    @Param('reviewId') reviewId: number,
+    @Body() updateReviewDto: UpdateReviewDto,
+  ): Promise<Review> {
+    try {
+      return this.gameService.updateReviewForGame(
+        gameId,
+        reviewId,
+        updateReviewDto,
+      );
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
+  @ApiOperation({ summary: 'Delete review  by game ID' })
+  @ApiParam({ name: 'gameId', description: 'ID of the game' })
+  @ApiParam({ name: 'reviewId', description: 'ID of the review' })
+  @ApiOkResponse({ description: 'Review has been successfully deleted' })
+  @ApiNotFoundResponse({ description: 'Review not found' })
+  @Delete(':gameId/review/:reviewId')
+  async deleteReviewForGame(
+    @Param('gameId') gameId: number,
+    @Param('reviewId') reviewId: number,
+  ): Promise<void> {
+    try {
+      await this.gameService.deleteReviewForGame(gameId, reviewId);
+    } catch (error) {
+      throw new NotFoundException(error.message);
     }
   }
 }

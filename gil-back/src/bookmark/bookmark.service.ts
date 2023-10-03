@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-import { Injectable } from '@nestjs/common';
-import { CreateBookmarkDto } from './dto/create-bookmark.dto';
-import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
-
-@Injectable()
-export class BookmarkService {
-  create(createBookmarkDto: CreateBookmarkDto) {
-    return 'This action adds a new bookmark';
-  }
-
-  findAll() {
-    return `This action returns all bookmark`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} bookmark`;
-  }
-
-  update(id: number, updateBookmarkDto: UpdateBookmarkDto) {
-    return `This action updates a #${id} bookmark`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} bookmark`;
-=======
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookmarkDto } from './dto/create-bookmark.dto';
 import { Bookmark } from './entities/bookmark.entity';
@@ -126,6 +100,5 @@ export class BookmarkService {
       throw new NotFoundException(`bookmark with ID ${bookmarkId} not found`);
     }
     await this.bookmarkRepository.remove(bookmark);
->>>>>>> e5c5a18bebc921e3d78859f4011578bb4d57d007
   }
 }

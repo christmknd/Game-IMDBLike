@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { BookmarkService } from './bookmark.service';
-import { CreateBookmarkDto } from './dto/create-bookmark.dto';
-import { UpdateBookmarkDto } from './dto/update-bookmark.dto';
-
-=======
 import {
   Controller,
   Get,
@@ -33,36 +26,9 @@ import { Role } from '../auth/enums/role.enum';
 import { JwtAuthGuard } from '../auth/jwt-auth.guards';
 
 @ApiTags('bookmark')
->>>>>>> e5c5a18bebc921e3d78859f4011578bb4d57d007
 @Controller('bookmark')
 export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
-
-<<<<<<< HEAD
-  @Post()
-  create(@Body() createBookmarkDto: CreateBookmarkDto) {
-    return this.bookmarkService.create(createBookmarkDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.bookmarkService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookmarkService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookmarkDto: UpdateBookmarkDto) {
-    return this.bookmarkService.update(+id, updateBookmarkDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bookmarkService.remove(+id);
-=======
   @ApiOperation({ summary: 'Initialize bookmark' })
   @ApiBody({ type: CreateBookmarkDto })
   @ApiResponse({
@@ -173,6 +139,5 @@ export class BookmarkController {
     } catch {
       throw new NotFoundException(`Bookmark cannot be deleted`);
     }
->>>>>>> e5c5a18bebc921e3d78859f4011578bb4d57d007
   }
 }

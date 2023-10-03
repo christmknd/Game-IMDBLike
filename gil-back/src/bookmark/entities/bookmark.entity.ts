@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-export class Bookmark {}
-=======
 import { Game } from '../../game/entities/game.entity';
 import {
   Column,
@@ -31,4 +28,3 @@ export class Bookmark {
   @JoinTable()
   favorites: Game[];
 }
->>>>>>> e5c5a18bebc921e3d78859f4011578bb4d57d007

@@ -19,4 +19,55 @@ export class ReviewService {
     const review = this.reviewRepository.create(createReviewDto);
     return this.reviewRepository.save(review);
   }
+
+
+
+  //LISTE DE TOUTES LES REVIEWS DE LA PLATEFORME
+  async findAllReviews(): Promise<Review[]> {
+    return this.reviewRepository.find();
+  }
+
+  //find toutes les reviews que l'on a fait en tant que user
+  async findReviewById(id: number, gameId: number): Promise<Review> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const review = await this.reviewRepository.findOneBy({ id: id }, gameId);
+    if (!review) {
+      throw new NotFoundException(`Review with id ${id} not found`);
+    }
+    return review;
+  }
+
+  async updateReview(
+    id: number,
+    gameId: number,
+    updateReviewDto: UpdateReviewDto,
+  ): Promise<Review> {
+    const game = await this.gameRepository.findOneBy({ id: gameId }); // Recherche du jeu par ID
+    if (!game) {
+      throw new NotFoundException(`Game with ID ${gameId} not found`);
+    }
+
+    const review = await this.reviewRepository.findOneBy({ id: gameId }); // Recherche de la critique par ID et gameId
+    if (!review) {
+      throw new NotFoundException(
+        `Review with ID ${id} for game ${gameId} not found`,
+      );
+    }
+
+    review.title = updateReviewDto.title;
+    review.content = updateReviewDto.content;
+    review.rating = updateReviewDto.rating;
+    review.pros = updateReviewDto.pros;
+    review.cons = updateReviewDto.cons;
+
+    // Enregistrez la critique mise à jour dans la base de données
+    return this.reviewRepository.save(review);
+  }
+
+
+  async deleteReview(id: number): Promise<void> {
+    const user = await this.reviewRepository.findOneBy({ id: id });
+    await this.reviewRepository.remove(user);
+  }
 }

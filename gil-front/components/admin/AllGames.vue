@@ -5,6 +5,7 @@
       <ul>
         <li>
           <NuxtLink :to="`/game/${game.id}`"><h2>{{ game.name }}</h2></NuxtLink>
+          <button class="btn btn-success">Ajouter aux favoris</button>
         </li>
       </ul>
     </div>

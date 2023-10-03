@@ -24,9 +24,4 @@ const accessToken = auth.getAccessToken();
     }
   })
 
-  //ajouter aux favoris 
-
-
-  //supprimer des favoris 
-
 </script>

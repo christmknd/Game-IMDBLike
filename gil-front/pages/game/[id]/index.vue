@@ -89,7 +89,7 @@ const editReview = (reviewId) => {
 
 const deleteReview = async (reviewId) => {
   try {
-    await fetch(`http://localhost:5000/game/${gameId}/review/`, {
+    await fetch(`http://localhost:5000/game/${gameId}/review`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${accessToken}`,

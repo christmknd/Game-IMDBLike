@@ -36,8 +36,12 @@ import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
 import { useRouter, useRoute } from 'vue-router';
 
-const { gameId, reviewId } = useRoute().params;
-const uri = `http://localhost:5000/game/${gameId}/review/${reviewId}`;
+const route = useRoute();
+const router = useRouter();
+
+
+const gameId  = route.params.id;
+const uri = `http://localhost:5000/game/${gameId}/review`;
 
 const { data: review } = await useFetch(uri, {
   headers: {

@@ -3,7 +3,6 @@ import * as dotenv from 'dotenv';
 import { Review } from './review/entities/review.entity';
 import { User } from './users/entities/user.entity';
 import { Game } from './game/entities/game.entity';
-import { Bookmark } from "./bookmark/entities/bookmark.entity";
 
 if (process.env.NODE_ENV === 'production') {
   dotenv.config({ path: '.env.production' });
@@ -19,7 +18,7 @@ const config: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: [Game, User, Review, Bookmark],
+  entities: [Game, User, Review],
   logging: true,
   synchronize: true
 }

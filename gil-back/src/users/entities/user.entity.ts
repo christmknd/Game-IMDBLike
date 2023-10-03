@@ -11,7 +11,6 @@ import { Platform } from '../../game/enums/platform-enum';
 import { Genre } from '../../game/enums/genre-enum';
 import { Playertype } from '../enums/playertype.enum';
 import { PlayerMode } from '../enums/playermode.enum';
-import { Bookmark } from "../../bookmark/entities/bookmark.entity";
 import { Role } from "../../auth/enums/role.enum";
 
 @Entity({ name: 'user' })
@@ -56,10 +55,6 @@ export class User {
   @Column({ type: 'enum', enum: Role, default: Role.Player })
   @IsEnum(Role)
   roles: Role;
-
-  @OneToOne(() => Bookmark, (bookmark) => bookmark.user)
-  @JoinColumn()
-  bookmark: Bookmark;
 
   //  un utilisateur ne peut déposer qu'une seule review sur un movie, un book ou un game.
   @OneToMany(() => Review, (review) => review.user)

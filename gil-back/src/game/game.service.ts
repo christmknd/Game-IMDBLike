@@ -79,9 +79,8 @@ export class GameService {
     reviewId: number,
   ): Promise<Review> {
     const review = await this.reviewRepository.findOne({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      where: { id: reviewId, gameId: gameId },
+      where: { id: reviewId },
+      relations: ['game'],
     });
 
     if (!review) {

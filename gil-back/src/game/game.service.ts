@@ -15,7 +15,8 @@ export class GameService {
     private gameRepository: Repository<Game>,
     @InjectRepository(Review)
     private reviewRepository: Repository<Review>,
-  ) {}
+  ) {
+  }
 
   async createGame(createGameDto: CreateGameDto): Promise<Game> {
     const game = this.gameRepository.create(createGameDto);
@@ -145,23 +146,22 @@ export class GameService {
   async deleteReviewForGame(gameId: number, reviewId: number): Promise<void> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const game = await this.gameRepository.findOne({ id: gameId });
+    const game = await this.gameRepository.findOne(gameId);
     if (!game) {
       throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
 
+    // Vérifier si la critique existe pour ce jeu
     const review = await this.reviewRepository.findOne({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      id: reviewId,
-      gameId: gameId,
+      where: { id: reviewId },
+      relations: ['game'],
     });
+
     if (!review) {
-      throw new NotFoundException(
-        `Review with ID ${reviewId} not found for game ${gameId}`,
-      );
+      throw new NotFoundException(`Review with ID ${reviewId} not found for game ${gameId}`);
     }
 
+    // Supprimer la critique
     await this.reviewRepository.remove(review);
   }
 }

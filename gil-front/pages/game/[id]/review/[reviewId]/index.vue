@@ -45,10 +45,11 @@ const editReview = () => {
 // Fonction pour supprimer la critique
 const deleteReview = async () => {
   try {
-    await fetch(uri, {
+    await fetch(`http://localhost:5000/game/${gameId}/review/${reviewId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
     });
     console.log('Critique supprimée avec succès !');

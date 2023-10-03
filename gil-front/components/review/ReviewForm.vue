@@ -40,6 +40,7 @@
   const review_pros = ref("");
   const review_cons = ref("");
   const review_rating = ref("");
+
   
   const addReview = async () => {
         const accesstoken = auth.getAccessToken()
@@ -49,7 +50,7 @@
             content : review_content.value,
             pros: review_pros.value,
             cons: review_cons.value,
-            rating : review_rating.value
+            rating : parseInt(review_rating.value)
           }
           await $fetch(`http://localhost:5000/game/${gameId}/review`, {
             method: 'POST',

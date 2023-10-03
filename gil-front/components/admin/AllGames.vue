@@ -5,6 +5,7 @@
       <ul>
         <li>
           <NuxtLink :to="`/game/${game.id}`"><h2>{{ game.name }}</h2></NuxtLink>
+          <button class="btn btn-success">Ajouter aux favoris</button>
         </li>
       </ul>
     </div>
@@ -22,5 +23,10 @@ const accessToken = auth.getAccessToken();
       'Authorization': `Bearer ${accessToken}`,
     }
   })
+
+  //ajouter aux favoris 
+
+
+  //supprimer des favoris 
 
 </script>

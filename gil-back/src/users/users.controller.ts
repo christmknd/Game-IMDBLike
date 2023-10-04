@@ -23,7 +23,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { Role } from '../auth/enums/role.enum';
+import { Role } from './enums/role.enum';
 import { Roles } from "../auth/decorators/roles.decorators";
 import { JwtAuthGuard } from "../auth/jwt-auth.guards";
 @ApiTags('users')

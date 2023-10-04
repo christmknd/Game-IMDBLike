@@ -27,11 +27,12 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
+    const payload = { username: user.username, sub: user.id , roles: user.roles };
 
     return {
       access_token: this.jwtService.sign(payload),
-      /*...additionalInfo,*/
+      username : user.username,
+      roles: user.roles
     };
   }
 
@@ -43,7 +44,7 @@ export class AuthService {
     });
 
     if (newUser) {
-      const payload = { username: newUser.username, sub: newUser.id };
+      const payload = { username: newUser.username, sub: newUser.id , roles: newUser.roles };
       const accessToken = this.generateJwtToken(payload);
       return { user: newUser, access_token: accessToken };
     }
@@ -62,14 +63,18 @@ export class AuthService {
   async validateRefreshToken(refreshToken: string) {
     try {
       const decoded = this.jwtService.verify(refreshToken);
-      // Vous pouvez ajouter ici des validations supplémentaires si nécessaire.
       return decoded;
     } catch (error) {
       throw new BadRequestException('Invalid refresh token');
     }
   }
 
-  generateJwtToken(payload: any) {
+  generateJwtToken(user: any) {
+    const payload = {
+      username: user.username,
+      sub: user.id,
+      roles: user.roles,
+    }
     return this.jwtService.sign(payload);
   }
 }

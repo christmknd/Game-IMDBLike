@@ -3,31 +3,36 @@ import {
   Body,
   Controller,
   Delete,
-  Get, HttpStatus,
+  Get,
+  HttpStatus,
   NotFoundException,
   Param,
   Patch,
-  Post, Put, UseGuards
+  Post,
+  UseGuards
 } from "@nestjs/common";
 import { GameService } from "./game.service";
 import { CreateGameDto } from "./dto/create-game.dto";
 import { UpdateGameDto } from "./dto/update-game.dto";
 import {
   ApiBadRequestResponse,
-  ApiBody, ApiCreatedResponse,
-  ApiNotFoundResponse, ApiOkResponse,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
   ApiOperation,
   ApiParam,
   ApiResponse,
   ApiTags
 } from "@nestjs/swagger";
-import { Game } from './entities/game.entity';
-import { Role } from '../auth/enums/role.enum';
-import { Roles } from '../auth/decorators/roles.decorators';
-import { JwtAuthGuard } from '../auth/jwt-auth.guards';
+import { Game } from "./entities/game.entity";
+import { Role } from "../users/enums/role.enum";
+import { Roles } from "../auth/decorators/roles.decorators";
+import { JwtAuthGuard } from "../auth/jwt-auth.guards";
 import { Review } from "../review/entities/review.entity";
 import { UpdateReviewDto } from "../review/dto/update-review.dto";
 import { CreateReviewDto } from "../review/dto/create-review.dto";
+import { RolesGuard } from "../auth/guards/RolesGuard";
 
 
 @ApiTags('game')
@@ -64,8 +69,8 @@ export class GameController {
   })
   @ApiNotFoundResponse({ description: 'No games were found' })
   @UseGuards(JwtAuthGuard)
-  @Roles(Role.Player)
-  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
+  @Roles(Role.Player, Role.Admin)
   @Get()
   findAll() {
     try {

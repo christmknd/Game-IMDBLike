@@ -11,7 +11,7 @@ import { Platform } from '../../game/enums/platform-enum';
 import { Genre } from '../../game/enums/genre-enum';
 import { Playertype } from '../enums/playertype.enum';
 import { PlayerMode } from '../enums/playermode.enum';
-import { Role } from "../../auth/enums/role.enum";
+import { Role } from "../enums/role.enum";
 
 @Entity({ name: 'user' })
 export class User {

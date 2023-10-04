@@ -1,12 +1,15 @@
 <script  setup>
-useHead({
-  title: 'Register'
-})
 </script>
 
 <template>
   <div>
-    <AuthRegisterForm/>
+    <Head>
+      <Title>S'inscrire</Title>
+    </Head>
+    <Body>
+      <AuthRegisterForm/>
+
+    </Body>
   </div>
 </template>
 

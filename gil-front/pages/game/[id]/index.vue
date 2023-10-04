@@ -1,5 +1,6 @@
 <template>
   <div class="game-card">
+    <Title>{{ game.name }}</Title>
     <h2>{{ game.name }}</h2>
     <p>Date de sortie : {{ game.releaseYear }}</p>
     <p>Genre : {{ game.genres }}</p>
@@ -13,6 +14,7 @@
           <router-link :to="`/game/${gameId}/review/${review.id}`">Voir la critique</router-link>
         </ul>
     </div>
+    <router-link :to="`/game/`">Retour à la page des jeux</router-link>
   </div>
 </template>
 
@@ -21,18 +23,13 @@ definePageMeta({
   layout: "user",
   middleware: 'connected'
 });
-useHead({
-  title: 'Détail du jeu'
-})
+
 
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
 const route = useRoute();
 const router = useRouter();
-
-
 const gameId = route.params.id
-console.log(gameId)
 
 const uri = `http://localhost:5000/game/${gameId}`
 

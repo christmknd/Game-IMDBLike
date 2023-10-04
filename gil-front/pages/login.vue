@@ -1,13 +1,17 @@
-<script setup>
-useHead({
-  title: 'Login'
-})
-</script>
 
 <template>
   <div>
-    <AuthLoginForm/>
+    <Head>
+      <Title>Se Connecter</Title>
+    </Head>
+    <Body>
+      <AuthLoginForm/>
+    </Body>
   </div>
 </template>
+
+<script setup>
+
+</script>
 
 <style scoped></style>

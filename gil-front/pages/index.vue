@@ -6,7 +6,12 @@ useHead({
 
 <template>
   <div>
-    <h1>Home</h1>
+    <Head>
+      <Title>HomePage</Title>
+    </Head>
+    <Body>
+      <h1>Home</h1>
+    </Body>
   </div>
 </template>
 

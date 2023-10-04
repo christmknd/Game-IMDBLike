@@ -1,6 +1,11 @@
 <template>
   <div>
-    <ReviewForm/>
+    <Head>
+      <Title>Ajouter une critique</Title>
+    </Head>
+    <Body>
+      <ReviewForm/>
+    </Body>
   </div>
 </template>
 
@@ -9,10 +14,6 @@ definePageMeta({
   layout: "user",
   middleware: 'connected'
 });
-useHead({
-  title: 'Ajouter une critique'
-})
-
 </script>
 
 <style scoped></style>

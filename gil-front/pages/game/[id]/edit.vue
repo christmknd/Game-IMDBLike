@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>Modifier le jeu : {{ game.name }}</h1>
+    <Head>
+      <Title>Modifier {{ game.name }} </Title>
+    </Head>
+    <Body>
+      <h1>Modifier le jeu : {{ game.name }}</h1>
     <form @submit.prevent="updateGame">
       <div class="mb-3">
         <label for="name" class="form-label">Nom du jeu</label>
@@ -12,6 +16,7 @@
       </div>
       <button type="submit" class="btn btn-primary">Enregistrer</button>
     </form>
+    </Body>
   </div>
 </template>
 
@@ -20,9 +25,7 @@ definePageMeta({
   layout: "user",
   middleware: 'connected'
 });
-useHead({
-  title: 'Modifier un jeu'
-})
+
 import { ref } from 'vue';
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();

@@ -201,21 +201,4 @@ export class GameController {
       throw new NotFoundException(error.message);
     }
   }
-
-  @ApiOperation({ summary: 'Delete review  by game ID' })
-  @ApiParam({ name: 'gameId', description: 'ID of the game' })
-  @ApiParam({ name: 'reviewId', description: 'ID of the review' })
-  @ApiOkResponse({ description: 'Review has been successfully deleted' })
-  @ApiNotFoundResponse({ description: 'Review not found' })
-  @Delete(':gameId/review/:reviewId')
-  async deleteReviewForGame(
-    @Param('gameId') gameId: number,
-    @Param('reviewId') reviewId: number,
-  ): Promise<void> {
-    try {
-      await this.gameService.deleteReviewForGame(gameId, reviewId);
-    } catch (error) {
-      throw new NotFoundException(error.message);
-    }
-  }
 }

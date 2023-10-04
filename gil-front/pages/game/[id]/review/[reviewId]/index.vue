@@ -1,12 +1,17 @@
 <template>
    <div>
-    <h2>{{ review.title }}</h2>
+    <Head>
+      <Title>Détail de la critique</Title>
+    </Head>
+    <Body>
+      <h2>{{ review.title }}</h2>
     <p>{{ review.content }}</p>
     <p>Note : {{ review.rating }}</p>
     <p>Points forts : {{ review.pros }}</p>
     <p>Points faibles : {{ review.cons }}</p>
     <button class="btn btn-warning" @click="editReview">Modifier la critique</button>
     <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
+    </Body>
   </div>
 </template>
 
@@ -15,9 +20,7 @@ definePageMeta({
   layout: "user",
   middleware: 'connected'
 });
-useHead({
-  title: 'Détail de la critique'
-});
+
 
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
@@ -29,8 +32,6 @@ const router = useRouter();
 
 const gameId = parseInt(route.params.id);
 const reviewId = parseInt(route.params.reviewId);
-console.log(gameId)
-console.log(reviewId)
 const uri = `http://localhost:5000/game/${gameId}/review/${reviewId}`;
 
 // Fetch des données de la critique

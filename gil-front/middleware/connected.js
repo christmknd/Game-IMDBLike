@@ -1,11 +1,9 @@
-import authService from '~/services/auth';
-const router = useRouter();
+import authService from '~/services/auth'; 
 
-
-export default function () {
-
+export default defineNuxtRouteMiddleware((to, from) => {
+  const isAuthenticated = authService.isConnected();
   
-  if (!authService.isConnected()) {
-    return router.push('/login');
+  if (!isAuthenticated) {
+    return navigateTo('/login')
   }
-}
+});

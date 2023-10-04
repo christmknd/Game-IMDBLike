@@ -1,25 +1,30 @@
 <template>
-    <div>
-      <h1>Modifier la critique du jeu</h1>
-      <form @submit.prevent="updateReview">
-        <div class="mb-3">
-          <label for="content" class="form-label">Contenu de la critique</label>
-          <textarea v-model="updatedReview.content" class="form-control" id="content"></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="rating" class="form-label">Note</label>
-          <input v-model="updatedReview.rating" type="number" class="form-control" id="rating">
-        </div>
-        <div class="mb-3">
-          <label for="pros" class="form-label">Points forts</label>
-          <input v-model="updatedReview.pros" type="text" class="form-control" id="pros">
-        </div>
-        <div class="mb-3">
-          <label for="cons" class="form-label">Points faibles</label>
-          <input v-model="updatedReview.cons" type="text" class="form-control" id="cons">
-        </div>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-      </form>
+  <div>
+      <Head>
+        <Title>Modifier une critique</Title>
+      </Head>
+      <Body>
+        <h1>Modifier la critique du jeu</h1>
+          <form @submit.prevent="updateReview">
+            <div class="mb-3">
+              <label for="content" class="form-label">Contenu de la critique</label>
+              <textarea v-model="updatedReview.content" class="form-control" id="content"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="rating" class="form-label">Note</label>
+              <input v-model="updatedReview.rating" type="number" class="form-control" id="rating">
+            </div>
+            <div class="mb-3">
+              <label for="pros" class="form-label">Points forts</label>
+              <input v-model="updatedReview.pros" type="text" class="form-control" id="pros">
+            </div>
+            <div class="mb-3">
+              <label for="cons" class="form-label">Points faibles</label>
+              <input v-model="updatedReview.cons" type="text" class="form-control" id="cons">
+            </div>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </form>
+      </Body>
     </div>
   </template>
   

@@ -1,17 +1,21 @@
 <template>
   <div>
    <AdminAllGames/>
+   <button class="btn btn-success" @click="addGame">Ajouter un jeu</button>
   </div>
 </template>
 
-<script>
-
-
+<script setup>
 definePageMeta({
   layout: "user",
   middleware: 'connected'
 });
-useHead({
-  title: 'Tous les jeux de la plateforme'
-})
+
+const router = useRouter();
+
+
+const addGame = () => {
+  router.push(`/game/addreview`);
+};
+
 </script>

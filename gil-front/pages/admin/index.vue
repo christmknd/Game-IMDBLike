@@ -3,17 +3,19 @@ definePageMeta({
   layout: "admin",
   middleware: 'connected'
 });
-useHead({
-  title: 'Admin Dashboard'
-})
 </script>
 
 <template>
   <div>
+    <Head>
+    <Title>Admin Page</Title>
+  </Head>
+  <Body>
     <h1>Admin Dashboard</h1>
     <AdminAllGames/>
     <AdminAllReviews/>
     <AdminAllUsers/>
+  </Body>
   </div>
 </template>
 

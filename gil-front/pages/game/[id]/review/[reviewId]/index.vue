@@ -6,7 +6,7 @@
     <p>Points forts : {{ review.pros }}</p>
     <p>Points faibles : {{ review.cons }}</p>
     <button class="btn btn-warning" @click="editReview">Modifier la critique</button>
-    <button class="btn btn-danger" @click="deleteReview">Supprimer la critique</button>
+    <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
   </div>
 </template>
 
@@ -26,12 +26,15 @@ import { useRouter, useRoute } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 
-const gameId = route.params.id;
-const reviewId = route.params.reviewId;
+
+const gameId = parseInt(route.params.id);
+const reviewId = parseInt(route.params.reviewId);
+console.log(gameId)
+console.log(reviewId)
 const uri = `http://localhost:5000/game/${gameId}/review/${reviewId}`;
 
 // Fetch des données de la critique
-const { data: review } = await useFetch(uri, {
+const { data: review  } = await useFetch(uri, {
   headers: {
     'Authorization': `Bearer ${accessToken}`,
   }
@@ -42,14 +45,20 @@ const editReview = () => {
   router.push(`/game/${gameId}/review/${reviewId}/edit`);
 };
 
+const confirmDelete = () => {
+      if (window.confirm('Êtes-vous sûr de vouloir supprimer cette critique ?')) {
+        deleteReview();
+      }
+    };
+
+
 // Fonction pour supprimer la critique
 const deleteReview = async () => {
   try {
-    await fetch(`http://localhost:5000/game/${gameId}/review/${reviewId}`, {
+    await $fetch(`http://localhost:5000/review/${reviewId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
       },
     });
     console.log('Critique supprimée avec succès !');

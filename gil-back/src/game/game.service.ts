@@ -151,11 +151,17 @@ export class GameService {
       throw new NotFoundException(`Game with ID ${gameId} not found`);
     }
 
-    // Vérifier si la critique existe pour ce jeu
     const review = await this.reviewRepository.findOne({
-      where: { id: reviewId },
-      relations: ['game'],
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      id: reviewId,
+      gameId: gameId,
     });
+    if (!review) {
+      throw new NotFoundException(
+        `Review with ID ${reviewId} not found for game ${gameId}`,
+      );
+    }
 
     if (!review) {
       throw new NotFoundException(`Review with ID ${reviewId} not found for game ${gameId}`);
@@ -163,5 +169,6 @@ export class GameService {
 
     // Supprimer la critique
     await this.reviewRepository.remove(review);
+    console.log('Review removed successfully');
   }
 }

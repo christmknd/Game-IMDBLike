@@ -41,7 +41,7 @@
             id="password" 
             placeholder="password"
             v-model="form_password"/>
-            <div id="pwdhelp" class="form-text">Le mot de passe doit contenir au moins 6 caractères<Label></Label></div>
+            <div id="pwdhelp" class="form-text">Le mot de passe doit contenir au moins 6 caractères<label></label></div>
      </div>
         <button type="submit" class="btn btn-primary">S'inscrire</button>
         </form>
@@ -76,8 +76,7 @@ export default {
           player_type: this.form_playertype,
           player_mode: this.form_playermode,
         }
-
-        await authService.register(formData.username, this.form_email, this.form_password);
+        await authService.register(formData.username, this.form_email, this.form_password, this.form_playertype,this.form_playermode);
         this.$emit('user-registered');
         this.$router.push('/game')
         console.log('User enregistré sur la plateforme avec succès')

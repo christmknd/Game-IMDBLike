@@ -14,6 +14,9 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt-auth.guards';
+import { Roles } from "./decorators/roles.decorators";
+import { RolesGuard } from "./guards/RolesGuard";
+import { Role } from "../users/enums/role.enum";
 
 @ApiTags('auth')
 @Controller('auth')
@@ -37,17 +40,18 @@ export class AuthController {
   @Post('login')
   @ApiResponse({ status: 200, description: 'Successfully logged in' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @ApiBody({ type: LoginDto })
-  login(@Body() loginDto: LoginDto) {
+  login(@Request() req) {
     try {
-      return this.authService.login(loginDto);
+      const { user } = req;
+      return this.authService.login(user);
     } catch {
-      throw new UnauthorizedException('Invalid or incorrect credentials');
+      throw new UnauthorizedException('Incoreect or Invalid credentials');
     }
   }
 
+
   @UseGuards(JwtAuthGuard)
-  @Get('user-profile')
+  @Get('profile')
   @ApiResponse({
     status: 200,
     description: 'Access to our profile page granted',
@@ -63,12 +67,11 @@ export class AuthController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Post('refresh-token')
-  async refreshAccessToken(@Request() req) {
-    const user = req.user;
-    const accessToken = this.authService.generateRefreshToken(user);
-
-    return { access_token: accessToken };
+  @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('admin')
+  onlyAdmin(@Request() req) {
+    return req.user;
   }
+
 }

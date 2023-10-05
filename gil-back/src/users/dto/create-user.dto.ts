@@ -36,4 +36,6 @@ export class CreateUserDto {
   @ApiProperty({ type: 'enum', enum: PlayerMode })
   favorite_mode: PlayerMode;
 
+
+
 }

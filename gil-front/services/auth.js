@@ -37,28 +37,6 @@ export default {
       return localStorage.getItem(username)
     },
 
-    async fetchBackend (url , method = 'GET', body = null) {
-      const accesstoken = this.getAccessToken();
-
-      const headers = {
-        'Authorization': `Bearer ${accesstoken}`,
-      };
-
-      const options = {
-        method,
-        headers,
-      };
-
-      if (body !== null) {
-        options.body = JSON.stringify(body);
-        headers['Content-Type'] = 'application/json';
-      }
-    
-      const response = await fetch(url, options);
-      return response;
-    },
-  
-
     isConnected() {
       const accessToken = this.getAccessToken();
       return accessToken !== null;
@@ -66,6 +44,7 @@ export default {
 
     logout() {
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('username')
     },
 
   };

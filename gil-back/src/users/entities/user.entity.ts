@@ -11,7 +11,7 @@ import { Platform } from '../../game/enums/platform-enum';
 import { Genre } from '../../game/enums/genre-enum';
 import { Playertype } from '../enums/playertype.enum';
 import { PlayerMode } from '../enums/playermode.enum';
-import { Role } from "../enums/role.enum";
+import { Role } from '../enums/role.enum';
 
 @Entity({ name: 'user' })
 export class User {
@@ -40,14 +40,6 @@ export class User {
   @Column({ type: 'enum', enum: Playertype })
   @IsEnum(Playertype)
   player_type: Playertype;
-
-  @Column({ type: 'enum', enum: Platform })
-  @IsEnum(Platform)
-  favorite_platform: Platform;
-
-  @Column({ type: 'enum', enum: Genre })
-  @IsEnum(Genre)
-  favorite_genre: Genre;
 
   @Column({ type: 'enum', enum: PlayerMode })
   favorite_mode: PlayerMode;

@@ -16,11 +16,12 @@
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
 
-
-    const { data: games } = await useFetch( `http://localhost:5000/game`, {
+  const { data: games } = await useFetch( `http://localhost:5000/game`, {
       headers : {
       'Authorization': `Bearer ${accessToken}`,
     }
   })
+
+   
 
 </script>

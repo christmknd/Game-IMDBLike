@@ -26,10 +26,13 @@ import {
 import { Review } from './entities/review.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guards';
 import { Roles } from '../auth/decorators/roles.decorators';
-import { Role } from '../auth/enums/role.enum';
+import { Role } from '../users/enums/role.enum';
+import { RolesGuard } from "../auth/guards/RolesGuard";
 
 @ApiTags('review')
 @Controller('review')
+@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard)
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
@@ -42,7 +45,6 @@ export class ReviewController {
     type: Review,
   })
   @ApiBadRequestResponse({ description: 'Review cannot be registrated' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Post()
@@ -57,8 +59,8 @@ export class ReviewController {
   //Lire toutes les reviews qui existent sur la plateforme
   @ApiOperation({ summary: 'Get all reviews' })
   @ApiNotFoundResponse({ description: 'No reviews found' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
+  @Roles(Role.Player)
   @Get()
   findAll() {
     try {
@@ -70,8 +72,8 @@ export class ReviewController {
 
   @ApiOperation({ summary: 'Get review by ID' })
   @ApiParam({ name: 'id', type: Number })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
+  @Roles(Role.Player)
   @ApiResponse({
     status: 200,
     description: 'Return review by ID',
@@ -96,8 +98,8 @@ export class ReviewController {
     type: Review,
   })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
+  @Roles(Role.Player)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     try {
@@ -113,8 +115,8 @@ export class ReviewController {
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Review deleted successfully' })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
+  @Roles(Role.Player)
   @Delete(':id')
   delete(@Param('id') id: string) {
     try {

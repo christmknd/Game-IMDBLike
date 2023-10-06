@@ -1,18 +1,20 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
   BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
   NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Request,
+  UnauthorizedException,
   UseGuards
-} from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+} from "@nestjs/common";
+import { UsersService } from "./users.service";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -20,12 +22,13 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { User } from './entities/user.entity';
-import { Role } from '../auth/enums/role.enum';
+  ApiTags
+} from "@nestjs/swagger";
+import { User } from "./entities/user.entity";
+import { Role } from "./enums/role.enum";
 import { Roles } from "../auth/decorators/roles.decorators";
 import { JwtAuthGuard } from "../auth/jwt-auth.guards";
+
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
@@ -113,4 +116,5 @@ export class UsersController {
       throw new NotFoundException('User not found : cannot be deleted');
     }
   }
+
 }

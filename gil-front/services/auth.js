@@ -8,19 +8,25 @@ export default {
           body: JSON.stringify({ username, password }),
         });
         localStorage.setItem('accessToken', response.access_token);
+        localStorage.setItem('username',response.username)
+        localStorage.setItem('role',response.roles)
+        localStorage.setItem('email',response.email)
         return response;
       } catch (error) {
         throw error;
       }
     },
   
-    async register(username, email, password) {
+    async register(username, email, password,player_type, player_mode) {
       try {
         const response = await $fetch('http://localhost:5000/auth/register', {
           method: 'POST',
-          body: JSON.stringify({ username, email, password }),
+          body: JSON.stringify({ username, email, password, player_type, player_mode }),
         });
         localStorage.setItem('accessToken', response.access_token);
+        localStorage.setItem('username',response.username)
+        localStorage.setItem('role',response.roles)
+        localStorage.setItem('email',response.email)
         return response;
       } catch (error) {
         throw error;
@@ -31,27 +37,18 @@ export default {
       return localStorage.getItem('accessToken');
     },
 
-    async fetchBackend (url , method = 'GET', body = null) {
-      const accesstoken = this.getAccessToken();
-
-      const headers = {
-        'Authorization': `Bearer ${accesstoken}`,
-      };
-
-      const options = {
-        method,
-        headers,
-      };
-
-      if (body !== null) {
-        options.body = JSON.stringify(body);
-        headers['Content-Type'] = 'application/json';
-      }
-    
-      const response = await fetch(url, options);
-      return response;
+    getUsername(){
+      return localStorage.getItem('username')
     },
-  
+
+    getRole(){
+      return localStorage.getItem('role')
+    },
+
+    getEmail(){
+      return localStorage.getItem('email')
+    },
+
 
     isConnected() {
       const accessToken = this.getAccessToken();
@@ -60,6 +57,9 @@ export default {
 
     logout() {
       localStorage.removeItem('accessToken');
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      localStorage.removeItem('email');
     },
 
   };

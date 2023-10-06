@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { User } from "../users/entities/user.entity";
 
 @Injectable()
 export class AuthService {
@@ -27,12 +28,21 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
+    const payload = {
+      username: user.username,
+      sub: user.id,
+      roles: user.roles,
+      email: user.email
+    };
 
     return {
       access_token: this.jwtService.sign(payload),
-      /*...additionalInfo,*/
+      username: user.username,
+      roles: user.roles,
+      email: user.email
     };
+
+    console.log(user)
   }
 
   async register(createUserDto: CreateUserDto) {
@@ -43,33 +53,20 @@ export class AuthService {
     });
 
     if (newUser) {
-      const payload = { username: newUser.username, sub: newUser.id };
+      const payload = { username: newUser.username, sub: newUser.id , roles: newUser.roles };
       const accessToken = this.generateJwtToken(payload);
-      return { user: newUser, access_token: accessToken };
+      return { user: newUser, access_token: accessToken , username: newUser.username};
     }
 
     return null;
   }
 
-  async generateRefreshToken(user: any) {
-    const payload = { username: user.username, sub: user.id };
-    const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: '7d',
-    });
-    return refreshToken;
-  }
-
-  async validateRefreshToken(refreshToken: string) {
-    try {
-      const decoded = this.jwtService.verify(refreshToken);
-      // Vous pouvez ajouter ici des validations supplémentaires si nécessaire.
-      return decoded;
-    } catch (error) {
-      throw new BadRequestException('Invalid refresh token');
+  generateJwtToken(user: any) {
+    const payload = {
+      username: user.username,
+      sub: user.id,
+      roles: user.roles,
     }
-  }
-
-  generateJwtToken(payload: any) {
     return this.jwtService.sign(payload);
   }
 }

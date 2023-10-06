@@ -32,6 +32,7 @@ export class AuthService {
       username: user.username,
       sub: user.id,
       roles: user.roles,
+      email: user.email
     };
 
     return {
@@ -40,6 +41,8 @@ export class AuthService {
       roles: user.roles,
       email: user.email
     };
+
+    console.log(user)
   }
 
   async register(createUserDto: CreateUserDto) {

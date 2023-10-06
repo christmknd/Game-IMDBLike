@@ -9,6 +9,8 @@ export default {
         });
         localStorage.setItem('accessToken', response.access_token);
         localStorage.setItem('username',response.username)
+        localStorage.setItem('role',response.roles)
+        localStorage.setItem('email',response.email)
         return response;
       } catch (error) {
         throw error;
@@ -23,6 +25,8 @@ export default {
         });
         localStorage.setItem('accessToken', response.access_token);
         localStorage.setItem('username',response.username)
+        localStorage.setItem('role',response.roles)
+        localStorage.setItem('email',response.email)
         return response;
       } catch (error) {
         throw error;
@@ -34,8 +38,17 @@ export default {
     },
 
     getUsername(){
-      return localStorage.getItem(username)
+      return localStorage.getItem('username')
     },
+
+    getRole(){
+      return localStorage.getItem('role')
+    },
+
+    getEmail(){
+      return localStorage.getItem('email')
+    },
+
 
     isConnected() {
       const accessToken = this.getAccessToken();
@@ -44,7 +57,9 @@ export default {
 
     logout() {
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('username')
+      localStorage.removeItem('username');
+      localStorage.removeItem('role');
+      localStorage.removeItem('email');
     },
 
   };

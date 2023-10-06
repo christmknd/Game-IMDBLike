@@ -45,12 +45,11 @@ export class AuthController {
       const { user } = req;
       return this.authService.login(user);
     } catch {
-      throw new UnauthorizedException('Incoreect or Invalid credentials');
+      throw new UnauthorizedException('Incorrect or Invalid credentials');
     }
   }
 
-
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Player)
   @Get('profile')
   @ApiResponse({
     status: 200,
@@ -67,11 +66,14 @@ export class AuthController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('admin')
   onlyAdmin(@Request() req) {
     return req.user;
   }
+
+
+
 
 }

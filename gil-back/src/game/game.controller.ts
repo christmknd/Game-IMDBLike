@@ -37,6 +37,8 @@ import { RolesGuard } from "../auth/guards/RolesGuard";
 
 @ApiTags('game')
 @Controller('game')
+@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard)
 export class GameController {
   constructor(private readonly gameService: GameService) {
   }
@@ -49,7 +51,6 @@ export class GameController {
     type: Game,
   })
   @ApiBadRequestResponse({ description: 'Game cannot be registrated' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Post()
@@ -68,8 +69,6 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'No games were found' })
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(RolesGuard)
   @Roles(Role.Player, Role.Admin)
   @Get()
   findAll() {
@@ -88,7 +87,6 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Get(':id')
@@ -110,7 +108,6 @@ export class GameController {
     type: Game,
   })
   @ApiNotFoundResponse({ description: 'Game not found : Game cannot be updated' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Patch(':id')
@@ -124,7 +121,6 @@ export class GameController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete game by ID' })
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Player)
   @Roles(Role.Admin)
   delete(@Param('id') id: number) {

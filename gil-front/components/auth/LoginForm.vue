@@ -29,10 +29,13 @@
 
 <script>
 import auth from '~/services/auth';
+import useValidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 
 export default {
   data (){
     return {
+        v$: useValidate(),
         form_username : '',
         form_password : ''
     }
@@ -42,12 +45,23 @@ export default {
       try {
        await auth.login(this.form_username, this.form_password);
         this.$emit('user-logged');
-        this.$router.push('/game');
+        this.v$.$validate()
+        if (!this.v$.$errors){
+          alert('Les informations que vous venez d\'entrer sont incorrects')
+        } else {
+          this.$router.push('/game');
         console.log('User connecté sur la plateforme avec succès')
+        }
       } catch (error) {
         console.error('Une erreur s\'est produite lors de la connexion du user : ',error )
       }
-    }
+    },
+    validations () {
+      return {
+        form_username: {required},
+        form_password: {required}
+      }
+    },
   }
 }
 </script>

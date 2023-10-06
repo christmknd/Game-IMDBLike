@@ -8,9 +8,6 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import config from './orm.config';
-import { RolesGuard } from './auth/guards/RolesGuard';
-import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from "./auth/jwt-auth.guards";
 
 @Module({
   imports: [

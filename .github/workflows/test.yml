@@ -1,0 +1,11 @@
+name: Test the application
+
+on:
+  push:
+    branches: ["dev", "main"]
+  pull_request:
+    branches: ["dev", "main"]
+
+jobs:
+  backend-unit-testing:
+    runs-on: ubuntu-latest

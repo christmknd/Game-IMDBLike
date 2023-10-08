@@ -67,7 +67,7 @@ export class ReviewService {
 
 
   async deleteReview(id: number): Promise<void> {
-    const user = await this.reviewRepository.findOneBy({ id: id });
-    await this.reviewRepository.remove(user);
+    const review = await this.reviewRepository.findOneBy({ id: id });
+    await this.reviewRepository.delete(review);
   }
 }

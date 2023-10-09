@@ -49,7 +49,7 @@ export class AuthController {
     }
   }
 
-  @Roles(Role.Player)
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
   @ApiResponse({
     status: 200,
@@ -58,7 +58,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   getUserProfile(@Request() req) {
     try {
-      return { user: req.user }
+      return req.user;
     } catch {
       throw new UnauthorizedException(
         'You are not authorized to go on this page',

@@ -13,11 +13,18 @@
 </template>
 
 <script setup>
+import auth from '../../services/auth'
 definePageMeta({
   layout: "user",
 });
 
-const {data : user} = await useFetch(`http://localhost:5000/auth/profile`)
+const accessToken = auth.getAccessToken() ;
+
+const {data : user} = await useFetch(`http://localhost:5000/auth/profile`, {
+  headers : {
+    'Authorization': `Bearer ${accessToken} `,
+  }
+})
 
 </script>
 

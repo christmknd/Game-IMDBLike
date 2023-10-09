@@ -4,7 +4,11 @@
     <Head>
       <Title>User Profile</Title>
     </Head>
-    <h1>User profile</h1>
+    <h1>{{ user.username }}</h1>
+
+    <h2>{{ user.player_type }}</h2>
+
+    <p>Mode favori : {{ user.favorite_mode }}</p>
   </div>
 </template>
 

@@ -58,7 +58,7 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   getUserProfile(@Request() req) {
     try {
-      return req.user;
+      return { user: req.user }
     } catch {
       throw new UnauthorizedException(
         'You are not authorized to go on this page',

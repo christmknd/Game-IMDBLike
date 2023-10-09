@@ -22,7 +22,7 @@
 <script setup>
 definePageMeta({
   layout: "user",
-  middleware: 'connected'
+  middleware: 'auth'
 });
 
 

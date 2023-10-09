@@ -11,7 +11,7 @@
 <script setup>
 definePageMeta({
   layout: "user",
-  middleware: 'connected'
+  middleware: 'auth'
 });
 
 const {data : user} = await useFetch(`http://localhost:5000/auth/profile`)

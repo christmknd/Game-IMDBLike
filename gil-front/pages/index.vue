@@ -2,6 +2,11 @@
 useHead({
   title: 'IMDBLike'
 })
+definePageMeta({
+  layout: "default",
+  middleware: 'auth'
+});
+
 </script>
 
 <template>

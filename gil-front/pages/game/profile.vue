@@ -2,13 +2,14 @@
 <template>
   <div>
     <Head>
-      <Title>User Profile</Title>
+      <Title>{{ user.username }} Profile</Title>
     </Head>
     <h1>{{ user.username }}</h1>
 
-    <h2>{{ user.player_type }}</h2>
+    <h3>{{ user.email }}</h3>
 
-    <p>Mode favori : {{ user.favorite_mode }}</p>
+    <p>player_type : {{ user.player_type }}</p>
+    <p>Mode de jeu favori : {{ user.favorite_mode }}</p>
   </div>
 </template>
 
@@ -20,7 +21,17 @@ definePageMeta({
 
 const accessToken = auth.getAccessToken() ;
 
-const {data : user} = await useFetch(`http://localhost:5000/auth/profile`, {
+const response = await useFetch(`http://localhost:5000/auth/profile`, {
+  headers : {
+    'Authorization': `Bearer ${accessToken} `,
+  }
+})
+
+console.log(parseInt(response.data.value.userId))
+const userId = parseInt(response.data.value.userId);
+
+
+const {data : user} = await useFetch(`http://localhost:5000/users/${userId}`, {
   headers : {
     'Authorization': `Bearer ${accessToken} `,
   }

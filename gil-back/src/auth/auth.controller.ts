@@ -66,13 +66,6 @@ export class AuthController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.Admin)
-  @Get('admin')
-  onlyAdmin(@Request() req) {
-    return req.user;
-  }
-
 
 
 

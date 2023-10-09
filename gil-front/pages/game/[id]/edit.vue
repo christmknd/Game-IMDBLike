@@ -23,7 +23,6 @@
 <script setup>
 definePageMeta({
   layout: "user",
-  middleware: 'auth'
 });
 
 import { ref } from 'vue';

@@ -24,6 +24,9 @@
       </div>
           <button type="submit" class="btn btn-primary">Se connecter</button>
       </form>
+      <div>
+        <p>Si vous n'êtes pas inscrit , cliquez <NuxtLink to="/register">ici</NuxtLink> </p>
+      </div>
   </div>
 </template>
 

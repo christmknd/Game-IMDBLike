@@ -4,6 +4,11 @@
 
   const router = useRouter();
 
+  const role = auth.getRole();
+  if (role !== 'Player'){
+    navigateTo('/forbidden')
+  }
+
   const logout = async () => {
     auth.logout();
     await router.push('/login'); // Redirige vers la page de connexion

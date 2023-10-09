@@ -4,6 +4,13 @@
 
   const router = useRouter();
 
+
+  const role = auth.getRole();
+  if (role !== 'admin'){
+    navigateTo('/forbidden')
+  }
+
+
   const logout = async () => {
     auth.logout()
     await router.push('/login'); // Redirige vers la page de connexion
@@ -22,9 +29,6 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <nuxt-link to="/admin">Dashboard</nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/game">Jeux</nuxt-link>
         </li>
         <li class="nav-item">
           <button @click="logout">Se Déconnecter</button>

@@ -1,7 +1,6 @@
 <script  setup>
 definePageMeta({
   layout: "user",
-  middleware: 'auth'
 });
 useHead({
   title: 'Ajouter un jeu'

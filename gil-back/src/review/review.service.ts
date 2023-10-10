@@ -5,22 +5,37 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Review } from './entities/review.entity';
 import { Repository } from 'typeorm';
 import { Game } from '../game/entities/game.entity';
+import { UsersService } from '../users/users.service';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class ReviewService {
   constructor(
     @InjectRepository(Review)
     private reviewRepository: Repository<Review>,
+    @InjectRepository(User)
+    private userService: UsersService,
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
   ) {}
 
-  async createReview(createReviewDto: CreateReviewDto): Promise<Review>{
-    const review = this.reviewRepository.create(createReviewDto);
+  async createReview(
+    createReviewDto: CreateReviewDto,
+    userId: number,
+  ): Promise<Review> {
+    const user = await this.userService.findUserById(userId);
+
+    if (!user) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+
+    const review = this.reviewRepository.create({
+      ...createReviewDto,
+      user: user,
+    });
+
     return this.reviewRepository.save(review);
   }
-
-
 
   //LISTE DE TOUTES LES REVIEWS DE LA PLATEFORME
   async findAllReviews(): Promise<Review[]> {
@@ -64,7 +79,6 @@ export class ReviewService {
     // Enregistrez la critique mise à jour dans la base de données
     return this.reviewRepository.save(review);
   }
-
 
   async deleteReview(id: number): Promise<void> {
     const review = await this.reviewRepository.findOneBy({ id: id });

@@ -19,7 +19,7 @@ const router = useRouter();
 
 
 const addGame = () => {
-  router.push(`/game/addreview`);
+  router.push(`/game/addgame`);
 };
 
 </script>

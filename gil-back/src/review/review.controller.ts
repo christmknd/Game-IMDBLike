@@ -8,8 +8,8 @@ import {
   Delete,
   BadRequestException,
   NotFoundException,
-  UseGuards,
-} from '@nestjs/common';
+  UseGuards, Req
+} from "@nestjs/common";
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
@@ -48,9 +48,10 @@ export class ReviewController {
   @Roles(Role.Player)
   @Roles(Role.Admin)
   @Post()
-  create(@Body() createReviewDto: CreateReviewDto) {
+  create(@Body() createReviewDto: CreateReviewDto ,  @Req() req) {
     try {
-      return this.reviewService.createReview(createReviewDto);
+      const userId = req.user.id;
+      return this.reviewService.createReview(createReviewDto, userId);
     } catch {
       throw new BadRequestException('Review cannot be registrated');
     }

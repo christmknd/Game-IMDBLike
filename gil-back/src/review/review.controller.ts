@@ -79,7 +79,7 @@ export class ReviewController {
   })
   @ApiNotFoundResponse({ description: 'Review not found' })
   @Get(':id')
-  findReviewById(@Param('id') id: string) {
+  findReviewById(@Param('id') id: number) {
     try {
       return this.reviewService.findReviewById(+id);
     } catch {
@@ -97,7 +97,7 @@ export class ReviewController {
   })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
+  update(@Param('id') id: number, @Body() updateReviewDto: UpdateReviewDto) {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -113,7 +113,7 @@ export class ReviewController {
   @ApiResponse({ status: 200, description: 'Review deleted successfully' })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     try {
       return this.reviewService.deleteReview(+id);
     } catch {

@@ -3,9 +3,9 @@
   import auth from '~/services/auth';
 
   const router = useRouter();
-
-
   const role = auth.getRole();
+
+
   if (role !== 'admin'){
     navigateTo('/forbidden')
   }

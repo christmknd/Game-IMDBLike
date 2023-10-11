@@ -24,4 +24,5 @@ export class CreateReviewDto {
   @ApiProperty({ description: 'Cons of the game'})
   @IsString()
   cons: string;
+
 }

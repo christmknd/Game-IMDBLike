@@ -49,7 +49,7 @@ export class AuthController {
     }
   }
 
-  @Roles(Role.Player)
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
   @ApiResponse({
     status: 200,
@@ -64,13 +64,6 @@ export class AuthController {
         'You are not authorized to go on this page',
       );
     }
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.Admin)
-  @Get('admin')
-  onlyAdmin(@Request() req) {
-    return req.user;
   }
 
 

@@ -3,6 +3,11 @@
   import auth from '~/services/auth';
 
   const router = useRouter();
+  const role = auth.getRole();
+
+  if (role !== 'Player'){
+    navigateTo('/forbidden')
+  }
 
   const logout = async () => {
     auth.logout();
@@ -21,6 +26,9 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <nuxt-link class="nav-link" to="/game">Jeux</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <nuxt-link class="nav-link" to="game/profile">Profile</nuxt-link>
         </li>
         <li class="nav-item">
           <button @click="logout">Se Déconnecter</button>

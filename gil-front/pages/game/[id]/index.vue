@@ -2,7 +2,6 @@
   <div class="game-card">
     <Title>{{ game.name }}</Title>
     <h2>{{ game.name }}</h2>
-    <h4>{{ username }}</h4>
     <p>Date de sortie : {{ game.releaseYear }}</p>
     <p>Genre : {{ game.genres }}</p>
     <p>Plateforme : {{ game.platform }}</p>
@@ -22,13 +21,11 @@
 <script setup>
 definePageMeta({
   layout: "user",
-  middleware: 'connected'
 });
 
 
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
-const username = auth.getUsername();
 const route = useRoute();
 const router = useRouter();
 const gameId = route.params.id

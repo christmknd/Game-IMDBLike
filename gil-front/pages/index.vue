@@ -2,6 +2,10 @@
 useHead({
   title: 'IMDBLike'
 })
+definePageMeta({
+  layout: "default",
+});
+
 </script>
 
 <template>

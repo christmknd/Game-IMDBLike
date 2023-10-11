@@ -12,7 +12,6 @@
 <script setup>
 definePageMeta({
   layout: "user",
-  middleware: 'connected'
 });
 </script>
 

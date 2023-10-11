@@ -34,15 +34,14 @@ export class AuthService {
       roles: user.roles,
       email: user.email
     };
-
+    
     return {
       access_token: this.jwtService.sign(payload),
       username: user.username,
       roles: user.roles,
-      email: user.email
+      email: user.email,
+      id: user.id,
     };
-
-    console.log(user)
   }
 
   async register(createUserDto: CreateUserDto) {

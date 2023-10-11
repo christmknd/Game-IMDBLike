@@ -134,6 +134,8 @@ export class GameController {
     }
   }
 
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @ApiOperation({ summary: 'Add  review  by game ID' })
   @ApiParam({ name: 'gameId', description: 'ID of the game' })
   @ApiCreatedResponse({ description: 'Review has been successfully created', type: Review })
@@ -141,15 +143,18 @@ export class GameController {
   @Post(':gameId/review')
   async addReviewToGame(
     @Param('gameId') gameId: number,
+    @Param('userId') userId: number,
     @Body() createReviewDto: CreateReviewDto,
   ): Promise<Review> {
     try {
-      return this.gameService.addReviewToGame(gameId, createReviewDto);
+      return this.gameService.addReviewToGame(gameId, userId, createReviewDto);
     } catch (error) {
       throw new BadRequestException(error.message);
     }
   }
 
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @ApiOperation({ summary: 'Find all the  reviews for a specific game ID' })
   @ApiParam({ name: 'gameId', description: 'ID of the game' })
   @ApiOkResponse({ description: 'All reviews for the game', type: Review, isArray: true })
@@ -164,6 +169,8 @@ export class GameController {
     }
   }
 
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @ApiOperation({ summary: 'Find  the  review for a specific game ID' })
   @ApiParam({ name: 'gameId', description: 'ID of the game' })
   @ApiParam({ name: 'reviewId', description: 'ID of the review' })
@@ -181,6 +188,8 @@ export class GameController {
     }
   }
 
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @ApiOperation({ summary: 'Update review  by game ID' })
   @ApiParam({ name: 'gameId', description: 'ID of the game' })
   @ApiParam({ name: 'reviewId', description: 'ID of the review' })
@@ -200,6 +209,26 @@ export class GameController {
       );
     } catch (error) {
       throw new NotFoundException(error.message);
+    }
+  }
+
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
+  @ApiOperation({ summary: 'Delete review  by game ID' })
+  @ApiParam({ name: 'gameId', description: 'ID of the game' })
+  @ApiParam({ name: 'reviewId', description: 'ID of the review' })
+  @ApiOkResponse({ description: 'Review has been successfully deleted', type: Review })
+  @ApiNotFoundResponse({ description: 'Review not found' })
+  @Delete(':gameId/review/:reviewId')
+  async deleteReviewForGame(
+    @Param('gameId') gameId: number,
+    @Param('reviewId') reviewId: number,
+  ): Promise<void> {
+    try {
+      await this.gameService.deleteReviewForGame(gameId, reviewId);
+      console.log('Review removed successfully');
+    } catch (error) {
+      throw new NotFoundException('Review not found or could not be deleted');
     }
   }
 }

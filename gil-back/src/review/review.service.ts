@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException
+} from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,34 +24,20 @@ export class ReviewService {
     private gameRepository: Repository<Game>,
   ) {}
 
-  async createReview(
-    createReviewDto: CreateReviewDto,
-    userId: number,
-  ): Promise<Review> {
-    const user = await this.userService.findUserById(userId);
+  async createReview(createReviewDto: CreateReviewDto): Promise<Review> {
 
-    if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
-    }
-
-    const review = this.reviewRepository.create({
-      ...createReviewDto,
-      user: user,
-    });
-
+    const review = this.reviewRepository.create(createReviewDto);
     return this.reviewRepository.save(review);
   }
 
-  //LISTE DE TOUTES LES REVIEWS DE LA PLATEFORME
   async findAllReviews(): Promise<Review[]> {
     return this.reviewRepository.find();
   }
 
-  //find toutes les reviews que l'on a fait en tant que user
-  async findReviewById(id: number, gameId: number): Promise<Review> {
+  async findReviewById(id: number): Promise<Review> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const review = await this.reviewRepository.findOneBy({ id: id }, gameId);
+    const review = await this.reviewRepository.findOneBy({ id: id });
     if (!review) {
       throw new NotFoundException(`Review with id ${id} not found`);
     }
@@ -55,18 +46,12 @@ export class ReviewService {
 
   async updateReview(
     id: number,
-    gameId: number,
     updateReviewDto: UpdateReviewDto,
   ): Promise<Review> {
-    const game = await this.gameRepository.findOneBy({ id: gameId }); // Recherche du jeu par ID
-    if (!game) {
-      throw new NotFoundException(`Game with ID ${gameId} not found`);
-    }
-
-    const review = await this.reviewRepository.findOneBy({ id: gameId }); // Recherche de la critique par ID et gameId
+    const review = await this.reviewRepository.findOneBy({ id: id }); // Recherche de la critique par ID et gameId
     if (!review) {
       throw new NotFoundException(
-        `Review with ID ${id} for game ${gameId} not found`,
+        `Review with ID ${id}  not found`,
       );
     }
 
@@ -80,8 +65,14 @@ export class ReviewService {
     return this.reviewRepository.save(review);
   }
 
+
   async deleteReview(id: number): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const review = await this.reviewRepository.findOneBy({ id: id });
-    await this.reviewRepository.delete(review);
+    if (!review) {
+      throw new NotFoundException(`Review with ID ${id} not found`);
+    }
+    await this.reviewRepository.remove(review);
   }
 }

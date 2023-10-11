@@ -6,9 +6,11 @@
     <Body>
       <h2>{{ review.title }}</h2>
     <p>{{ review.content }}</p>
+    <p>Ajouté par {{ review.added_by }}</p>
     <p>Note : {{ review.rating }}</p>
     <p>Points forts : {{ review.pros }}</p>
     <p>Points faibles : {{ review.cons }}</p>
+    <p>Ajouté le {{ review.createdOn }}</p>
     <button class="btn btn-warning" @click="editReview">Modifier la critique</button>
     <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
     <router-link :to="`/game/${gameId}`">Retour à la page du jeux</router-link>

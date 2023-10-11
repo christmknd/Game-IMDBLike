@@ -27,7 +27,6 @@ const response = await useFetch(`http://localhost:5000/auth/profile`, {
   }
 })
 
-console.log(parseInt(response.data.value.userId))
 const userId = parseInt(response.data.value.userId);
 
 

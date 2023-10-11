@@ -47,7 +47,7 @@
   const gameId  = route.params.id;
   const reviewId = route.params.reviewId;
 
-  const uri = `http://localhost:5000/game/${gameId}/review/${reviewId}`;
+  const uri = `http://localhost:5000/review/${reviewId}`;
   
   
   const updatedReview = ref({}); // Créez un objet vide pour stocker les données mises à jour

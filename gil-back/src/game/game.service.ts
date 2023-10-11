@@ -72,18 +72,18 @@ export class GameService {
       throw new NotFoundException(`Game with ID ${id} not found`);
     }
 
-    /*
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
-*/
+
     const review = this.reviewRepository.create({
       ...createReviewDto,
       game: { id: id },
-     // user: { id: userId },
+      user: { id: user.id },
     });
     return this.reviewRepository.save(review);
   }

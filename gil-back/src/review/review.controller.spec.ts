@@ -1,43 +1,35 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ReviewController } from './review.controller';
-import { ReviewService } from './review.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ReviewController } from "./review.controller";
+import { ReviewService } from "./review.service";
 import { UpdateReviewDto } from "./dto/update-review.dto";
 import { NotFoundException } from "@nestjs/common";
 import { Review } from "./entities/review.entity";
 import { CreateReviewDto } from "./dto/create-review.dto";
-import { Genre } from "../game/enums/genre-enum";
-import { Platform } from "../game/enums/platform-enum";
+import { PlayerMode } from "../users/enums/playermode.enum";
+import { Playertype } from "../users/enums/playertype.enum";
+import { Role } from "../users/enums/role.enum";
 
-const mockReviews: Review[] = [
-  {
+
+const reviewDto: CreateReviewDto = {
+  title: 'Review 1',
+  content: 'This is the first review',
+  rating: 5,
+  pros: 'Pros of the first review',
+  cons: 'Cons of the first review',
+};
+
+const createReview = (dto: CreateReviewDto) => {
+  return {
     id: 1,
-    title: 'Review 1',
-    content: 'This is the first review',
-    rating: 5,
-    pros: 'Pros of the first review',
-    cons: 'Cons of the first review',
-    game: []
-  },
-  {
-    id: 2,
-    title: 'Review 2',
-    content: 'This is the second review',
-    rating: 4,
-    pros: 'Pros of the second review',
-    cons: 'Cons of the second review',
-    game : [
-      {
-        id: 1,
-        name: 'Game 1',
-        releaseYear: 2023,
-        genres: Genre.Action,
-        platform: Platform.PlayStation_4,
-      }
-    ]
-  },
-];
+    ...dto,
+    user: null,
+    game: null,
+  };
+};
 
-// @ts-ignore
+// Utilisez createReview pour créer des objets de revue
+const mockReviews: Review[] = [createReview(reviewDto)];
+
 const mockReviewService = {
   findAllReviews: jest.fn().mockResolvedValue(mockReviews),
   createReview: jest.fn().mockImplementation((newReview: CreateReviewDto) => {
@@ -70,8 +62,8 @@ const mockReviewService = {
     }
     mockReviews.splice(index, 1);
     return { raw: [], affected: 1 };
-  },
-};
+  }),
+}
 
 describe('ReviewController', () => {
   let reviewController: ReviewController;

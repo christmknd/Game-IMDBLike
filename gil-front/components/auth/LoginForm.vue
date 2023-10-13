@@ -45,7 +45,7 @@ export default {
       try {
        await auth.login(this.form_username, this.form_password);
         this.$emit('user-logged');
-        this.$router.push('/game');
+        this.$router.push('/game')
         console.log('User connecté sur la plateforme avec succès')
       } catch (error) {
         console.error('Une erreur s\'est produite lors de la connexion du user : ',error )

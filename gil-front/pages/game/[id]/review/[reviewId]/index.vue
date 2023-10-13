@@ -26,11 +26,6 @@
           <p>Note : {{ review.rating }} </p>
         </div>
       </div>
-      <h2></h2>
- 
-    
-    
-
     </Body>
   </div>
 </template>

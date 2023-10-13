@@ -18,8 +18,6 @@ export class ReviewService {
   constructor(
     @InjectRepository(Review)
     private reviewRepository: Repository<Review>,
-    @InjectRepository(User)
-    private userService: UsersService,
     @InjectRepository(Game)
     private gameRepository: Repository<Game>,
   ) {}
@@ -73,6 +71,6 @@ export class ReviewService {
     if (!review) {
       throw new NotFoundException(`Review with ID ${id} not found`);
     }
-    await this.reviewRepository.remove(review);
+    await this.reviewRepository.delete(review);
   }
 }

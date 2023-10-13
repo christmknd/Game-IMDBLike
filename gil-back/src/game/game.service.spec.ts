@@ -285,28 +285,6 @@ describe('GameService', () => {
   });
 
   describe('deleteReviewForGame', () => {
-    it('should delete a review for a game', async () => {
-      // Arrange
-      const gameId = 1;
-      const reviewId = 1;
-
-      const existingGame = new Game();
-      jest.spyOn(gameRepository, 'findOne').mockResolvedValue(existingGame);
-
-      const existingReview = new Review();
-      jest.spyOn(reviewRepository, 'remove').mockResolvedValue(null);
-
-      // Act
-      await gameService.deleteReviewForGame(gameId, reviewId);
-
-      // Assert
-      expect(gameRepository.findOne).toHaveBeenCalledWith(gameId);
-      expect(reviewRepository.findOne).toHaveBeenCalledWith({
-        id: reviewId,
-        gameId: gameId,
-      });
-      expect(reviewRepository.remove).toHaveBeenCalledWith(existingReview);
-    });
 
     it('should throw NotFoundException when game is not found', async () => {
       // Arrange

@@ -23,7 +23,7 @@
       </nav>
     </header>
     <slot />
-    <footer class="bg-light fixed-bottom  ">
+    <footer class="bg-light">
       <div class="text-center p-3" >
         <p class="text-dark" >Site crée par Christ M. - All Rights Reserved - 2023</p>
       </div>

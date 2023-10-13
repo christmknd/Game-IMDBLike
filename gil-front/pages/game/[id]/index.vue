@@ -1,20 +1,32 @@
 <template>
-  <div class="game-card">
+  <div>
     <Title>{{ game.name }}</Title>
-    <h2>{{ game.name }}</h2>
-    <p>Date de sortie : {{ game.releaseYear }}</p>
-    <p>Genre : {{ game.genres }}</p>
-    <p>Plateforme : {{ game.platform }}</p>
-    <button class="btn btn-success" @click="addReview">Ajouter une review</button>
-    <button class="btn btn-warning" @click="editGame">Modifier</button>
-    <button class="btn btn-danger" @click="deleteGame">Supprimer</button>
-    <div v-for="review in reviews" :key="review.id" class="review card">
-      <h2>{{ review.title }}</h2>
-        <ul>
-          <router-link :to="`/game/${gameId}/review/${review.id}`">Voir la critique</router-link>
+    <div class="card text-center">
+      <div class="card-header">
+        <h1>Détail du jeu</h1>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">{{ game.name }}</h2>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><p>Date de sortie : {{ game.releaseYear }}</p></li>
+          <li class="list-group-item"><p>Genre : {{ game.genres }}</p></li>
+          <li class="list-group-item"><p>Plateforme : {{ game.platform }}</p></li>
         </ul>
+        <button class="btn btn-success" @click="addReview">Ajouter une review</button>
+        <button class="btn btn-warning" @click="editGame">Modifier</button>
+        <button class="btn btn-danger" @click="deleteGame">Supprimer</button>
+      </div>
+      <router-link :to="`/game/`">Retour à la page des jeux</router-link>
+      <div class="card-footer text-muted">
+        Jeu ajouté par 
+      </div>
     </div>
-    <router-link :to="`/game/`">Retour à la page des jeux</router-link>
+    <div v-for="review in reviews" :key="review.id" class="review card">
+        <h2>{{ review.title }}</h2>
+          <ul>
+            <router-link :to="`/game/${gameId}/review/${review.id}`">Voir la critique</router-link>
+          </ul>
+    </div>
   </div>
 </template>
 
@@ -72,7 +84,6 @@ const {data: reviews} = await useFetch(`http://localhost:5000/game/${gameId}/rev
 const addReview = () => {
   router.push(`/game/${gameId}/addreview`)
 }
-
 
 </script>
 

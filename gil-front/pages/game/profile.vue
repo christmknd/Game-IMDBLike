@@ -4,12 +4,25 @@
     <Head>
       <Title>{{ user.username }} Profile</Title>
     </Head>
-    <h1>{{ user.username }}</h1>
+    <div class="card text-center">
+      <div class="card-header">
+        <h1>Mon profil</h1>
+      </div>
+      <div class="card-body">
+        <h2 class="card-title">{{ user.username }}</h2>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Mail : {{ user.email }}</li>
+          <li class="list-group-item"><p>player_type : {{ user.player_type }}</p></li>
+          <li class="list-group-item">Mode de jeu favori : {{ user.favorite_mode }}</li>
+        </ul>
+      </div>
+    </div>
+    
 
-    <h3>{{ user.email }}</h3>
+    <h3></h3>
 
-    <p>player_type : {{ user.player_type }}</p>
-    <p>Mode de jeu favori : {{ user.favorite_mode }}</p>
+    
+    <p></p>
   </div>
 </template>
 

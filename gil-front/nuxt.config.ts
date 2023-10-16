@@ -39,7 +39,9 @@ export default defineNuxtConfig({
     }
   },
   alias: {
-    "@": resolve(__dirname)
+    '~': resolve(__dirname, './'),
+    "@": resolve(__dirname),
+
   },
   components: [
     '~/components',

@@ -3,27 +3,28 @@
     <h1>Se connecter</h1>
     <form @submit.prevent="login">
       <div class="mb-3">
-        <label htmlFor='username' class="form-label">Username</label>
-        <input 
-          class="form-control"
-          type="text" 
-          id="username" 
-          placeholder='username'
-          v-model="form_username" 
+          <label class="form-label">Username</label>
+          <input
+            class="form-control"
+            type="text"
+            id="username"
+            placeholder='username'
+            v-model="form_username"
           />
       </div>
       <div class="mb-3">
-        <label htmlFor='password' class="form-label">Mot de passe</label>
-          <input 
-          class="form-control"
-          type="password" 
-          id="password" 
-          placeholder="password"
-          v-model="form_password"
+          <label class="form-label">Mot de passe</label>
+          <input
+            class="form-control"
+            type="password"
+            id="password"
+            placeholder="password"
+            v-model="form_password"
           />
       </div>
+
           <button type="submit" class="btn btn-primary">Se connecter</button>
-      </form>
+    </form>
       <div>
         <p>Si vous n'êtes pas inscrit , cliquez <NuxtLink to="/register">ici</NuxtLink> </p>
       </div>
@@ -32,8 +33,12 @@
 
 <script>
 import auth from '~/services/auth';
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
+
 
 export default {
+
   data (){
     return {
         form_username : '',
@@ -54,5 +59,3 @@ export default {
   }
 }
 </script>
-
-<style scoped></style>

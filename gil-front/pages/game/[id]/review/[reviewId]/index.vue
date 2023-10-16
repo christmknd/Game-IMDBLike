@@ -4,13 +4,28 @@
       <Title>Détail de la critique</Title>
     </Head>
     <Body>
-      <h2>{{ review.title }}</h2>
-    <p>{{ review.content }}</p>
-    <p>Note : {{ review.rating }}</p>
-    <p>Points forts : {{ review.pros }}</p>
-    <p>Points faibles : {{ review.cons }}</p>
+      <div class="card text-center">
+        <h2 class="card-header">{{ review.title }}</h2>
+        <div class="card-body">
+          <ul  class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="card-text">
+            <p>{{ review.content }}</p>
+          </div>
+            </li>
+            <li class="list-group-item"><p>Ajouté par {{ review.added_by }}</p></li>
+            <li class="list-group-item"><p>Points forts : {{ review.pros }}</p></li>
+            <li class="list-group-item"><p>Points faibles : {{ review.cons }}</p></li>
+          </ul>
+              
     <button class="btn btn-warning" @click="editReview">Modifier la critique</button>
     <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
+        </div>
+        <router-link :to="`/game/${gameId}`">Retour à la page du jeux</router-link>
+        <div class="card-footer">
+          <p>Note : {{ review.rating }} </p>
+        </div>
+      </div>
     </Body>
   </div>
 </template>
@@ -18,7 +33,6 @@
 <script  setup>
 definePageMeta({
   layout: "user",
-  middleware: 'connected'
 });
 
 

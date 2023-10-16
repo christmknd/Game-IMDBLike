@@ -1,20 +1,22 @@
 
 
 <template>
-  <div>
-    <h1>Toutes les critiques</h1>
-    <ul>
-      <div v-for="review in reviews" :key="review.id">
+    <div class="card text-center">
+      <div class="card-header">
+        <h2 class="card-title">Toutes les critiques</h2>
+      </div>
+      <div class="card-body">
+        <div v-for="review in reviews" :key="review.id">
         <h2>{{ review.title }}</h2>
-        <ul>
-          <li>{{ review.content }}</li>
-          <li>{{ review.rating }}</li>
-          <li>{{ review.pros }}</li>
-          <li>{{ review.cons }}</li>
+        <ul class="list-group">
+          <li class="list-group-item">{{ review.content }}</li>
+          <li class="list-group-item">Note : {{ review.rating }}</li>
+          <li class="list-group-item">Points posifitfs : {{ review.pros }}</li>
+          <li class="list-group-item">Points négatifs :{{ review.cons }}</li>
         </ul>
       </div>
-    </ul>
-  </div>
+      </div>
+    </div>   
 </template>
 
 <script setup>

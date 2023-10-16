@@ -25,6 +25,4 @@ export class CreateReviewDto {
   @IsString()
   cons: string;
 
-
-
 }

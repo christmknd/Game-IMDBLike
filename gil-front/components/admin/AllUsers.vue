@@ -1,14 +1,13 @@
 <template>
-  <div>
-    <h1>Toutes les utilisateurs</h1>
-    <ul>
-      <li v-for="user in users" :key="user.id">
-        <ul>
-          <li>{{ user.username }}</li>
-          <li>{{ user.email }}</li>
+  <div class="card">
+    <div class="card-header">
+      <h2>Toutes les utilisateurs</h2>
+    </div>
+      <div class="card-body" v-for="user in users" :key="user.id">
+        <ul class="list-group">
+          <li class="list-group-item">{{ user.username }} | {{ user.email }} </li>
         </ul>
-      </li>
-    </ul>
+      </div>
   </div>
 </template>
 

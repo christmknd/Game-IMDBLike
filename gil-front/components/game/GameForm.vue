@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async addGame(){
-      const accesstoken = auth.getAccessToken()
+      const accesstoken = auth.getAccessToken();
       try {
         const gameData = {
           name : this.game_name,

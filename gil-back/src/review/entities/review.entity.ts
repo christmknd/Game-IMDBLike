@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, /*ManyToOne*/ PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, /*ManyToOne*/ PrimaryGeneratedColumn } from "typeorm";
 import { IsInt, IsString, Max, Min } from 'class-validator';
 import { Game } from "../../game/entities/game.entity";
 import { User } from "../../users/entities/user.entity";

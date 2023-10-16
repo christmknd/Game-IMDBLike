@@ -78,7 +78,7 @@ export default {
         }
         await authService.register(formData.username, this.form_email, this.form_password, this.form_playertype,this.form_playermode);
         this.$emit('user-registered');
-        this.$router.push('/game')
+        this.$router.push('/login')
         console.log('User enregistré sur la plateforme avec succès')
       } catch (error) {
         console.error('Une erreur s\'est produite lors de l\'enrigistrement du user : ',error )

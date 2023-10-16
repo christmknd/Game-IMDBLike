@@ -11,6 +11,7 @@
           placeholder='username'
           v-model="form_username"
           />
+          <div v-if="v$.form_username.$error">Le username est obligatoire.</div>
       </div>
       <div class="mb-3">
         <label htmlFor='password' class="form-label">Mot de passe</label>
@@ -21,6 +22,10 @@
           placeholder="password"
           v-model="form_password"
           />
+          <div v-if="v$.form_password.$error">
+          <span v-if="form_password.required">Le mot de passe est obligatoire.</span>
+          <span v-else-if="form_password.minLength">Le mot de passe doit contenir au moins 6 caractères.</span>
+        </div>
       </div>
           <button type="submit" class="btn btn-primary">Se connecter</button>
       </form>
@@ -30,17 +35,27 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { useVuelidate } from '@vuelidate/core';
-import {required, minLength} from '@vuelidate/validators'
+<script>
+import auth from '~/services/auth';
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
 
-const form_username = ref('');
-const form_password = ref('');
 
-const rules = {
-  form_username: {
-    required
+export default {
+  setup () {
+    return { v$: useVuelidate() }
+  },
+  data (){
+    return {
+        form_username : '',
+        form_password : ''
+    }
+  },
+  validations (){
+    return {
+      form_username : {required},
+      form_password : {required , minLength: minLength(6)}
+    }
   },
   methods: {
     async login () {
@@ -54,5 +69,5 @@ const rules = {
       }
     }
   }
-};
+}
 </script>

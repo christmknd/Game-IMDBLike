@@ -106,6 +106,26 @@ export class GameService {
     return review;
   }
 
+  async findUserIdForReviewInGame(
+    gameId: number,
+    reviewId: number,
+  ): Promise<number> {
+    const review = await this.reviewRepository.findOne({
+      where: { id: reviewId, game: { id: gameId } },
+      relations: ['user'],
+    });
+    if (!review) {
+      throw new NotFoundException(`Review with ID ${reviewId} not found for game ${gameId}`);
+    }
+
+    if (!review.user) {
+      throw new NotFoundException(`User not found for review with ID ${reviewId}`);
+    }
+
+
+    return review.user.id;
+  }
+
   //trouver tout les reviews par rapport à un jeu spécifiquement
   async findAllReviewsForGame(gameId: number): Promise<Review[]> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

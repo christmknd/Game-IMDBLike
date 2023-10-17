@@ -13,13 +13,12 @@
             <p>{{ review.content }}</p>
           </div>
             </li>
-            <li class="list-group-item"><p>Ajouté par {{ review.added_by }}</p></li>
+            <li class="list-group-item"><p>Ajouté par</p></li>
             <li class="list-group-item"><p>Points forts : {{ review.pros }}</p></li>
             <li class="list-group-item"><p>Points faibles : {{ review.cons }}</p></li>
-          </ul>
-              
-    <button class="btn btn-warning" @click="editReview">Modifier la critique</button>
-    <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
+          </ul>     
+            <button class="btn btn-warning" @click="editReview" >Modifier la critique</button>
+            <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
         </div>
         <router-link :to="`/game/${gameId}`">Retour à la page du jeux</router-link>
         <div class="card-footer">
@@ -38,6 +37,7 @@ definePageMeta({
 
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
+
 import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -46,6 +46,7 @@ const router = useRouter();
 
 const gameId = parseInt(route.params.id);
 const reviewId = parseInt(route.params.reviewId);
+const userId = parseInt(localStorage.getItem('userId'))
 const uri = `http://localhost:5000/game/${gameId}/review/${reviewId}`;
 
 // Fetch des données de la critique
@@ -82,6 +83,20 @@ const deleteReview = async () => {
     console.error('Une erreur s\'est produite : la critique n\'a pas pu être supprimée. \n', error);
   }
 };
+
+
+//récuperer le userId de la review 
+
+const {data : reviewUserId} = await useFetch(`http://localhost:5000/game/${gameId}/review/${reviewId}/user`, {
+  method: 'GET',
+  headers : {
+    'Authorization': `Bearer ${accessToken} `
+  }
+})
+
+console.log('Review user ID: ',reviewUserId.value)
+
+
 </script>
 
 

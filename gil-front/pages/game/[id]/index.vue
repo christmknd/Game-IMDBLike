@@ -15,12 +15,22 @@
               </ul>
               <button class="btn btn-success" @click="addReview">Ajouter une review</button>
               <button class="btn btn-warning" @click="editGame">Modifier</button>
-              <button class="btn btn-danger" @click="deleteGame">Supprimer</button>
+              <button class="btn btn-danger" @click="deleteGame" disabled>Supprimer</button>
               </div>
             <router-link :to="`/game/`">Retour à la page des jeux</router-link>
-            <div class="card-footer text-muted">
-              Jeu ajouté par 
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title text-center">Toutes les critiques </h3>
             </div>
+            <div v-for="review in reviews" :key="review.id">
+            <div class="card-body">
+              <h4>{{ review.title }}</h4>
+              <ul class="list-group">
+                  <router-link :to="`/game/${gameId}/review/${review.id}`">Voir la critique</router-link>
+              </ul>
+            </div>
+          </div>
           </div>
       </div> 
   </div>
@@ -46,6 +56,7 @@ const {data: game} = await useFetch(uri , {
     'Authorization': `Bearer ${accessToken} `,
   }
 })
+
 
 const editGame = () => {
   router.push(`/game/${gameId}/edit`);
@@ -80,6 +91,8 @@ const {data: reviews} = await useFetch(`http://localhost:5000/game/${gameId}/rev
 const addReview = () => {
   router.push(`/game/${gameId}/addreview`)
 }
+
+
 
 </script>
 

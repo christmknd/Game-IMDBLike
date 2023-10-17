@@ -190,6 +190,21 @@ export class GameController {
 
   @Roles(Role.Player)
   @Roles(Role.Admin)
+  @Get(':gameId/review/:reviewId/user')
+  async findUserIdForReviewInGame(
+    @Param('gameId') gameId: number,
+    @Param('reviewId') reviewId: number,
+  ) {
+    try {
+      return this.gameService.findUserIdForReviewInGame(gameId, reviewId);
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
+
+
+  @Roles(Role.Player)
+  @Roles(Role.Admin)
   @ApiOperation({ summary: 'Update review  by game ID' })
   @ApiParam({ name: 'gameId', description: 'ID of the game' })
   @ApiParam({ name: 'reviewId', description: 'ID of the review' })

@@ -8,7 +8,7 @@ on:
 
 
 jobs: 
-  unit-and-e2e-tesy:
+  unit-and-e2e-test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependancies on frontend
+      - name: Install dependancies on backend
         run: npm ci
         working-directory: ./gil-back
 
@@ -39,5 +39,6 @@ jobs:
 
       - name: Run unit test on frontend
         run: npm test
+        working-directory: ./gil-front
 
 

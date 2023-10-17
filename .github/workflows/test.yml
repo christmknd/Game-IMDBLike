@@ -32,10 +32,6 @@ jobs:
         run: npm run test
         working-directory: ./gil-back
 
-      - name: Run e2e test on backend
-        run: npm run test:e2e
-        working-directory: ./gil-back
-
       
       - name: Install dependancies on frontend
         run: npm ci

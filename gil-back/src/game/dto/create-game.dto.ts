@@ -21,8 +21,4 @@ export class CreateGameDto {
   @ApiProperty({ type: 'enum', enum: Platform })
   @IsEnum(Platform)
   platform: Platform;
-
-  @ApiProperty({ description: 'User ID' })
-  @IsInt()
-  userId: number;
 }

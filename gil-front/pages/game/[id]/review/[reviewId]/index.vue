@@ -17,8 +17,8 @@
             <li class="list-group-item"><p>Points forts : {{ review.pros }}</p></li>
             <li class="list-group-item"><p>Points faibles : {{ review.cons }}</p></li>
           </ul>     
-            <button class="btn btn-warning" @click="editReview" >Modifier la critique</button>
-            <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
+            <button class="btn btn-warning" @click="editReview" :disabled="reviewUserId.value !== userId"  >Modifier la critique</button>
+            <button class="btn btn-danger" @click="confirmDelete" :disabled="isDisabled">Supprimer la critique</button>
         </div>
         <router-link :to="`/game/${gameId}`">Retour à la page du jeux</router-link>
         <div class="card-footer">
@@ -37,7 +37,8 @@ definePageMeta({
 
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
-
+const number = auth.getUserId()
+const userId = parseInt(number)
 import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -46,7 +47,7 @@ const router = useRouter();
 
 const gameId = parseInt(route.params.id);
 const reviewId = parseInt(route.params.reviewId);
-const userId = parseInt(localStorage.getItem('userId'))
+
 const uri = `http://localhost:5000/game/${gameId}/review/${reviewId}`;
 
 // Fetch des données de la critique
@@ -94,8 +95,15 @@ const {data : reviewUserId} = await useFetch(`http://localhost:5000/game/${gameI
   }
 })
 
-console.log('Review user ID: ',reviewUserId.value)
+const isDisabled = () => {
+  if (reviewUserId.value !== userId) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
+console.log('Review user ID: ',reviewUserId.value)
 
 </script>
 

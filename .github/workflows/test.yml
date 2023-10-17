@@ -7,3 +7,41 @@ on:
     branches : ["dev","main"]
 
 
+jobs: 
+  unit-and-e2e-tesy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependancies on frontend
+        run: npm ci
+        working-directory: ./gil-back
+
+      - name: Run unit test on backend
+        run: npm run test
+        working-directory: ./gil-back
+
+      - name: Run e2e test on backend
+        run: npm run test:e2e
+        working-directory: ./gil-back
+
+      
+      - name: Install dependancies on frontend
+        run: npm ci
+        working-directory: ./gil-front
+
+      - name: Run unit test on frontend
+        run: npm test
+
+

@@ -1,0 +1,27 @@
+- hosts: backend
+  become: yes
+  tasks:
+    - name: Clone the backend repository
+      git:
+        repo: https://github.com/christmknd/Game-IMDBLike/
+        dest: ./gil-back
+        version: dev
+      tags: backend
+
+    - name: Install Node.js and npm
+      yum:
+        name: nodejs
+        state: present
+      tags: backend
+
+    - name: Install npm packages for the backend
+      npm:
+        path: ./gil-back
+      tags: backend
+
+    - name: Start the backend application
+      shell: cd ./gil-back && npm start
+      async: 600
+      poll: 0
+      ignore_errors: yes
+      tags: backend

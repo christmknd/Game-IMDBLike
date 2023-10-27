@@ -1,1 +1,4 @@
 .env
+ansible\gil-backend-keys.pem
+ansible\gil-frontend-keys.pem
+ansible\gil-mysql.pem

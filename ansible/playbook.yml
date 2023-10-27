@@ -1,0 +1,12 @@
+- hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Include backend tasks
+      include: backend.yml
+
+    - name: Include frontend tasks
+      include: frontend.yml
+
+    - name: Include database tasks
+      include: database.yml

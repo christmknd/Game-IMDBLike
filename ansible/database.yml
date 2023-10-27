@@ -1,0 +1,14 @@
+- hosts: database
+  become: yes
+  tasks:
+    - name: Install MySQL Server
+      yum:
+        name: mysql-server
+        state: present
+      tags: database
+
+    - name: Start MySQL service
+      service:
+        name: mysqld
+        state: started
+      tags: database

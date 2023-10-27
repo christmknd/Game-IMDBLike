@@ -1,0 +1,24 @@
+- hosts: frontend
+  become: yes
+  tasks:
+    - name: Clone the frontend repository
+      git:
+        repo: https://github.com/christmknd/Game-IMDBLike/
+        dest: ./gil-front
+        version: dev
+      tags: frontend
+
+    - name: Install Node.js and npm
+      yum:
+        name: nodejs
+        state: present
+      tags: frontend
+
+    - name: Install npm packages for the frontend
+      npm:
+        path: ./gil-front
+      tags: frontend
+
+    - name: Build the frontend application
+      shell: cd ./gil-front && npm run build
+      tags: frontend

@@ -4,13 +4,27 @@
       <Title>Détail de la critique</Title>
     </Head>
     <Body>
-      <h2>{{ review.title }}</h2>
-    <p>{{ review.content }}</p>
-    <p>Note : {{ review.rating }}</p>
-    <p>Points forts : {{ review.pros }}</p>
-    <p>Points faibles : {{ review.cons }}</p>
-    <button class="btn btn-warning" @click="editReview">Modifier la critique</button>
-    <button class="btn btn-danger" @click="confirmDelete">Supprimer la critique</button>
+      <div class="card text-center">
+        <h2 class="card-header">{{ review.title }}</h2>
+        <div class="card-body">
+          <ul  class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="card-text">
+            <p>{{ review.content }}</p>
+          </div>
+            </li>
+            <li class="list-group-item"><p>Ajouté par</p></li>
+            <li class="list-group-item"><p>Points forts : {{ review.pros }}</p></li>
+            <li class="list-group-item"><p>Points faibles : {{ review.cons }}</p></li>
+          </ul>     
+          <button class="btn btn-warning" @click="editReview" v-if="isAllowedToUpdate">Modifier la critique</button>
+      <button class="btn btn-danger" @click="confirmDelete" v-if="isAllowedToUpdate">Supprimer la critique</button>
+        </div>
+        <router-link :to="`/game/${gameId}`">Retour à la page du jeux</router-link>
+        <div class="card-footer">
+          <p>Note : {{ review.rating }} </p>
+        </div>
+      </div>
     </Body>
   </div>
 </template>
@@ -18,12 +32,14 @@
 <script  setup>
 definePageMeta({
   layout: "user",
-  middleware: 'connected'
 });
 
 
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
+const number = auth.getUserId()
+const userId = parseInt(number)
+console.log('userId : ', userId)
 import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -32,6 +48,7 @@ const router = useRouter();
 
 const gameId = parseInt(route.params.id);
 const reviewId = parseInt(route.params.reviewId);
+
 const uri = `http://localhost:5000/game/${gameId}/review/${reviewId}`;
 
 // Fetch des données de la critique
@@ -68,6 +85,23 @@ const deleteReview = async () => {
     console.error('Une erreur s\'est produite : la critique n\'a pas pu être supprimée. \n', error);
   }
 };
+
+
+//récuperer le userId de la review 
+
+const {data : reviewUserId} = await useFetch(`http://localhost:5000/game/${gameId}/review/${reviewId}/user`, {
+  method: 'GET',
+  headers : {
+    'Authorization': `Bearer ${accessToken} `
+  }
+})
+
+const isAllowedToUpdate = computed(() => {
+  return reviewUserId.value == userId;
+});
+
+console.log('Review user ID: ',reviewUserId.value)
+
 </script>
 
 

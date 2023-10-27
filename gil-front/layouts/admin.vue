@@ -3,6 +3,13 @@
   import auth from '~/services/auth';
 
   const router = useRouter();
+  const role = auth.getRole();
+
+
+  if (role !== 'admin'){
+    navigateTo('/forbidden')
+  }
+
 
   const logout = async () => {
     auth.logout()
@@ -23,12 +30,15 @@
         <li class="nav-item">
           <nuxt-link to="/admin">Dashboard</nuxt-link>
         </li>
+        <li class="nav-item">
+          <button @click="logout">Se Déconnecter</button>
+        </li>
       </ul>
     </div>
       </nav>
     </header>
     <slot />
-      <footer class="bg-light fixed-bottom  ">
+      <footer class="bg-light">
       <div class="text-center p-3" >
         <p class="text-dark" >Site crée par Christ M. - All Rights Reserved - 2023</p>
       </div>

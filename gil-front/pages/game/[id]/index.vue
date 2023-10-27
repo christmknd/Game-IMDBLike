@@ -1,34 +1,49 @@
 <template>
-  <div class="game-card">
+  <div>
     <Title>{{ game.name }}</Title>
-    <h2>{{ game.name }}</h2>
-    <h4>{{ username }}</h4>
-    <p>Date de sortie : {{ game.releaseYear }}</p>
-    <p>Genre : {{ game.genres }}</p>
-    <p>Plateforme : {{ game.platform }}</p>
-    <button class="btn btn-success" @click="addReview">Ajouter une review</button>
-    <button class="btn btn-warning" @click="editGame">Modifier</button>
-    <button class="btn btn-danger" @click="deleteGame">Supprimer</button>
-    <div v-for="review in reviews" :key="review.id" class="review card">
-      <h2>{{ review.title }}</h2>
-        <ul>
-          <router-link :to="`/game/${gameId}/review/${review.id}`">Voir la critique</router-link>
-        </ul>
-    </div>
-    <router-link :to="`/game/`">Retour à la page des jeux</router-link>
+      <div class="container">
+          <div class="card text-center">
+            <div class="card-header">
+              <h1>Détail du jeu</h1>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">{{ game.name }}</h2>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><p>Date de sortie : {{ game.releaseYear }}</p></li>
+                <li class="list-group-item"><p>Genre : {{ game.genres }}</p></li>
+                <li class="list-group-item"><p>Plateforme : {{ game.platform }}</p></li>
+              </ul>
+              <button class="btn btn-success" @click="addReview">Ajouter une review</button>
+              <button class="btn btn-warning" @click="editGame">Modifier</button>
+              <button class="btn btn-danger" @click="deleteGame" disabled>Supprimer</button>
+              </div>
+            <router-link :to="`/game/`">Retour à la page des jeux</router-link>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title text-center">Toutes les critiques </h3>
+            </div>
+            <div v-for="review in reviews" :key="review.id">
+            <div class="card-body">
+              <h4>{{ review.title }}</h4>
+              <ul class="list-group">
+                  <router-link :to="`/game/${gameId}/review/${review.id}`">Voir la critique</router-link>
+              </ul>
+            </div>
+          </div>
+          </div>
+      </div> 
   </div>
 </template>
 
 <script setup>
 definePageMeta({
   layout: "user",
-  middleware: 'connected'
 });
 
 
 import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
-const username = auth.getUsername();
 const route = useRoute();
 const router = useRouter();
 const gameId = route.params.id
@@ -41,6 +56,7 @@ const {data: game} = await useFetch(uri , {
     'Authorization': `Bearer ${accessToken} `,
   }
 })
+
 
 const editGame = () => {
   router.push(`/game/${gameId}/edit`);
@@ -77,7 +93,12 @@ const addReview = () => {
 }
 
 
+
 </script>
 
 <style>
+.container{
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
 </style>

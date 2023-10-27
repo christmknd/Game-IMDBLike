@@ -1,7 +1,6 @@
 <script setup>
 definePageMeta({
   layout: "admin",
-  middleware: 'connected'
 });
 </script>
 
@@ -12,11 +11,22 @@ definePageMeta({
   </Head>
   <Body>
     <h1>Admin Dashboard</h1>
-    <AdminAllGames/>
-    <AdminAllReviews/>
-    <AdminAllUsers/>
+    <div class="container">
+      <div class="container-fluid">
+        <section>
+      <AdminAllUsers/>
+    </section>
+      </div>
+    </div>
+   
+
   </Body>
   </div>
 </template>
 
-<style scoped></style>
+<style >
+.container-fluid{
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+</style>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Test the application
 
 on:
@@ -9,3 +10,49 @@ on:
 jobs:
   backend-unit-testing:
     runs-on: ubuntu-latest
+=======
+name: Tests 
+
+on:
+  push:
+    branches : ["dev","main"]
+  pull_request:
+    branches : ["dev","main"]
+
+
+jobs: 
+  unit-and-e2e-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18]
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependancies on backend
+        run: npm ci
+        working-directory: ./gil-back
+
+      - name: Run unit test on backend
+        run: npm run test
+        working-directory: ./gil-back
+
+      
+      - name: Install dependancies on frontend
+        run: npm ci
+        working-directory: ./gil-front
+
+      - name: Run unit test on frontend
+        run: npm test
+        working-directory: ./gil-front
+
+
+>>>>>>> a80d5893701ba1592593a32ab9559e2e14d488a2

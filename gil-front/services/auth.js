@@ -8,9 +8,10 @@ export default {
           body: JSON.stringify({ username, password }),
         });
         localStorage.setItem('accessToken', response.access_token);
-        localStorage.setItem('username',response.username)
+        localStorage.setItem('username',username)
         localStorage.setItem('role',response.roles)
         localStorage.setItem('email',response.email)
+        localStorage.setItem('userId',response.id)
         return response;
       } catch (error) {
         throw error;
@@ -27,10 +28,15 @@ export default {
         localStorage.setItem('username',response.username)
         localStorage.setItem('role',response.roles)
         localStorage.setItem('email',response.email)
+        localStorage.setItem('userId',response.id)
         return response;
       } catch (error) {
         throw error;
       }
+    },
+
+    getUserId(){
+      return localStorage.getItem('userId');
     },
    
     getAccessToken() {

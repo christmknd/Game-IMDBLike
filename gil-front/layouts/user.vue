@@ -3,6 +3,11 @@
   import auth from '~/services/auth';
 
   const router = useRouter();
+  const role = auth.getRole();
+
+  if (role !== 'Player'){
+    navigateTo('/forbidden')
+  }
 
   const logout = async () => {
     auth.logout();
@@ -23,6 +28,9 @@
           <nuxt-link class="nav-link" to="/game">Jeux</nuxt-link>
         </li>
         <li class="nav-item">
+          <nuxt-link class="nav-link" to="game/profile">Profile</nuxt-link>
+        </li>
+        <li class="nav-item">
           <button @click="logout">Se Déconnecter</button>
         </li>
       </ul>
@@ -30,7 +38,7 @@
       </nav>
     <slot />
     <footer class=" fixed-botttom bg-light text-center text-lg-start">
-      <footer class="bg-light fixed-bottom  ">
+      <footer class="bg-light">
       <div class="text-center p-3" >
         <p class="text-dark" >Site crée par Christ M. - All Rights Reserved - 2023</p>
       </div>

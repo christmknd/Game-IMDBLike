@@ -35,6 +35,7 @@
   const gameId = route.params.id;
   console.log(gameId);
 
+
   const review_title = ref("");
   const review_content = ref("");
   const review_pros = ref("");

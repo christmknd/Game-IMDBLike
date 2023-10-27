@@ -11,8 +11,8 @@ import { Game } from '../game/entities/game.entity';
 describe('ReviewService', () => {
   let reviewService: ReviewService;
   let reviewRepository: Repository<Review>;
-  let gameRepository: Repository<Game>; 
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  let gameRepository: Repository<Game>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -29,11 +29,11 @@ describe('ReviewService', () => {
       ],
     }).compile();
 
-    reviewService = module.get<ReviewService>(ReviewService)
-    reviewRepository = module.get<Repository<Review>>(getRepositoryToken(Review))
-    gameRepository = module.get<Repository<Game>>(getRepositoryToken(Game))
-    ;
-
+    reviewService = module.get<ReviewService>(ReviewService);
+    reviewRepository = module.get<Repository<Review>>(
+      getRepositoryToken(Review),
+    );
+    gameRepository = module.get<Repository<Game>>(getRepositoryToken(Game));
 
     reviewService = module.get<ReviewService>(ReviewService);
   });
@@ -85,7 +85,7 @@ describe('ReviewService', () => {
       const reviewId = 1;
       jest.spyOn(reviewRepository, 'findOneBy').mockResolvedValue(review);
 
-      const result = await reviewService.findReviewById(reviewId, 1); 
+      const result = await reviewService.findReviewById(reviewId);
 
       expect(result).toBe(review);
     });
@@ -94,7 +94,7 @@ describe('ReviewService', () => {
       const reviewId = 1;
       jest.spyOn(reviewRepository, 'findOneBy').mockResolvedValue(undefined);
 
-      await expect(reviewService.findReviewById(reviewId, 1)).rejects.toThrowError(
+      await expect(reviewService.findReviewById(reviewId)).rejects.toThrowError(
         NotFoundException,
       );
     });
@@ -103,7 +103,6 @@ describe('ReviewService', () => {
   describe('updateReview', () => {
     it('should update a review', async () => {
       const reviewId = 1;
-      const gameId = 1; 
       const updateReviewDto: UpdateReviewDto = {
         title: 'Updated Title',
         content: 'Updated content',
@@ -113,11 +112,16 @@ describe('ReviewService', () => {
       };
 
       const existingReview = new Review();
-      jest.spyOn(reviewRepository, 'findOneBy').mockResolvedValue(existingReview);
+      jest
+        .spyOn(reviewRepository, 'findOneBy')
+        .mockResolvedValue(existingReview);
       jest.spyOn(reviewRepository, 'save').mockResolvedValue(existingReview);
 
       // Act
-      const result = await reviewService.updateReview(reviewId, gameId, updateReviewDto);
+      const result = await reviewService.updateReview(
+        reviewId,
+        updateReviewDto,
+      );
 
       // Assert
       expect(result).toEqual(existingReview);
@@ -130,13 +134,12 @@ describe('ReviewService', () => {
 
     it('should throw NotFoundException when review is not found', async () => {
       const reviewId = 1;
-      const gameId = 1; 
       jest.spyOn(reviewRepository, 'findOneBy').mockResolvedValue(undefined);
 
       // Act and Assert
-      await expect(reviewService.updateReview(reviewId, gameId, {} as UpdateReviewDto)).rejects.toThrowError(
-        NotFoundException,
-      );
+      await expect(
+        reviewService.updateReview(reviewId, {} as UpdateReviewDto),
+      ).rejects.toThrowError(NotFoundException);
     });
   });
 
@@ -144,8 +147,12 @@ describe('ReviewService', () => {
     it('should delete a review', async () => {
       const existingReview = new Review();
       const reviewId = 1;
-      jest.spyOn(reviewRepository, 'findOneBy').mockResolvedValue(existingReview);
-      jest.spyOn(reviewRepository, 'delete').mockResolvedValue({ affected: 1 } as DeleteResult);
+      jest
+        .spyOn(reviewRepository, 'findOneBy')
+        .mockResolvedValue(existingReview);
+      jest
+        .spyOn(reviewRepository, 'delete')
+        .mockResolvedValue({ affected: 1 } as DeleteResult);
 
       await reviewService.deleteReview(reviewId);
 
@@ -162,6 +169,3 @@ describe('ReviewService', () => {
     });
   });
 });
-
-
-

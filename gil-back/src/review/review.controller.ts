@@ -15,7 +15,6 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import {
   ApiBadRequestResponse,
-  ApiBearerAuth,
   ApiBody,
   ApiNotFoundResponse,
   ApiOperation,
@@ -27,8 +26,7 @@ import { Review } from './entities/review.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guards';
 import { Roles } from '../auth/decorators/roles.decorators';
 import { Role } from '../users/enums/role.enum';
-import { RolesGuard } from "../auth/guards/RolesGuard";
-
+import { RolesGuard } from '../auth/guards/RolesGuard';
 @ApiTags('review')
 @Controller('review')
 @UseGuards(RolesGuard)
@@ -81,9 +79,9 @@ export class ReviewController {
   })
   @ApiNotFoundResponse({ description: 'Review not found' })
   @Get(':id')
-  findReviewById(@Param('id') id: string, gameId: number) {
+  findReviewById(@Param('id') id: number) {
     try {
-      return this.reviewService.findReviewById(+id, gameId);
+      return this.reviewService.findReviewById(+id);
     } catch {
       throw new NotFoundException('Review not found');
     }
@@ -98,10 +96,8 @@ export class ReviewController {
     type: Review,
   })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be updated' })
-  @Roles(Role.Admin)
-  @Roles(Role.Player)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
+  update(@Param('id') id: number, @Body() updateReviewDto: UpdateReviewDto) {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -111,19 +107,17 @@ export class ReviewController {
     }
   }
 
+
   @ApiOperation({ summary: 'Delete review by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiResponse({ status: 200, description: 'Review deleted successfully' })
   @ApiNotFoundResponse({ description: 'Review not found : cannot be deleted' })
-  @Roles(Role.Admin)
-  @Roles(Role.Player)
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     try {
       return this.reviewService.deleteReview(+id);
     } catch {
       throw new NotFoundException('Review not found : cannot be deleted');
     }
   }
-
 }

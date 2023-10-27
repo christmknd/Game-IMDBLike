@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { CreateReviewDto } from '../review/dto/create-review.dto';
 import { Review } from '../review/entities/review.entity';
 import { UpdateReviewDto } from '../review/dto/update-review.dto';
+import { User } from "../users/entities/user.entity";
 
 @Injectable()
 export class GameService {
@@ -15,6 +16,8 @@ export class GameService {
     private gameRepository: Repository<Game>,
     @InjectRepository(Review)
     private reviewRepository: Repository<Review>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {
   }
 
@@ -59,6 +62,7 @@ export class GameService {
   //AJOUTER UNE REVIEW A UN JEU
   async addReviewToGame(
     id: number,
+    userId: number,
     createReviewDto: CreateReviewDto,
   ): Promise<Review> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -68,9 +72,18 @@ export class GameService {
       throw new NotFoundException(`Game with ID ${id} not found`);
     }
 
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+
     const review = this.reviewRepository.create({
       ...createReviewDto,
       game: { id: id },
+      user: { id: user.id },
     });
     return this.reviewRepository.save(review);
   }
@@ -91,6 +104,26 @@ export class GameService {
     }
 
     return review;
+  }
+
+  async findUserIdForReviewInGame(
+    gameId: number,
+    reviewId: number,
+  ): Promise<number> {
+    const review = await this.reviewRepository.findOne({
+      where: { id: reviewId, game: { id: gameId } },
+      relations: ['user'],
+    });
+    if (!review) {
+      throw new NotFoundException(`Review with ID ${reviewId} not found for game ${gameId}`);
+    }
+
+    if (!review.user) {
+      throw new NotFoundException(`User not found for review with ID ${reviewId}`);
+    }
+
+
+    return review.user.id;
   }
 
   //trouver tout les reviews par rapport à un jeu spécifiquement

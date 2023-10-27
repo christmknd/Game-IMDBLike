@@ -29,6 +29,7 @@ const accessToken = auth.getAccessToken();
       'Authorization': `Bearer ${accessToken} `,
     }
   });
+
 </script>
 
 <style scoped></style>

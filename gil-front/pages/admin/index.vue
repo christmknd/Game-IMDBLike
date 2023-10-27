@@ -14,16 +14,6 @@ definePageMeta({
     <div class="container">
       <div class="container-fluid">
         <section>
-            <AdminAllGames/>
-         </section>
-      </div>
-      <div class="container-fluid">
-        <section>
-            <AdminAllReviews/>
-       </section>
-      </div>
-      <div class="container-fluid">
-        <section>
       <AdminAllUsers/>
     </section>
       </div>

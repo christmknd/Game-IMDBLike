@@ -17,8 +17,8 @@
             <li class="list-group-item"><p>Points forts : {{ review.pros }}</p></li>
             <li class="list-group-item"><p>Points faibles : {{ review.cons }}</p></li>
           </ul>     
-            <button class="btn btn-warning" @click="editReview" :disabled="reviewUserId.value !== userId"  >Modifier la critique</button>
-            <button class="btn btn-danger" @click="confirmDelete" :disabled="isDisabled">Supprimer la critique</button>
+          <button class="btn btn-warning" @click="editReview" v-if="isAllowedToUpdate">Modifier la critique</button>
+      <button class="btn btn-danger" @click="confirmDelete" v-if="isAllowedToUpdate">Supprimer la critique</button>
         </div>
         <router-link :to="`/game/${gameId}`">Retour à la page du jeux</router-link>
         <div class="card-footer">
@@ -39,6 +39,7 @@ import auth from '~/services/auth';
 const accessToken = auth.getAccessToken();
 const number = auth.getUserId()
 const userId = parseInt(number)
+console.log('userId : ', userId)
 import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -95,13 +96,9 @@ const {data : reviewUserId} = await useFetch(`http://localhost:5000/game/${gameI
   }
 })
 
-const isDisabled = () => {
-  if (reviewUserId.value !== userId) {
-    return true;
-  } else {
-    return false;
-  }
-}
+const isAllowedToUpdate = computed(() => {
+  return reviewUserId.value == userId;
+});
 
 console.log('Review user ID: ',reviewUserId.value)
 

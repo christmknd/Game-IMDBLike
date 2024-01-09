@@ -25,7 +25,7 @@ export class Game {
   @MinLength(3)
   name: string;
 
-  @Column({type : 'year', default : 2000})
+  @Column({type : 'integer', default : 2000})
   @ApiProperty({
     description: 'Release Year of the Game',
     default : 2000

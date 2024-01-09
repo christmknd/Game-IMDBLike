@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 const config: TypeOrmModuleOptions = {
-  type: 'mysql',
+  type: 'postgres', //postgres
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT, 10),
   username: process.env.DB_USERNAME,

@@ -41,7 +41,7 @@ export class User {
   @IsEnum(Playertype)
   player_type: Playertype;
 
-  @Column({ type: 'enum', enum: PlayerMode })
+  @Column({ type: 'enum', enum: PlayerMode , default: PlayerMode.Solo })
   favorite_mode: PlayerMode;
 
   @Column({ type: 'enum', enum: Role, default: Role.Player })

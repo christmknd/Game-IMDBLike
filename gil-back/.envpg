@@ -1,0 +1,8 @@
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=root
+DB_DATABASE=gameapp
+DB_SYNCHRONIZE=true
+JWT_SECRET=mysecretkey
+E2E_PASSWORD=usertest
